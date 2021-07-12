@@ -1,0 +1,11 @@
+// import all the  base style
+@import "./base/color";
+@import "./base/default";
+
+//components
+@import "./components/navbar";
+@import "./components/home";
+@import "./components/auth";
+@import "./components/works";
+@import "./components/users";
+@import "./components/loading";

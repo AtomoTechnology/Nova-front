@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,600;1,300;1,700&display=swap");
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: cover;
+  font-family: "Rubik", Times, Georgia;
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
+  // color: rgb(189, 189, 189);
+  font-size: 16px;
+  &:hover {
+    text-decoration: none;
+  }
+}
+button {
+  outline: none;
+  border: none;
+  padding: 10px 10px;
+  margin: 5px 0px;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: white;
+  border-radius: 50px;
+  background-color: $color-primary;
+  &:hover {
+    background-color: darken($color: $color-primary, $amount: 10);
+  }
+  &:active,
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}
+ul {
+  list-style: none;
+}
+input,
+textarea,
+select {
+  padding: 10px 10px;
+  background-color: $gray;
+  border-radius: 2px;
+  border: none;
+  color: white;
+  width: 100%;
+  &:hover,
+  &:focus,
+  &:active {
+    border: none;
+    outline: none;
+  }
+}
+.taller {
+  width: 100%;
+  // background-color: $gray;
+  display: flex;
+  // justify-content: space-between;
+
+  .content-principal {
+    display: flex;
+    width: 80%;
+    // max-width: auto;
+    // width: 1px;
+    transition: 500ms;
+    flex-direction: column;
+    margin-left: 20%;
+    .content-principal-margin {
+      margin-top: 54px;
+      padding: 1.2rem;
+      > div {
+        // min-height: 90vh;
+      }
+    }
+  }
+}
+.toggleContentPrincipal {
+  width: calc(100% - 80px) !important;
+  margin-left: 80px !important;
+}
+.toggleContentHeader {
+  width: calc(100% - 80px) !important;
+  // margin-left: 80px !important;
+}
+@media (max-width: 500px) {
+  .content-principal {
+    width: calc(100% - 80px) !important;
+    margin-left: 80px !important;
+    .content-header {
+      width: calc(100% - 80px);
+    }
+  }
+}
