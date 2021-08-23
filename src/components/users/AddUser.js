@@ -26,7 +26,7 @@ export const AddUser = ({ history }) => {
 
   const imageChange = (e) => {
     // setFile(e.target.files[0]);
-    console.log(e.target.files[0]);
+    console.log(e.target.files[0].size);
     if(e.target.files[0]){
 
       var reader = new FileReader();
@@ -50,9 +50,11 @@ export const AddUser = ({ history }) => {
       dispatch(startCreatingClient(values, urlImagen));
       reset();
       setTimeout(() => {
-        history.push("/clients");
-      }, 1000);
-    } else {
+      history.push("/clients");
+      // window.location.replace('/clients');
+    }, 1000);
+    // window.location.reload(true);
+  } else {
       console.log(errores);
     }
     setAddingUser(false);
