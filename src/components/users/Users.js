@@ -56,6 +56,10 @@ export const Users = () => {
 		setResult([]);
 	};
 
+	// document.onscroll = (e) => {
+	// 	document.querySelector('.add-cliente-flotante').style.display = 'none';
+	// };
+
 	return (
 		<div className="users">
 			<span className="title-header">Clientes</span>

@@ -29,7 +29,9 @@ export const NavbarLateral = () => {
 	const handleLogout = () => {
 		dispatch(startLogout());
 	};
-
+	const handleNavbar = () => {
+		document.querySelector('.navbar').classList.toggle('active');
+	};
 	// if (window.innerWidth <= 500) {
 	//   document.querySelector(".toggleMenu").classList.add("active");
 	//   document.querySelector(".navbar").classList.add("active");
@@ -42,11 +44,14 @@ export const NavbarLateral = () => {
 	const manipulateInterface = () => {
 		// const navegation = document.querySelector(".navegation");
 		// const navbar = document.querySelector(".navbar");
-		document.querySelector('.toggleMenu').classList.toggle('active');
-		document.querySelector('.navbar').classList.toggle('active');
+		// document.querySelector('.toggleMenu').classList.toggle('active');
+		document.querySelector('.navbar').classList.toggle('active-mini-menu');
 		document
 			.querySelector('.content-principal')
 			.classList.toggle('toggleContentPrincipal');
+		// document
+		// 	.querySelector('.content-principal')
+		// 	.classList.toggle('active-mini-menu');
 		document
 			.querySelector('.content-header')
 			.classList.toggle('toggleContentHeader');
@@ -61,6 +66,11 @@ export const NavbarLateral = () => {
 	return (
 		<div className="navbar">
 			<div className="navbar__container">
+				<i
+					onClick={handleNavbar}
+					id="btn-close-mobil"
+					className="fas fa-times"
+				></i>
 				{/* <div className="navbar__header"> */}
 				{/* <Link to="/" className="navbar__header-logo">
             <img src={NavaLogo} alt="Logo Nova" />

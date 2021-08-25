@@ -91,11 +91,11 @@ select {
 	// margin-left: 80px !important;
 }
 @media (max-width: 500px) {
-	.content-principal {
-		width: calc(100% - 80px) !important;
-		margin-left: 80px !important;
-		.content-header {
-			width: calc(100% - 80px);
-		}
-	}
+	// .content-principal {
+	// 	width: calc(100% - 80px) !important;
+	// 	margin-left: 80px !important;
+	// 	.content-header {
+	// 		// width: calc(100% - 80px);
+	// 	}
+	// }
 }

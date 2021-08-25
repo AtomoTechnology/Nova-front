@@ -63,23 +63,25 @@ export const Histories = () => {
 	// console.log(total);
 	return (
 		<div>
-			<div className="search  shadow rounded">
-				<h1 className="text-4xl text-green-500 mb-1 p-1">Filtrar</h1>
-				<div className="flex mb-2 justify-between gap-1">
+			<div className="search search-histories  shadow rounded">
+				<h1 className="text-4xl text-green-500 mb-1 bg-gray-200 p-1 ">
+					Filtrar
+				</h1>
+				<div className="flex box-input-filter mb-2 justify-between gap-1">
 					<div className="flex-grow relative">
 						<div className="start-day capitalize text-green-400 text-2xl">
 							fecha Inicio
 						</div>
 						<div className="relative">
 							<input
-								className="text-gray-900 bg-gray-500 rounded-none cursor-pointer"
+								className="text-gray-900 bg-gray-200 rounded-none cursor-pointer"
 								type="Date"
 								value={startDate}
 								onChange={handleStartDate}
 							/>
 							<i
 								onClick={clearStartDate}
-								className="fas fa-times flex h-full items-center justify-center top-0  cursor-pointer ml-1 p-2 text-white text-lg right-0 absolute"
+								className="fas fa-times flex h-full items-center justify-center top-0  cursor-pointer ml-1 p-2 text-red-700 text-lg right-0 absolute"
 							></i>
 						</div>
 					</div>
@@ -90,14 +92,14 @@ export const Histories = () => {
 						</div>
 						<div className="relative">
 							<input
-								className="text-gray-900 bg-gray-500 rounded-none cursor-pointer"
+								className="text-gray-900 bg-gray-200 rounded-none cursor-pointer"
 								type="Date"
 								value={endDate}
 								onChange={handleEndtDate}
 							/>
 							<i
 								onClick={clearEndDate}
-								className="fas fa-times flex h-full items-center justify-center top-0  cursor-pointer ml-1 p-2 text-white text-lg right-0 absolute"
+								className="fas fa-times flex h-full items-center justify-center top-0  cursor-pointer ml-1 p-2 text-red-700 text-lg right-0 absolute"
 							></i>
 						</div>
 					</div>
