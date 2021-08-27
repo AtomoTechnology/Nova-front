@@ -4,7 +4,7 @@ import ReactPDF from '@react-pdf/renderer';
 import { Loading } from '../Loading';
 import { saveAs } from 'file-saver';
 import axios from 'axios';
-// import pdf1 from '../assets/img/pdf/1.png';
+import pdf3 from '../../templatePics/pdf/3.png';
 export const Order = ({ order }) => {
 	const [loading, setLoading] = useState(false);
 	const [downloaded, setDownloaded] = useState(false);
@@ -57,7 +57,7 @@ export const Order = ({ order }) => {
 		// </div>
 		<div className="orden">
 			<div className="photo">
-				<img src="../assets/img/pdf/3.png" alt="" />
+				<img src={pdf3} alt="" />
 			</div>
 			<div className="body-pdf">
 				<h3 className="codigo">{order.work?.codigo}</h3>
