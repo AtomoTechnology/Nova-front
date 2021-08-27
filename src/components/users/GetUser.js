@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Work } from '../works/Work';
 import moment from 'moment';
+import userLogo from '../../templatePics/userLogo.png';
 import {
 	getWorksClient,
 	startGettingOneClient,
@@ -125,10 +126,7 @@ export const GetUser = ({ match }) => {
 								alt={client?.name}
 							/>
 						) : (
-							<img
-								src={'/assets/img/userLogo.png'}
-								className="rounded-full h-full w-full"
-							/>
+							<img src={userLogo} className="rounded-full h-full w-full" />
 						)}
 					</div>
 					<div className="user-info">
@@ -202,7 +200,7 @@ export const GetUser = ({ match }) => {
 				<div id="img-client" className="flex justify-center  items-center">
 					<img
 						className="max-w-lg z-20 border-2 border-bg-red-200"
-						src={`/assets/img/client/${client?.pathImg}`}
+						src={userLogo}
 					/>
 				</div>
 				<span
