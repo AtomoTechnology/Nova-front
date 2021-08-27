@@ -122,10 +122,10 @@ export const AddWork = ({ history }) => {
 		let ok = true;
 		let errors = [];
 
-		if (emei.trim().length < 15) {
-			ok = false;
-			errors.emei = true;
-		}
+		// if (emei.trim().length < 15) {
+		// 	ok = false;
+		// 	errors.emei = true;
+		// }
 
 		if (!marca || marca.trim().length === 0) {
 			ok = false;
@@ -143,10 +143,10 @@ export const AddWork = ({ history }) => {
 			ok = false;
 			errors.estado = true;
 		}
-		if (files?.length == 1) {
-			ok = false;
-			errors.files = true;
-		}
+		// if (files?.length == 1) {
+		// 	ok = false;
+		// 	errors.files = true;
+		// }
 		if (!observaciones || observaciones.trim().length === 0) {
 			ok = false;
 			errors.observaciones = true;
@@ -177,31 +177,31 @@ export const AddWork = ({ history }) => {
 	};
 	let imgs = [];
 
-	const imageChange = (e) => {
-		setFiles(e.target.files);
-		// for (let index = 0; index < e.target.files.length; index++) {
-		//   imgs.push(index);
-		// }
+	// const imageChange = (e) => {
+	// 	setFiles(e.target.files);
+	// 	// for (let index = 0; index < e.target.files.length; index++) {
+	// 	//   imgs.push(index);
+	// 	// }
 
-		let arrayImg = [];
-		if (e.target.files) {
-			for (let index = 0; index < e.target.files.length; index++) {
-				console.log('images');
+	// 	let arrayImg = [];
+	// 	if (e.target.files) {
+	// 		for (let index = 0; index < e.target.files.length; index++) {
+	// 			console.log('images');
 
-				var reader = new FileReader();
+	// 			var reader = new FileReader();
 
-				reader.onload = (ev) => {
-					let img = ev.target.result;
-					arrayImg.push(img);
-				};
-				reader.readAsDataURL(e.target.files[index]);
-			}
-		}
+	// 			reader.onload = (ev) => {
+	// 				let img = ev.target.result;
+	// 				arrayImg.push(img);
+	// 			};
+	// 			reader.readAsDataURL(e.target.files[index]);
+	// 		}
+	// 	}
 
-		console.log('lenght ' + arrayImg.length);
-		setLinkImages(arrayImg);
-		showMultiplesImg(e.target.files);
-	};
+	// 	console.log('lenght ' + arrayImg.length);
+	// 	setLinkImages(arrayImg);
+	// 	showMultiplesImg(e.target.files);
+	// };
 
 	return (
 		<div className="work-add">
@@ -318,8 +318,8 @@ export const AddWork = ({ history }) => {
 					</div>
 					<div>
 						<label>
-							Emei
-							<span className="text-red-600">*</span>
+							Emei / Serie
+							{/* <span className="text-red-600">*</span> */}
 						</label>
 						<input
 							onChange={handleInputChange}
@@ -329,11 +329,11 @@ export const AddWork = ({ history }) => {
 							min={1}
 							minLength={25}
 						/>
-						{errores.emei ? (
+						{/* {errores.emei ? (
 							<h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
 								El emei es obligatoria, debe tener 15 numeros
 							</h5>
-						) : null}
+						) : null} */}
 					</div>
 					<div>
 						<label>recargo</label>
@@ -383,7 +383,7 @@ export const AddWork = ({ history }) => {
 							La(s) observaciones es obligatoria
 						</h5>
 					) : null}
-					<label>Facha(s) Detectada(s)</label>
+					<label>Falla(s) Detectada(s)</label>
 					<textarea
 						value={fachasEncontradas}
 						onChange={handleInputChange}
