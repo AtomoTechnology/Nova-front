@@ -11,16 +11,6 @@ export const NavbarLateral = () => {
 	const activeLink = (e) => {
 		e.target.parentElement.parentElement.classList.toggle('active');
 		console.log((e.target.parentElement.parentElement.style.display = 'none'));
-		// var links = document.querySelectorAll('.link-lateral');
-		// console.log(links);
-		// links.forEach((l) => {
-		// 	console.log('contando');
-		// 	l.classList.add('hidden');
-		// 	console.log(l.classList);
-		// 	l.classList.remove('active');
-		// 	// console.log(l);
-		// });
-		// e.target.classList.add('active');
 	};
 
 	const dispatch = useDispatch();
@@ -83,6 +73,7 @@ export const NavbarLateral = () => {
 				<div className="navegation">
 					<ul>
 						<li className="menu-item link-lateral active" onClick={activeLink}>
+							<span className="cartel">Home</span>
 							<Link to="/" className="">
 								<span className="icon">
 									<i class="fas fa-home"></i>
@@ -91,6 +82,7 @@ export const NavbarLateral = () => {
 							</Link>
 						</li>
 						<li className="menu-item link-lateral" onClick={activeLink}>
+							<span className="cartel">Clientes</span>
 							<Link to="/clients">
 								<span className="icon">
 									<i class="fas fa-users"></i>{' '}
@@ -99,6 +91,7 @@ export const NavbarLateral = () => {
 							</Link>
 						</li>
 						<li className="menu-item link-lateral" onClick={activeLink}>
+							<span className="cartel">Trabajos</span>
 							<Link to="/works">
 								<span className="icon">
 									<i className="fas fa-th-list"></i>
@@ -108,6 +101,7 @@ export const NavbarLateral = () => {
 						</li>
 						{role === 'admin' && (
 							<li className="menu-item link-lateral" onClick={activeLink}>
+								<span className="cartel">Registrar Usuario</span>
 								<Link to="/auth/register">
 									<span className="icon">
 										<i className="fas fa-user-plus"></i>
@@ -118,6 +112,8 @@ export const NavbarLateral = () => {
 						)}
 						{role === 'admin' && (
 							<li className="menu-item link-lateral" onClick={activeLink}>
+								<span className="cartel">Ordenes</span>
+
 								<Link to="/orders">
 									<span className="icon">
 										<i className="fas fa-th-list"></i>
@@ -128,6 +124,7 @@ export const NavbarLateral = () => {
 						)}
 
 						<li className="menu-item link-lateral" onClick={activeLink}>
+							<span className="cartel">Agregar Cliente</span>
 							<Link to="/client/add">
 								<span className="icon">
 									<i class="fas fa-plus-circle"></i>
@@ -136,6 +133,8 @@ export const NavbarLateral = () => {
 							</Link>
 						</li>
 						<li className="menu-item link-lateral" onClick={activeLink}>
+							<span className="cartel">Agregar Trabajo</span>
+
 							<Link to="/work/add">
 								<span className="icon">
 									<i class="fas fa-calendar-plus"></i>
@@ -144,6 +143,8 @@ export const NavbarLateral = () => {
 							</Link>
 						</li>
 						<li className="menu-item link-lateral" onClick={activeLink}>
+							<span className="cartel">Historial de Trabajo</span>
+
 							<Link to="/works/histories/all">
 								<span className="icon">
 									<i class="fas fa-history"></i>{' '}
@@ -152,6 +153,8 @@ export const NavbarLateral = () => {
 							</Link>
 						</li>
 						<li onClick={handleLogout} className="menu-item">
+							<span className="cartel">Cerrar Sesion</span>
+
 							<Link to="#">
 								<span className="icon">
 									<i className="fas fa-sign-out-alt"></i>

@@ -63,7 +63,7 @@ export const Histories = () => {
 	// console.log(total);
 	return (
 		<div>
-			<div className="search search-histories  shadow rounded">
+			<div className="search search-histories p-3 shadow rounded">
 				<h1 className="text-4xl text-green-500 mb-1 bg-gray-200 p-1 ">
 					Filtrar
 				</h1>

@@ -283,7 +283,7 @@ export const AddWork = ({ history }) => {
 								</option>
 								{clients.map((clt) => (
 									<option key={clt._id} value={clt._id}>
-										{clt.dni.toString()}
+										{clt.dni.toString() + ' - ' + clt.name}
 									</option>
 								))}
 							</datalist>

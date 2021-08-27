@@ -53,38 +53,36 @@ export const Works = () => {
 					<i class="fas fa-plus-circle"></i>
 				</Link>
 			</div>
-			{works.length < 0 && (
-				<div className="search-box-all-works w-full overflow-hidden shadow my-2 p-2">
-					<form className="flex w-full flex-wrap lg:justify-center gap-y-2 flex-col sm:flex-row md:justify-between items-center sm:gap-x-2">
-						<select
-							className="sm:rounded-full shadow  sm:w-min w-full"
-							name="estado"
-							onChange={handleInputChange}
-							value={estado}
-						>
-							<option value="" disabled>
-								Filtrar por estado
-							</option>
-							{stateArray.map((elem) => (
-								<option key={elem} value={elem}>
-									{elem}
-								</option>
-							))}
-						</select>
-						<input
-							name="codigo"
-							className="shadow sm:rounded-full   sm:w-min w-full"
-							value={codigo}
-							onChange={(e) => {
-								setCodigo(e.target.value);
-							}}
-							placeholder="Buscar codigo de trabajo"
-							type="text"
-						/>
-					</form>
-				</div>
-			)}
 
+			<div className="search-box-all-works w-full overflow-hidden shadow my-2 p-2">
+				<form className="flex w-full flex-wrap lg:justify-center gap-y-2 flex-col sm:flex-row md:justify-between items-center sm:gap-x-2">
+					<select
+						className="sm:rounded-full shadow  sm:w-min w-full"
+						name="estado"
+						onChange={handleInputChange}
+						value={estado}
+					>
+						<option value="" disabled>
+							Filtrar por estado
+						</option>
+						{stateArray.map((elem) => (
+							<option key={elem} value={elem}>
+								{elem}
+							</option>
+						))}
+					</select>
+					<input
+						name="codigo"
+						className="shadow sm:rounded-full   sm:w-min w-full"
+						value={codigo}
+						onChange={(e) => {
+							setCodigo(e.target.value);
+						}}
+						placeholder="Buscar codigo de trabajo"
+						type="text"
+					/>
+				</form>
+			</div>
 			{result.length === 0 && (
 				<div className="message-result-empty hidden  bg-red-500 text-gray-100 p-2 my-2 w-12/12 shadow-md rounded text-center">
 					No hay resultado para este filtro...
