@@ -2,6 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { startLogout } from '../../action/authAction';
+import userLogo from '../../templatePics/userLogo.png';
+import userLogoAdmin from '../../templatePics/adminLogo.png';
 // import logoUser from "../../asset/img/userLogo.png";
 // import logoAdmin from "../../asset/img/adminLogo.png";
 
@@ -71,9 +73,9 @@ export const NavbarContent = () => {
 			>
 				<div className="user-logo">
 					{role === 'admin' ? (
-						<img src="/assets/img/adminLogo.png" />
+						<img src={userLogoAdmin} />
 					) : (
-						<img src="/assets/img/userLogo.png" />
+						<img src={userLogo} />
 					)}
 
 					<span className="user-name">{username}</span>
