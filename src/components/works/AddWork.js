@@ -110,7 +110,10 @@ export const AddWork = ({ history }) => {
 			console.log(values);
 			dispatch(createWork(values, linkImages));
 			reset();
-			history.push('/works');
+			setTimeout(() => {
+				window.location.href = '/works';
+			}, 1000);
+			// history.push('/works');
 		} else {
 			console.log(errores);
 			console.log(values);

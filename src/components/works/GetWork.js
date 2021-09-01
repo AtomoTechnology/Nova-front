@@ -217,7 +217,7 @@ export const GetWork = ({ match, history }) => {
 				)}
 
 				<div className="one-work-body grid grid-cols-2 grid-rows-2 gap-2">
-					<div className="work-data shadow rounded bg-gray-400 p-1">
+					<div className="work-data shadow rounded bg-gray-700 text-white p-1">
 						<p>Codigo : {work?.codigo} </p>
 						<p>Marca : {work?.marca} </p>
 						<p>Modelo : {work?.modelo}</p>
@@ -228,23 +228,32 @@ export const GetWork = ({ match, history }) => {
 						</p>
 						{work?.tieneContrasena && <p>Contraseña : {work?.contrasena}</p>}
 					</div>
-					<div className="client-data rounded shadow bg-blue-400 p-1">
-						<img className="rounded-full h-12 w-12" src={userLogo} />
-						<p>
-							Cliente :{' '}
-							<Link
-								className="underline text-white"
-								to={`/clients/${work?.cliente?._id}`}
-							>
-								{' '}
-								{work?.cliente?.name}{' '}
-							</Link>
-						</p>
-						<p>DNI : {work?.cliente?.dni}</p>
-						<p>Celular 1 : {work?.cliente?.phone1}</p>
-					</div>
+					{work?.cliente ? (
+						<div className="client-data rounded shadow bg-pink-500 p-1">
+							<img className="rounded-full h-12 w-12" src={userLogo} />
+							<p>
+								Cliente :{' '}
+								<Link
+									className="underline text-white"
+									to={`/clients/${work?.cliente?._id}`}
+								>
+									{' '}
+									{work?.cliente?.name}{' '}
+								</Link>
+							</p>
+							<p>DNI : {work?.cliente?.dni}</p>
+							<p>Celular 1 : {work?.cliente?.phone1}</p>
+						</div>
+					) : (
+						<div className="cliente-no-existe flex justify-center items-center text-white text-center client-data rounded shadow bg-pink-700">
+							<h3>
+								Cliente no encontrado... <br />
+								Puede ser que se haya borrado anteriormente.
+							</h3>
+						</div>
+					)}
 
-					<div className="price-data rounded shadow bg-red-400 p-1">
+					<div className="price-data rounded shadow bg-blue-400 p-1">
 						<p>Pecargo: {work?.recargo}</p>
 						<p>Precio: {work?.precio}</p>
 						<p>descuento: {work?.descuento}</p>
@@ -373,7 +382,7 @@ export const GetWork = ({ match, history }) => {
 									<span className="text-red-600">*</span>
 								</label>
 								<div>
-									<input readOnly value={work?.cliente.dni} />
+									<input readOnly value={work?.cliente?.dni} />
 								</div>
 								{errores.cliente ? (
 									<h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">

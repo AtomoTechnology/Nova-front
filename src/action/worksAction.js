@@ -7,6 +7,17 @@ import { types } from '../types/types';
 import Swal from 'sweetalert2';
 import { convertDate } from '../helpers/convertDateWork';
 import axios from 'axios';
+const Toast = Swal.mixin({
+	toast: true,
+	position: 'bottom-end',
+	showConfirmButton: false,
+	timer: 2000,
+	timerProgressBar: true,
+	didOpen: (toast) => {
+		toast.addEventListener('mouseenter', Swal.stopTimer);
+		toast.addEventListener('mouseleave', Swal.resumeTimer);
+	},
+});
 
 export const getAllWorks = () => {
 	return async (dispatch) => {
@@ -34,14 +45,16 @@ export const getOneWork = (workId) => {
 			if (body.ok) {
 				dispatch(setWorkOne(body.work));
 			} else {
-				Swal.fire(
-					'error',
-					'Hubo un error en la consula intente de nuevo',
-					'error'
-				);
+				Toast.fire({
+					icon: 'error',
+					title: 'Error al recuperar los datos del cliente',
+				});
 			}
 		} catch (error) {
-			Swal.fire('error', error, 'error');
+			Toast.fire({
+				icon: 'error',
+				title: error,
+			});
 		}
 	};
 };
@@ -67,30 +80,30 @@ export const createWork = (work, files) => {
 					const body2 = await res2.json();
 					console.log(body2);
 					if (body2.ok) {
-						Swal.fire(
-							'success',
-							'Se agregó correctamente el trabajo',
-							'success'
-						);
+						Toast.fire({
+							icon: 'success',
+							title: 'Se agregó con exito el trabajo!!!',
+						});
 					} else {
-						Swal.fire(
-							'Error',
-							'Se produjo un error al agregar el trabajo',
-							'Error'
-						);
+						Toast.fire({
+							icon: 'error',
+							title: body2.msg,
+						});
 					}
 				}
 			} else {
 				const res2 = await fetchWithToken('works', work, 'POST');
 				const body2 = await res2.json();
 				if (body2.ok) {
-					Swal.fire('success', 'Se agregó correctamente el trabajo', 'success');
+					Toast.fire({
+						icon: 'success',
+						title: 'Se agregó con exito el trabajo!!!',
+					});
 				} else {
-					Swal.fire(
-						'Error',
-						'Se produjo un error al agregar el trabajo',
-						'Error'
-					);
+					Toast.fire({
+						icon: 'error',
+						title: body2.msg,
+					});
 				}
 			}
 
@@ -155,12 +168,9 @@ export const startEditWork = (work, workId) => {
 			console.log(body.updateWork);
 			if (body.ok) {
 				dispatch(setWorkOne(body.updateWork));
-				Swal.fire({
-					position: 'center',
+				Toast.fire({
 					icon: 'success',
 					title: 'Trabajo editado con exito!!!',
-					showConfirmButton: false,
-					timer: 2500,
 				});
 			} else {
 				Swal.fire(

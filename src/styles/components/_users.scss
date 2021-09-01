@@ -279,3 +279,123 @@
 	box-shadow: $shadow;
 	margin: 10px 0px !important;
 }
+
+// user edit form
+.edit-client {
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: #00060a80;
+	width: 100%;
+	margin: auto;
+	height: 100%;
+	z-index: 111;
+	display: none;
+	transition: 400ms ease-in-out;
+	animation: animateModalUpdate 500ms linear;
+	/* transform: translate(50%, 50%); */
+	// display: flex;
+	&.active {
+		display: flex;
+	}
+
+	.form-update-box {
+		display: flex;
+		justify-content: flex-start;
+		max-width: 350px;
+		width: 85%;
+		position: fixed;
+		background-color: #fff;
+		form {
+			background: white;
+			padding: 10px;
+			padding-top: 2rem;
+			border-radius: 0;
+			height: 100vh;
+			overflow-y: auto;
+			width: 100%;
+			h3 {
+				font-size: 20px;
+				font-weight: 400;
+				margin-bottom: 10px;
+			}
+		}
+	}
+}
+.edit-client-overlay,
+.delete-client-overlay {
+	position: relative;
+	// background: aqua;
+	height: 100%;
+	width: 100%;
+}
+
+@keyframes animateModalUpdate {
+	0% {
+		transform: translateX(350px);
+	}
+	50% {
+		transform: translateX(200px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+// delete client
+.delete-client-box {
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: #00060a80;
+	width: 100%;
+	margin: auto;
+	height: 100%;
+	z-index: 111;
+	display: none;
+	justify-content: center;
+	align-items: center;
+
+	transition: 400ms ease-in-out;
+	animation: animateModalUpdate 500ms linear;
+	&.active {
+		display: flex;
+	}
+}
+.delete-client {
+	width: 250px;
+	background: #ffffff;
+	min-height: 200px;
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	/* justify-content: space-between; */
+	gap: 1rem;
+	position: absolute;
+	// left: 30%;
+	// top: 20%;
+	//  top: 50%;
+}
+.delete-client-header {
+	width: 100%;
+	padding: 5px;
+	background: red;
+	text-align: center;
+	color: white;
+	font-size: 20px;
+	font-weight: 600;
+}
+.delete-client-body {
+	display: flex;
+	color: $color-primary;
+
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 2rem;
+	padding: 8px;
+	padding-bottom: 1rem;
+	h3 {
+		text-align: center;
+		font-size: 18px;
+	}
+}
