@@ -111,9 +111,9 @@ export const AddWork = ({ history }) => {
 			dispatch(createWork(values, linkImages));
 			reset();
 			setTimeout(() => {
-				window.location.href = '/works';
+				// window.location.replace('/works');
+				history.push('/works');
 			}, 1000);
-			// history.push('/works');
 		} else {
 			console.log(errores);
 			console.log(values);

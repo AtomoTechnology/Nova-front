@@ -12,7 +12,7 @@ import {
 import { useForm } from '../../hooks/useForm';
 import { SmallLoading } from '../SmallLoading';
 import { Link } from 'react-router-dom';
-export const GetUser = ({ match }) => {
+export const GetUser = ({ match, history }) => {
 	console.log(match);
 	const clientId = match.params.clientId;
 	const [errores, setErrores] = useState([]);
@@ -100,7 +100,9 @@ export const GetUser = ({ match }) => {
 	const deleteCliente = (e) => {
 		dispatch(startDeleteClient(clientId));
 		document.querySelector('.delete-client-box').classList.toggle('active');
-		window.location.href = '/clients';
+		setTimeout(() => {
+			history.push('/clients');
+		}, 500);
 	};
 	console.log(name, dni, phone1, direction);
 
@@ -117,7 +119,6 @@ export const GetUser = ({ match }) => {
 	//   // setTimeout(() => {
 	//   // }, 1000);
 	// };
-
 	// const { works } = useSelector((state) => state.works);
 	// console.log(clientWorks);
 	return (

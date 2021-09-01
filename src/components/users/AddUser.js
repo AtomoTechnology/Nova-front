@@ -49,8 +49,8 @@ export const AddUser = ({ history }) => {
 			dispatch(startCreatingClient(values, urlImagen));
 			reset();
 			setTimeout(() => {
-				// history.push('/clients');
-				window.location.href = '/clients';
+				history.push('/clients');
+				// window.location.href = '/clients';
 				// window.location.replace('/clients');
 			}, 1000);
 			// window.location.reload(true);

@@ -152,10 +152,10 @@ export const GetWork = ({ match, history }) => {
 			ok = false;
 			errors.modelo = true;
 		}
-		if (!emei || emei.length === 0) {
-			ok = false;
-			errors.emei = true;
-		}
+		// if (!emei || emei.length === 0) {
+		// 	ok = false;
+		// 	errors.emei = true;
+		// }
 		if (!estado) {
 			ok = false;
 			errors.estado = true;
@@ -427,11 +427,11 @@ export const GetWork = ({ match, history }) => {
 									type="number"
 									name="emei"
 								/>
-								{errores.emei ? (
+								{/* {errores.emei ? (
 									<h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
 										El emei es obligatoria
 									</h5>
-								) : null}
+								) : null} */}
 							</div>
 							<div>
 								<label>recargo</label>
