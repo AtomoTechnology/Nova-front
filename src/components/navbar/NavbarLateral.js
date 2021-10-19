@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { startLogout } from '../../action/authAction';
-// import NavaLogo from "../../assets/img/logo.png";
+import NavaLogo from '../../templatePics/logo03.png';
 // import userLogo from "../../assets/img/userLogo.png";
 
 export const NavbarLateral = () => {
@@ -63,14 +63,20 @@ export const NavbarLateral = () => {
 				></i>
 				{/* <div className="navbar__header"> */}
 				{/* <Link to="/" className="navbar__header-logo">
-            <img src={NavaLogo} alt="Logo Nova" />
           </Link> */}
 				{/* <div className="navbar__header-user">
             <img src={userLogo} alt="User perfil" />
             <span className="navbar__header-user-username">usuario</span>
-          </div> */}
+		</div> */}
 				{/* </div> */}
 				<div className="navegation">
+					<div className="navegation-header">
+						<i onClick={manipulateInterface} class="fas fa-bars"></i>
+						<div className="img">
+							{/* <img src={NavaLogo} alt="Logo Nova" width="25" /> */}
+							<span>Nova Technology</span>
+						</div>
+					</div>
 					<ul>
 						<li className="menu-item link-lateral active" onClick={activeLink}>
 							<span className="cartel">Home</span>
@@ -150,10 +156,22 @@ export const NavbarLateral = () => {
 									<span className="icon">
 										<i class="fas fa-history"></i>{' '}
 									</span>
-									<span className="title">Historial De Trabajo</span>
+									<span className="title">Hist. Trab/Gastos</span>
 								</Link>
 							</li>
 						)}
+						{/* <li onClick={handleLogout} className="menu-item">
+							<span className="cartel">Cerrar Sesion</span>
+
+							<Link to="#">
+								<span className="icon">
+									<i className="fas fa-sign-out-alt"></i>
+								</span>
+								<span className="title">Cerrar Sesion</span>
+							</Link>
+						</li> */}
+					</ul>
+					<div className="navegation-footer">
 						<li onClick={handleLogout} className="menu-item">
 							<span className="cartel">Cerrar Sesion</span>
 
@@ -164,7 +182,7 @@ export const NavbarLateral = () => {
 								<span className="title">Cerrar Sesion</span>
 							</Link>
 						</li>
-					</ul>
+					</div>
 				</div>
 				{/* <div className="navbar__footer">
           <a className="navbar__logout">
@@ -172,11 +190,11 @@ export const NavbarLateral = () => {
             <i className="fas fa-sign-out-alt"></i>
           </a>
         </div> */}
-				<div
+				{/* <div
 					onClick={manipulateInterface}
 					id="toggleMenu"
 					className="toggleMenu"
-				></div>
+				></div> */}
 			</div>
 		</div>
 	);

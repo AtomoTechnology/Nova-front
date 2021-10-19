@@ -57,7 +57,8 @@ export const Work = ({ work }) => {
 
 			<div className="title p-1">
 				<span className={'capitalize text-' + color}>
-					{work?.marca + '   ' + work?.modelo}
+					{work?.marca + ' - ' + work?.modelo}
+					{work?.tieneContrasena && <i class="fas fa-lock work-lock"></i>}
 				</span>
 			</div>
 			<div className="observaciones p-1">

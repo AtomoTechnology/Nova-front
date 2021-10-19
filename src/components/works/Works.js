@@ -15,10 +15,12 @@ export const Works = () => {
 	const [loadingWorks, setLoadingWorks] = useState(true);
 	const [result, setResult] = useState([]);
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		dispatch(getAllWorks());
 		setLoadingWorks(false);
-	}, [dispatch, estado]);
+	}, []);
+
 	let { works } = useSelector((state) => state.works);
 
 	useEffect(() => {

@@ -70,7 +70,7 @@ export const Users = () => {
 			</div>
 			{clients.length >= 10 && (
 				<div className="box-search relative">
-					<div className="search-box-userworks bg-gray-800  border-2 border-gray-200">
+					<div className="search-box-userworks bg-gray-800 ">
 						{/* <i class="fas fa-search text-gray-900 bg-gray-100 p-3"></i> */}
 
 						<form className="w-full">

@@ -1,0 +1,17 @@
+.footer {
+	width: 100%;
+	background-color: rgb(241, 240, 240);
+	box-shadow: $shadow;
+}
+.footer-container {
+	width: 90%;
+	margin: auto;
+	// background: red;
+	padding: 0.5rem;
+	ul {
+		list-style: none;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+}

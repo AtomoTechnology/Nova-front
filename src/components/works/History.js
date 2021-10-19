@@ -10,11 +10,9 @@ export const History = ({ work }) => {
 			</td>
 			<td className="flex-1 p-2">{work?.marca + ' - ' + work.modelo}</td>
 			<td className="flex-1 p-2 capitalize">{work?.cliente?.name}</td>
-			<td className="flex-1 p-2">{'$ ' + work?.precio}</td>
+			<td className="flex-1 p-2">{'$ ' + work?.total}</td>
 			<td className="flex-1 p-2">
-				{work?.fechaFin
-					? moment(work?.fechaFin).format('DD-MM-YYYY    HH:mm:ss')
-					: '--'}
+				{work?.fechaFin ? moment(work?.fechaFin).format('DD-MM-YYYY') : '--'}
 			</td>
 		</tr>
 	);

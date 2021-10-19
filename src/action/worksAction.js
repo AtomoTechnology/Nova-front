@@ -61,10 +61,12 @@ export const getOneWork = (workId) => {
 
 export const createWork = (work, files) => {
 	return async (dispatch) => {
-		console.log(files);
-		console.log(work);
+		// console.log(files);
+		// let descuento = (parseInt(work.precio) * parseInt(work.descuento)) / 100;
+		// let recargo = (parseInt(work.precio) * work.recargo) / 100;
+		// work.total = parseInt(work.precio) + recargo - descuento;
+		// console.log(work);
 		// return;
-
 		try {
 			if (files) {
 				const res = await fetchWithOutToken(

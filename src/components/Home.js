@@ -16,6 +16,7 @@ import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import { SmallLoading } from './SmallLoading';
 import { Work } from './works/Work';
+import { WorkWithOut } from './works/WorkWithOut';
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
@@ -24,6 +25,7 @@ export const Home = () => {
 	const [workStates, setWorkStates] = useState([]);
 	// const [confirmWorks, setConfirmWorks] = useState([]);
 	const [loadingWorkState, setLoadingWorkState] = useState(true);
+	const [loadingConfirmWork, setLoadingConfirmWork] = useState(true);
 	useEffect(() => {
 		dispatch(startGettingAllClient());
 	}, [dispatch]);
@@ -31,6 +33,9 @@ export const Home = () => {
 	useEffect(() => {
 		dispatch(getAllWorks());
 	}, [dispatch]);
+
+	const { clients } = useSelector((state) => state.clients);
+	const { works } = useSelector((state) => state.works);
 
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_URL}work_state`)
@@ -41,9 +46,6 @@ export const Home = () => {
 			});
 	}, [setLoadingWorkState, setWorkStates]);
 	// console.log(workStates);
-
-	const { clients } = useSelector((state) => state.clients);
-	const { works } = useSelector((state) => state.works);
 
 	// setConfirmWorks(works.filter((cw) => cw.estado.name === 'Entregado'));
 	var confirmWorks = [];
@@ -71,9 +73,23 @@ export const Home = () => {
 	});
 	// console.log(workWithoutChangeState);
 
+	const GoToTheLeft = (e) => {
+		const carrouselLanguages = document.getElementById(
+			e.target.parentElement.parentElement.classList[0]
+		);
+
+		carrouselLanguages.scrollLeft -= carrouselLanguages.offsetWidth;
+	};
+	const GoToTheRight = async (e) => {
+		const carrouselLanguages = document.getElementById(
+			e.target.parentElement.parentElement.classList[0]
+		);
+		carrouselLanguages.scrollLeft += carrouselLanguages.offsetWidth;
+	};
+
 	return (
 		<div className="home">
-			<div className="home__statistics shadow-md bg-gray-50 mb-2 p-1">
+			<div className="home__statistics shadow mb-2 p-1">
 				{/* <h3>Estadisticas</h3> */}
 				<div className="users">
 					<div className="users-content rounded-t">
@@ -106,23 +122,35 @@ export const Home = () => {
 			</div>
 			{!loadingWorkState ? (
 				workWithoutChangeState.length > 0 && (
-					<div className="home__section-recent-works shadow-lg my-1 p-2 rounded-md bg-gray-100">
-						<h3 className="text-3xl p-1 mb-2 text-red-400">AVISO</h3>
+					<div className="home__section-recent-works shadow my-1 p-2">
+						<h3 className="text-red-400">AVISO</h3>
 
-						<Swiper
-							spaceBetween={2}
-							slidesPerView={3}
-							navigation
-							// pagination={{ clickable: true }}
+						<div>
+							<div className="avisos" id="avisos">
+								<button
+									className="btn btn-left-carrousel"
+									onClick={GoToTheLeft}
+									id="btn-left"
+									// style={{ display: 'none' }}
+								>
+									<i className="fa fa-angle-double-left" aria-hidden="true"></i>
+								</button>
 
-							className="workStateWithoutChange p-2"
-						>
-							{workWithoutChangeState.map((wk) => (
-								<SwiperSlide key={wk._id}>
+								{workWithoutChangeState.map((wk) => (
 									<WorkState key={wk._id} work={wk} />
-								</SwiperSlide>
-							))}
-						</Swiper>
+								))}
+								<button
+									onClick={GoToTheRight}
+									className="btn btn-right-carrousel"
+									id="btn-right"
+								>
+									<i
+										className="fa fa-angle-double-right"
+										aria-hidden="true"
+									></i>
+								</button>
+							</div>
+						</div>
 					</div>
 				)
 			) : (
@@ -132,25 +160,35 @@ export const Home = () => {
 			{
 				// !loadingWorkState ?
 				confirmWorks.length > 0 && (
-					<div className="home__section-recent-works shadow-lg my-1 p-2 rounded-md bg-gray-100">
-						<h3 className="text-3xl p-1 mb-2 text-red-400">
-							Trabajos Terminados
-						</h3>
-						<Swiper
-							spaceBetween={2}
-							slidesPerView={3}
-							navigation
-							// pagination={{ clickable: true }}
-							className="workStateWithoutChange p-2"
-						>
-							{confirmWorks.map((wk) => (
-								<SwiperSlide key={wk._id}>
-									{/* <WorkState key={wk._id} work={wk} /> */}
-									<Work key={wk._id} work={wk} />
-									{/* <div className="cw">hi</div> */}
-								</SwiperSlide>
-							))}
-						</Swiper>
+					<div className="home__section-recent-works shadow my-1 p-2">
+						<h3 className="text-red-400">Trabajos Terminados</h3>
+
+						<div>
+							<div className="confirmados" id="confirmados">
+								<button
+									className="btn btn-left-carrousel"
+									onClick={GoToTheLeft}
+									id="btn-left"
+									// style={{ display: 'none' }}
+								>
+									<i className="fa fa-angle-double-left" aria-hidden="true"></i>
+								</button>
+
+								{confirmWorks.map((wk) => (
+									<WorkWithOut key={wk._id} work={wk} />
+								))}
+								<button
+									onClick={GoToTheRight}
+									className="btn btn-right-carrousel"
+									id="btn-right"
+								>
+									<i
+										className="fa fa-angle-double-right"
+										aria-hidden="true"
+									></i>
+								</button>
+							</div>
+						</div>
 					</div>
 				)
 				// :

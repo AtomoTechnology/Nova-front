@@ -55,6 +55,7 @@ export const AddWork = ({ history }) => {
 		esPatron: es_patron,
 		contrasena: '',
 		patron: '',
+		total: 0,
 	});
 
 	console.log(oneClientForm);
@@ -107,12 +108,12 @@ export const AddWork = ({ history }) => {
 		e.preventDefault();
 		setLoading(true);
 		if (verifyForm()) {
-			console.log(values);
+			// console.log(values);
 			dispatch(createWork(values, linkImages));
-			reset();
+			// reset();
 			setTimeout(() => {
 				// window.location.replace('/works');
-				history.push('/works');
+				// history.push('/works');
 			}, 1000);
 		} else {
 			console.log(errores);

@@ -34,6 +34,7 @@ export const GetWork = ({ match, history }) => {
 	const [reload, setReload] = useState(false);
 	// console.log(clients);
 	const workId = match.params.workId;
+	console.log(role);
 
 	useEffect(() => {
 		dispatch(getOneWork(workId));
@@ -175,16 +176,15 @@ export const GetWork = ({ match, history }) => {
 
 	return (
 		<div className="one-work relative">
-			{role === 'admin' && (
-				<div className="absolute hover:bg-gray-200 rounded-full">
-					<a
-						href="#editWork"
-						className="p-3 h-24 w-24 rounded-full text-white bg-red-600"
-					>
-						<i className="fas fa-pen"></i>
-					</a>
-				</div>
-			)}
+			<div className="absolute hover:bg-gray-200 rounded-full">
+				<a
+					href="#editWork"
+					className="p-3 h-24 w-24 rounded-full text-white bg-red-600"
+				>
+					<i className="fas fa-pen"></i>
+				</a>
+			</div>
+
 			<div className="one-work-grid">
 				{work?.images.length > 0 ? (
 					<Swiper
@@ -333,10 +333,11 @@ export const GetWork = ({ match, history }) => {
 					</div>
 				</div>
 			)}
+
 			<div id="editWork" className="overlay">
 				<a href="#" className="close-modal"></a>
 				<div className="modal-edit-work">
-					<h3>Agregar Trabajo</h3>
+					<h3>Editar Trabajo {work?.codigo} </h3>
 					<form onSubmit={handleEditWork} className="work-edit-form">
 						<div className="grid-content">
 							<div>
@@ -375,21 +376,23 @@ export const GetWork = ({ match, history }) => {
 									</h5>
 								) : null}
 							</div>
-
-							<div>
-								<label>
-									Cliente
-									<span className="text-red-600">*</span>
-								</label>
+							{role == 'admin' && (
 								<div>
-									<input readOnly value={work?.cliente?.dni} />
+									<label>
+										Cliente
+										<span className="text-red-600">*</span>
+									</label>
+									<div>
+										<input readOnly value={work?.cliente?.dni} />
+									</div>
+									{errores.cliente ? (
+										<h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
+											Debe seleccionar un cliente
+										</h5>
+									) : null}
 								</div>
-								{errores.cliente ? (
-									<h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-										Debe seleccionar un cliente
-									</h5>
-								) : null}
-							</div>
+							)}
+
 							<div>
 								<label>
 									Estado
@@ -416,53 +419,62 @@ export const GetWork = ({ match, history }) => {
 									</h5>
 								) : null}
 							</div>
-							<div>
-								<label>
-									Emei
-									<span className="text-red-600">*</span>
-								</label>
-								<input
-									onChange={handleInputChange}
-									value={emei}
-									type="number"
-									name="emei"
-								/>
-								{/* {errores.emei ? (
+							{role == 'admin' && (
+								<div>
+									<label>
+										Emei
+										<span className="text-red-600">*</span>
+									</label>
+									<input
+										onChange={handleInputChange}
+										value={emei}
+										type="number"
+										name="emei"
+									/>
+									{/* {errores.emei ? (
 									<h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
 										El emei es obligatoria
 									</h5>
 								) : null} */}
-							</div>
-							<div>
-								<label>recargo</label>
-								<input
-									value={recargo}
-									onChange={handleInputChange}
-									type="number"
-									name="recargo"
-								/>
-							</div>
-							<div>
-								<label>
-									precio
-									{/* <span className="text-red-600">*</span> */}
-								</label>
-								<input
-									value={precio}
-									onChange={handleInputChange}
-									type="number"
-									name="precio"
-								/>
-							</div>
-							<div>
-								<label>descuento</label>
-								<input
-									onChange={handleInputChange}
-									type="number"
-									name="descuento"
-									value={descuento}
-								/>
-							</div>
+								</div>
+							)}
+							{role == 'admin' && (
+								<div>
+									<label>recargo</label>
+									<input
+										value={recargo}
+										onChange={handleInputChange}
+										type="number"
+										name="recargo"
+									/>
+								</div>
+							)}
+							{role == 'admin' && (
+								<div>
+									<label>
+										precio
+										{/* <span className="text-red-600">*</span> */}
+									</label>
+									<input
+										value={precio}
+										onChange={handleInputChange}
+										type="number"
+										name="precio"
+									/>
+								</div>
+							)}
+
+							{role == 'admin' && (
+								<div>
+									<label>descuento</label>
+									<input
+										onChange={handleInputChange}
+										type="number"
+										name="descuento"
+										value={descuento}
+									/>
+								</div>
+							)}
 						</div>
 						<div>
 							<label>

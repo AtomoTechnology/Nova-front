@@ -3,7 +3,7 @@
 }
 
 .navbar {
-	background-color: darken($color: $background-primary, $amount: 5);
+	background-color: darken($color: $background-primary, $amount: 15);
 	// background-color: $color-primary;
 	//   overflow-y: scroll;
 	scroll-behavior: smooth;
@@ -54,11 +54,55 @@
 		height: 100%;
 		.navegation {
 			display: flex;
-			justify-content: center;
+			flex-direction: column;
+			justify-content: space-between;
 			align-items: center;
-			overflow: hidden;
+			overflow-y: auto;
 			height: 100%;
+			overflow-x: hidden;
 			width: 100%;
+			&-header {
+				display: flex;
+				// justify-content: space-between;
+				align-items: center;
+				width: 100%;
+				// background-color: #fff;
+				// margin: auto;
+				i {
+					min-width: 80px;
+					font-size: 20px;
+					color: #fff;
+					text-align: center;
+					line-height: 60px;
+					transition: 500ms;
+					height: 60px;
+					cursor: pointer;
+				}
+				.img {
+					cursor: pointer;
+					text-align: left;
+					// margin-right: 1rem;
+					// padding: 0.3rem;
+					// width: 30px;
+					// height: 30px;
+					// border-radius: 50%;
+					gap: 10px;
+					box-shadow: $shadow;
+					background-color: darken($color: $background-primary, $amount: 10);
+
+					color: #fff;
+					display: flex;
+					justify-content: space-around;
+					// margin-left: 10px;
+					align-items: center;
+					padding: 4px;
+					// padding: 0.7rem;
+					img {
+						// width: 100%;
+						// padding: 10px;
+					}
+				}
+			}
 		}
 		.toggleMenu {
 			position: absolute;
@@ -88,7 +132,8 @@
 			}
 		}
 	}
-	ul {
+	ul,
+	.navegation-footer {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -235,6 +280,7 @@
 #btn-open-menu-mobile {
 	display: none;
 }
+
 // content header
 .content-header {
 	display: flex;
@@ -242,7 +288,7 @@
 	align-items: center;
 	width: 80%;
 	padding: 0px 0px;
-	background-color: $gray;
+	background-color: $background-primary;
 	position: fixed;
 	transition: 500ms;
 	z-index: 10;
@@ -261,7 +307,7 @@
 			padding: 0px 13px;
 			cursor: pointer;
 			span {
-				color: $color-primary;
+				color: #fff;
 				text-transform: capitalize;
 				font-size: 16px;
 			}
@@ -284,7 +330,7 @@
 			right: 5px;
 			top: 50px;
 			// border-radius: 6px;
-			z-index: 2;
+			z-index: 2000;
 			// padding: 10px;
 			&.active-mobile {
 				visibility: visible;

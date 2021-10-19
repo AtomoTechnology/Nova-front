@@ -110,7 +110,7 @@
 		}
 	}
 	&__section-recent-works {
-		padding: 10px;
+		// padding: 10px;
 	}
 }
 
@@ -173,3 +173,63 @@
 // 	display: grid;
 // 	grid-template-rows: repeat(auto-fit, minmax(250px, 1fr));
 // }
+.avisos,
+.confirmados {
+	background: white;
+	padding: 10px;
+	display: flex;
+	position: relative;
+	justify-content: space-between;
+	align-items: center;
+	align-content: center;
+	justify-items: center;
+	gap: 1rem;
+	/* overflow-x: scroll; */
+	overflow: hidden;
+	/* box-shadow: 1px 2px 10px rgb(0, 0, 0, 0.4); */
+	scroll-behavior: smooth;
+}
+.btn-left-carrousel,
+.btn-right-carrousel {
+	/* border: 1px solid red; */
+	display: flex;
+	padding: 0 !important;
+	margin: 0;
+	justify-content: center;
+	align-items: center;
+	justify-items: center;
+	align-content: center;
+	background: rgb(255, 255, 255);
+	color: $background-primary;
+	position: sticky;
+	box-shadow: $shadow;
+	cursor: pointer;
+	transition: 200ms;
+	z-index: 10;
+	max-width: 50px;
+	max-height: 50px;
+}
+.btn-left-carrousel:hover,
+.btn-right-carrousel:hover {
+	background-color: $background-primary;
+	i {
+		color: #fff;
+	}
+}
+.btn-left-carrousel i,
+.btn-right-carrousel i {
+	height: 50px;
+	width: 50px;
+	color: $background-primary;
+	font-size: 30px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.btn-left-carrousel {
+	left: 0.3rem;
+}
+.btn-right-carrousel {
+	right: 0.3rem;
+}

@@ -5,11 +5,10 @@ import { useSelector } from 'react-redux';
 import workFakeFoto from '../../templatePics/bg.jpg';
 import userLogo from '../../templatePics/userLogo.png';
 
-export const WorkState = ({ work }) => {
-	let ahora = moment(moment().format('YYYY-MM-DD'));
+export const WorkWithOut = ({ work }) => {
 	const { role } = useSelector((state) => state.auth);
 	let color = '';
-	switch (work?.state[work?.state.length - 1].nombre) {
+	switch (work.estado.name) {
 		case 'Revision':
 			color = 'red-700';
 			break;
@@ -27,65 +26,39 @@ export const WorkState = ({ work }) => {
 			break;
 	}
 	return (
-		<Link to={`/works/${work.work._id}`} className="work work-state">
-			{/* {work?.work.images.length > 0 ? (
-        <img
-          style={{
-            // width: 100,
-            height: 150,
-          }}
-          className="rounded-t"
-          src={`/assets/img/works/${work?.work.images[0]?.fileName}`}
-        />
-      ) : (
-        <img
-          style={{
-            // width: 100,
-            height: 150,
-          }}
-          className="rounded-t"
-          src={workFakeFoto}
-        />
-      )} */}
-
+		<Link to={`/works/${work._id}`} className="work">
 			<div className="title p-1">
 				<span className={'capitalize text-' + color}>
-					{work?.work.marca + '   ' + work?.work.modelo}
+					{work?.marca + '   ' + work?.modelo}
 				</span>
 			</div>
-			<div className="observaciones p-1">
+			{/* <div className="observaciones p-1">
 				<span>
-					{work?.work.observaciones.slice(0, 100)}{' '}
-					{work?.work.observaciones.length > 100 ? '...' : null}
+					{work?.observaciones.slice(0, 100)}{' '}
+					{work?.observaciones.length > 100 ? '...' : null}
 				</span>
+			</div> */}
+			<div className="p-1">
+				{' '}
+				<p className="text-gray-700">{work?.codigo}</p>
 			</div>
 			<div className="p-1">
 				{' '}
 				<p className="text-gray-300">
-					{'Hace ' +
-						ahora.diff(
-							moment(
-								moment(work.state[work.state.length - 1].fecha).format(
-									'YYYY-MM-DD'
-								)
-							),
-							'days'
-						) +
-						' Dias'}
+					{moment(work?.fechaInicio).format('DD-MM-yyyy')}
 				</p>
-				<p>{work.work.codigo}</p>
 			</div>
 			<div className="estado p-1 flex justify-between items-center">
-				<span className={`rounded-sm bg-${color} p-1`}>
-					{work?.state[work?.state.length - 1].nombre}
+				<span className={`rounded-sm text-white bg-${color} p-1`}>
+					{work?.estado.name}
 				</span>
 				<i className={' fas fa-mobile-alt mr-4 text-' + color}></i>
 			</div>
 			<div className="cliente-precio flex justify-between bg-gray-200 rounded-b p-1 items-center gap-2">
-				{work?.work.cliente?.pathImg ? (
+				{work?.cliente?.pathImg ? (
 					<img
 						className="rounded-full w-8 border-1 border-pink-500 h-8"
-						src={`/assets/img/client/${work?.work.cliente?.pathImg}`}
+						src={`/assets/img/client/${work?.cliente?.pathImg}`}
 					/>
 				) : (
 					<img
@@ -93,12 +66,13 @@ export const WorkState = ({ work }) => {
 						src={userLogo}
 					/>
 				)}
+
 				<h3 className="capitalize font-serif">
-					{work?.work.cliente?.name?.slice(0, 13)}...
+					{work?.cliente?.name?.slice(0, 10)}...
 				</h3>
 				{role == 'admin' && (
 					<span className={'work-precio text-' + color}>
-						{' $ ' + work?.work.total.toFixed(2)}
+						{'$' + work?.total.toFixed(2)}
 					</span>
 				)}
 			</div>
