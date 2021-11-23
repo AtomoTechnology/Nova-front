@@ -4,7 +4,7 @@
 	.search-box-all-works {
 		position: sticky;
 		top: 3rem;
-		z-index: 1;
+		z-index: 2;
 		background-color: $background-primary;
 		border-top: 2px solid white;
 	}
@@ -97,6 +97,26 @@
 			border-bottom: 0.5px solid #f7e9e9;
 		}
 	}
+	.borrar-trabajo {
+		display: none;
+		position: absolute;
+		right: 10px;
+		top: 5px;
+		background: red;
+		width: 40px;
+		height: 40px;
+		text-align: center;
+		// display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 50px;
+		color: #f9fafb;
+		font-size: 26px;
+		box-shadow: 1px 2px 5px #1f2937, -1px -2px 5px #1f2937;
+		z-index: 1;
+		cursor: pointer;
+		transition: 500ms;
+	}
 	overflow: hidden;
 
 	display: flex;
@@ -121,6 +141,12 @@
 			transform: scale(1.04);
 		}
 		box-shadow: 2px 2px 18px rgba(148, 146, 146, 0.9);
+		.borrar-trabajo {
+			display: flex;
+		}
+		a {
+			text-decoration: underline;
+		}
 	}
 	.precio {
 		padding: 10px;
@@ -172,17 +198,17 @@
 		height: 100px;
 	}
 	a {
-		text-decoration: underline;
-		text-align: center;
-		color: white;
-		text-transform: uppercase;
-		font-weight: bold;
-		width: 100%;
-		background-color: $color-primary;
-		&:hover {
-			background-color: darken($color: $color-primary, $amount: 10);
-		}
-		padding: 10px 0px;
+		// text-decoration: underline;
+		// text-align: center;
+		// color: white;
+		// text-transform: uppercase;
+		// font-weight: bold;
+		// width: 100%;
+		// // background-color: $color-primary;
+		// &:hover {
+		// 	background-color: darken($color: $color-primary, $amount: 10);
+		// }
+		// padding: 10px 0px;
 	}
 }
 .work-entregados {
@@ -528,4 +554,60 @@ th:last-child {
 	top: 3rem;
 	box-shadow: $shadow;
 	z-index: 1;
+}
+.modal-borrar-work {
+	position: absolute;
+	background: #02091c42;
+	z-index: 10;
+	display: none;
+	justify-content: center;
+	height: 100%;
+	align-items: center;
+	width: 100%;
+	.modal-box {
+		display: flex;
+		flex-direction: column;
+		background: white;
+		box-shadow: 1px 2px 5px white;
+		gap: 1rem;
+		width: 90%;
+		.header {
+			padding: 0.2rem;
+			background: red;
+			color: white;
+			text-align: center;
+		}
+		.btns {
+			display: flex;
+			gap: 0.6rem;
+			justify-content: center;
+			padding: 0.3rem;
+			align-items: center;
+			.borrar {
+				background-color: red;
+			}
+			.cancel {
+				background-color: #1f2937;
+			}
+		}
+	}
+}
+
+.modal-edit-work.active {
+	display: flex;
+}
+
+.update-state {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+	background: #f9fafb;
+	box-shadow: 1px 2px 5px #d1d5db;
+	margin: 1rem 0;
+	padding: 0.3rem;
+	overflow: auto;
+	button {
+		border-radius: 3px;
+	}
 }

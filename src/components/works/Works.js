@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { filterWorksState, getAllWorks } from '../../action/worksAction';
+import { getAllWorks } from '../../action/worksAction';
 import { useForm } from '../../hooks/useForm';
 import { SmallLoading } from '../SmallLoading';
 import { Work } from './Work';

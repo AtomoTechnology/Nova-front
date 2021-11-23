@@ -6,12 +6,11 @@ import { types } from '../types/types';
 
 import Swal from 'sweetalert2';
 import { convertDate } from '../helpers/convertDateWork';
-import axios from 'axios';
 const Toast = Swal.mixin({
 	toast: true,
 	position: 'bottom-end',
 	showConfirmButton: false,
-	timer: 2000,
+	timer: 4000,
 	timerProgressBar: true,
 	didOpen: (toast) => {
 		toast.addEventListener('mouseenter', Swal.stopTimer);
@@ -180,6 +179,28 @@ export const startEditWork = (work, workId) => {
 					'Hubo un error en la consula intente de nuevo',
 					'error'
 				);
+			}
+		} catch (error) {
+			Swal.fire('error', error, 'error');
+		}
+	};
+};
+
+export const DeleteWork = (workId) => {
+	console.log('Estoy...');
+	return async (dispatch) => {
+		try {
+			const resp = await fetchWithToken(`works/${workId}`, [], 'DELETE');
+			const body = await resp.json();
+			console.log(body);
+			if (body.ok) {
+				// dispatch(setWorkOne(body.updateWork));
+				Toast.fire({
+					icon: 'success',
+					title: 'Trabajo borrado con exito!!!',
+				});
+			} else {
+				Swal.fire('error', body.msg, 'error');
 			}
 		} catch (error) {
 			Swal.fire('error', error, 'error');

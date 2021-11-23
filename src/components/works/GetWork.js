@@ -254,8 +254,8 @@ export const GetWork = ({ match, history }) => {
 					)}
 
 					<div className="price-data rounded shadow bg-blue-400 p-1">
-						<p>Pecargo: {work?.recargo}</p>
 						<p>Precio: {work?.precio}</p>
+						<p>Pecargo: {work?.recargo}</p>
 						<p>descuento: {work?.descuento}</p>
 						<p>Total: {work?.total}</p>
 					</div>
@@ -333,6 +333,12 @@ export const GetWork = ({ match, history }) => {
 					</div>
 				</div>
 			)}
+			<div className="update-state">
+				<button className="bg-gray-400 hover:bg-gray-600">Presupuesto</button>
+				<button className="bg-yellow-500 hover:bg-yellow-600">Terminado</button>
+				<button className="bg-green-300 hover:bg-green-400">Reparación</button>
+				<button className="bg-green-500 hover:bg-green-700">Entregado</button>
+			</div>
 
 			<div id="editWork" className="overlay">
 				<a href="#" className="close-modal"></a>

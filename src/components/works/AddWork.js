@@ -110,11 +110,9 @@ export const AddWork = ({ history }) => {
 		if (verifyForm()) {
 			// console.log(values);
 			dispatch(createWork(values, linkImages));
-			// reset();
-			setTimeout(() => {
-				// window.location.replace('/works');
-				// history.push('/works');
-			}, 1000);
+			reset();
+			history.push('/works');
+			// window.location.replace('/works');
 		} else {
 			console.log(errores);
 			console.log(values);

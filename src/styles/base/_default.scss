@@ -8,15 +8,15 @@ body {
 	// font-family: 'Teko', sans-serif;
 	font-weight: 500;
 }
-a {
-	text-decoration: none;
-	cursor: pointer;
-	// color: rgb(189, 189, 189);
-	font-size: 16px;
-	&:hover {
-		text-decoration: none;
-	}
-}
+// a {
+// 	text-decoration: none;
+// 	cursor: pointer;
+// 	// color: rgb(189, 189, 189);
+// 	font-size: 16px;
+// 	&:hover {
+// 		text-decoration: none;
+// 	}
+// }
 button {
 	padding: 5px 10px;
 	outline: none;
@@ -113,8 +113,6 @@ select {
 	.msg {
 		font-size: 18px;
 		color: $background-primary;
-	}
-	.icons {
 	}
 	i {
 		width: 40px;

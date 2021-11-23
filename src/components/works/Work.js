@@ -1,11 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import workFakeFoto from '../../templatePics/bg.jpg';
 import userLogo from '../../templatePics/userLogo.png';
+import { DeleteWork } from '../../action/worksAction';
+import Swal from 'sweetalert2';
 
 export const Work = ({ work }) => {
+	const dispatch = useDispatch();
+	// console.log(history);
+
 	const { role } = useSelector((state) => state.auth);
 	let color = '';
 	switch (work.estado.name) {
@@ -25,8 +30,27 @@ export const Work = ({ work }) => {
 			color = 'green-700';
 			break;
 	}
+
+	const DeleteWorkById = () => {
+		Swal.fire({
+			title: 'Estás seguro ?',
+			text: 'Al aceptar se borrará el trabajo definitivamente!',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Si, Borrar!',
+			cancelButtonText: 'Cancelar',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				dispatch(DeleteWork(work?._id));
+			}
+		});
+	};
+
 	return (
-		<Link to={`/works/${work._id}`} className="work">
+		<div className="work">
+			<i onClick={DeleteWorkById} class="fas fa-trash borrar-trabajo"></i>
 			{work?.images.length > 0 ? (
 				work?.images[0].url ? (
 					<img
@@ -55,12 +79,12 @@ export const Work = ({ work }) => {
 				/>
 			)}
 
-			<div className="title p-1">
+			<Link to={`/works/${work._id}`} className="title p-1">
 				<span className={'capitalize text-' + color}>
 					{work?.marca + ' - ' + work?.modelo}
 					{work?.tieneContrasena && <i class="fas fa-lock work-lock"></i>}
 				</span>
-			</div>
+			</Link>
 			<div className="observaciones p-1">
 				<span>
 					{work?.observaciones.slice(0, 100)}{' '}
@@ -105,6 +129,6 @@ export const Work = ({ work }) => {
 					</span>
 				)}
 			</div>
-		</Link>
+		</div>
 	);
 };

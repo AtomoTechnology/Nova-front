@@ -4,7 +4,6 @@ import {
 } from '../helpers/fetchWithOutToken';
 import { types } from '../types/types';
 import Swal from 'sweetalert2';
-import axios from 'axios';
 
 const Toast = Swal.mixin({
 	toast: true,

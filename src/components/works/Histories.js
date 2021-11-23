@@ -315,6 +315,15 @@ export const Histories = () => {
 					<div onClick={toggleGastos} className="gastos-header">
 						<span>Gastos</span>
 						<i class="fas fa-angle-double-down"></i>
+						<div
+							onClick={openModalAddOutgoing}
+							className="add-gastos-flotante cursor-pointer"
+						>
+							<div to="#">
+								<i class="fas fa-plus-circle"></i>
+								<span className="agregar-gasto">Agregar Gastos</span>
+							</div>
+						</div>
 					</div>
 					<div className="gastos">
 						{gastos.map((gasto) => (
@@ -328,15 +337,6 @@ export const Histories = () => {
 					</div>
 				</div>
 			)}
-			<div
-				onClick={openModalAddOutgoing}
-				className="add-gastos-flotante cursor-pointer"
-			>
-				<div to="#">
-					<i class="fas fa-plus-circle"></i>
-					<span className="agregar-gasto">Agregar Gastos</span>
-				</div>
-			</div>
 		</div>
 	);
 };
