@@ -6,6 +6,7 @@ import workFakeFoto from '../../templatePics/bg.jpg';
 import userLogo from '../../templatePics/userLogo.png';
 
 export const WorkState = ({ work }) => {
+	console.log(work);
 	let ahora = moment(moment().format('YYYY-MM-DD'));
 	const { role } = useSelector((state) => state.auth);
 	let color = '';
@@ -27,7 +28,7 @@ export const WorkState = ({ work }) => {
 			break;
 	}
 	return (
-		<Link to={`/works/${work.work._id}`} className="work work-state">
+		<Link to={`/works/${work?.work?._id}`} className="work work-state">
 			{/* {work?.work.images.length > 0 ? (
         <img
           style={{
@@ -50,13 +51,13 @@ export const WorkState = ({ work }) => {
 
 			<div className="title p-1">
 				<span className={'capitalize text-' + color}>
-					{work?.work.marca + '   ' + work?.work.modelo}
+					{work?.work?.marca + '   ' + work?.work?.modelo}
 				</span>
 			</div>
 			<div className="observaciones p-1">
 				<span>
-					{work?.work.observaciones.slice(0, 100)}{' '}
-					{work?.work.observaciones.length > 100 ? '...' : null}
+					{work?.work?.observaciones.slice(0, 100)}{' '}
+					{work?.work?.observaciones.length > 100 ? '...' : null}
 				</span>
 			</div>
 			<div className="p-1">
@@ -65,7 +66,7 @@ export const WorkState = ({ work }) => {
 					{'Hace ' +
 						ahora.diff(
 							moment(
-								moment(work.state[work.state.length - 1].fecha).format(
+								moment(work?.state[work?.state.length - 1].fecha).format(
 									'YYYY-MM-DD'
 								)
 							),
@@ -73,7 +74,7 @@ export const WorkState = ({ work }) => {
 						) +
 						' Dias'}
 				</p>
-				<p>{work.work.codigo}</p>
+				<p>{work?.work?.codigo}</p>
 			</div>
 			<div className="estado p-1 flex justify-between items-center">
 				<span className={`rounded-sm bg-${color} p-1`}>
@@ -82,10 +83,10 @@ export const WorkState = ({ work }) => {
 				<i className={' fas fa-mobile-alt mr-4 text-' + color}></i>
 			</div>
 			<div className="cliente-precio flex justify-between bg-gray-200 rounded-b p-1 items-center gap-2">
-				{work?.work.cliente?.pathImg ? (
+				{work?.work?.cliente?.pathImg ? (
 					<img
 						className="rounded-full w-8 border-1 border-pink-500 h-8"
-						src={`/assets/img/client/${work?.work.cliente?.pathImg}`}
+						src={`/assets/img/client/${work?.work?.cliente?.pathImg}`}
 					/>
 				) : (
 					<img
@@ -94,11 +95,11 @@ export const WorkState = ({ work }) => {
 					/>
 				)}
 				<h3 className="capitalize font-serif">
-					{work?.work.cliente?.name?.slice(0, 13)}...
+					{work?.work?.cliente?.name?.slice(0, 13)}...
 				</h3>
 				{role == 'admin' && (
 					<span className={'work-precio text-' + color}>
-						{' $ ' + work?.work.total.toFixed(2)}
+						{' $ ' + work?.work?.total.toFixed(2)}
 					</span>
 				)}
 			</div>
