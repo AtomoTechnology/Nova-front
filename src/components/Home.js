@@ -137,7 +137,7 @@ export const Home = () => {
 								</button>
 
 								{workWithoutChangeState.map((wk) => (
-									<WorkState key={wk._id} work={wk} />
+									<WorkState key={wk?._id} work={wk} />
 								))}
 								<button
 									onClick={GoToTheRight}
@@ -175,7 +175,7 @@ export const Home = () => {
 								</button>
 
 								{confirmWorks.map((wk) => (
-									<WorkWithOut key={wk._id} work={wk} />
+									<WorkWithOut key={wk?._id} work={wk} />
 								))}
 								<button
 									onClick={GoToTheRight}
