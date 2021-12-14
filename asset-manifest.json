@@ -1,28 +1,29 @@
 {
   "files": {
-    "main.css": "/Nova-front/static/css/main.fdcbd13d.chunk.css",
-    "main.js": "/Nova-front/static/js/main.d3ff5489.chunk.js",
-    "main.js.map": "/Nova-front/static/js/main.d3ff5489.chunk.js.map",
+    "main.css": "/Nova-front/static/css/main.2b6ec7e6.chunk.css",
+    "main.js": "/Nova-front/static/js/main.3509b70e.chunk.js",
+    "main.js.map": "/Nova-front/static/js/main.3509b70e.chunk.js.map",
     "runtime-main.js": "/Nova-front/static/js/runtime-main.fb87ccd6.js",
     "runtime-main.js.map": "/Nova-front/static/js/runtime-main.fb87ccd6.js.map",
     "static/css/2.97a5650e.chunk.css": "/Nova-front/static/css/2.97a5650e.chunk.css",
-    "static/js/2.366630ac.chunk.js": "/Nova-front/static/js/2.366630ac.chunk.js",
-    "static/js/2.366630ac.chunk.js.map": "/Nova-front/static/js/2.366630ac.chunk.js.map",
+    "static/js/2.c4a7612c.chunk.js": "/Nova-front/static/js/2.c4a7612c.chunk.js",
+    "static/js/2.c4a7612c.chunk.js.map": "/Nova-front/static/js/2.c4a7612c.chunk.js.map",
     "index.html": "/Nova-front/index.html",
     "static/css/2.97a5650e.chunk.css.map": "/Nova-front/static/css/2.97a5650e.chunk.css.map",
-    "static/css/main.fdcbd13d.chunk.css.map": "/Nova-front/static/css/main.fdcbd13d.chunk.css.map",
-    "static/js/2.366630ac.chunk.js.LICENSE.txt": "/Nova-front/static/js/2.366630ac.chunk.js.LICENSE.txt",
+    "static/css/main.2b6ec7e6.chunk.css.map": "/Nova-front/static/css/main.2b6ec7e6.chunk.css.map",
+    "static/js/2.c4a7612c.chunk.js.LICENSE.txt": "/Nova-front/static/js/2.c4a7612c.chunk.js.LICENSE.txt",
     "static/media/3.37f87e4b.png": "/Nova-front/static/media/3.37f87e4b.png",
     "static/media/adminLogo.4d8edb82.png": "/Nova-front/static/media/adminLogo.4d8edb82.png",
     "static/media/bg.02bee48a.jpg": "/Nova-front/static/media/bg.02bee48a.jpg",
     "static/media/logo03.57274dd7.png": "/Nova-front/static/media/logo03.57274dd7.png",
+    "static/media/logoNovaWhite.80a4b1d0.png": "/Nova-front/static/media/logoNovaWhite.80a4b1d0.png",
     "static/media/userLogo.4bac9738.png": "/Nova-front/static/media/userLogo.4bac9738.png"
   },
   "entrypoints": [
     "static/js/runtime-main.fb87ccd6.js",
     "static/css/2.97a5650e.chunk.css",
-    "static/js/2.366630ac.chunk.js",
-    "static/css/main.fdcbd13d.chunk.css",
-    "static/js/main.d3ff5489.chunk.js"
+    "static/js/2.c4a7612c.chunk.js",
+    "static/css/main.2b6ec7e6.chunk.css",
+    "static/js/main.3509b70e.chunk.js"
   ]
 }
