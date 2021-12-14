@@ -4,8 +4,8 @@ import {
 } from '../helpers/fetchWithOutToken';
 import { types } from '../types/types';
 
-import Swal from 'sweetalert2';
 import { convertDate } from '../helpers/convertDateWork';
+import Swal from 'sweetalert2';
 const Toast = Swal.mixin({
 	toast: true,
 	position: 'bottom-end',
@@ -166,6 +166,7 @@ export const startEditWork = (work, workId) => {
 			const resp = await fetchWithToken(`works/${workId}`, work, 'PUT');
 			const body = await resp.json();
 			//   const worksEditOk = convertDate(body.updateWork);
+			console.log(body);
 			console.log(body.updateWork);
 			if (body.ok) {
 				dispatch(setWorkOne(body.updateWork));

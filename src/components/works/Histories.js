@@ -1,7 +1,5 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Alert } from '../../helpers/Alert';
 import { fetchWithToken } from '../../helpers/fetchWithOutToken';
 import { useForm } from '../../hooks/useForm';
 import { SmallLoading } from '../SmallLoading';
@@ -29,6 +27,7 @@ export const Histories = () => {
 	const [loadingHistories, setLoadingHistories] = useState(true);
 	const [gastos, setGastos] = useState([]);
 	const [gastosFiltrados, setGastosFiltrados] = useState([]);
+	const [outGoingChange, setOutGoingChange] = useState(false);
 
 	const [values, handleInputChange, reset] = useForm({
 		description: '',
@@ -57,7 +56,7 @@ export const Histories = () => {
 	};
 	useEffect(() => {
 		getOutgoings();
-	}, []);
+	}, [outGoingChange]);
 
 	const handleStartDate = (e) => {
 		setStartDate(e.target.value);
@@ -274,13 +273,37 @@ export const Histories = () => {
 					<div onClick={toggleGastos} className="gastos-header">
 						<span>Gastos</span>
 						<i class="fas fa-angle-double-down"></i>
+						<div
+							onClick={openModalAddOutgoing}
+							className="add-gastos-flotante cursor-pointer"
+						>
+							<div to="#">
+								<i class="fas fa-plus-circle"></i>
+								<span className="agregar-gasto">Agregar Gastos</span>
+							</div>
+						</div>
 					</div>
 
-					<div className="gastos">
-						{gastosFiltrados.map((gasto) => (
-							<Gasto gasto={gasto} />
-						))}
-					</div>
+					<table className="shadow-md gastos">
+						<thead className="bg-red-300 p-3">
+							<tr>
+								<th>Fecha</th>
+								<th>Descripción</th>
+								<th>Monto</th>
+								<th>Borrar</th>
+							</tr>
+						</thead>
+						<tbody>
+							{gastosFiltrados.map((gasto) => (
+								<Gasto
+									key={gasto._id}
+									setOutGoingChange={setOutGoingChange}
+									outGoingChange={outGoingChange}
+									gasto={gasto}
+								/>
+							))}
+						</tbody>
+					</table>
 					<div className="flex sticky bottom-0 justify-between p-2 bg-green-300 mt-1">
 						<span>Ganancia : {' $ ' + total2} </span>
 						<span>Gastos : {' $ ' + gastostotal2} </span>
@@ -325,11 +348,26 @@ export const Histories = () => {
 							</div>
 						</div>
 					</div>
-					<div className="gastos">
-						{gastos.map((gasto) => (
-							<Gasto gasto={gasto} />
-						))}
-					</div>
+					<table className="shadow-md gastos">
+						<thead className="bg-red-300 p-3">
+							<tr>
+								<th>Fecha</th>
+								<th>Descripción</th>
+								<th>Monto</th>
+								<th>Borrar</th>
+							</tr>
+						</thead>
+						<tbody>
+							{gastos.map((gasto) => (
+								<Gasto
+									key={gasto._id}
+									setOutGoingChange={setOutGoingChange}
+									outGoingChange={outGoingChange}
+									gasto={gasto}
+								/>
+							))}
+						</tbody>
+					</table>
 					<div className="flex sticky bottom-0 justify-between p-2 bg-green-300 mt-1">
 						<span>Ganancia : {' $ ' + total1} </span>
 						<span>Gastos : {' $ ' + gastostotal1} </span>

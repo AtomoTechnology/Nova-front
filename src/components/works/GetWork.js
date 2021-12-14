@@ -434,7 +434,7 @@ export const GetWork = ({ match, history }) => {
 									<input
 										onChange={handleInputChange}
 										value={emei}
-										type="number"
+										type="text"
 										name="emei"
 									/>
 									{/* {errores.emei ? (
@@ -450,7 +450,7 @@ export const GetWork = ({ match, history }) => {
 									<input
 										value={recargo}
 										onChange={handleInputChange}
-										type="number"
+										type="text"
 										name="recargo"
 									/>
 								</div>
@@ -464,7 +464,7 @@ export const GetWork = ({ match, history }) => {
 									<input
 										value={precio}
 										onChange={handleInputChange}
-										type="number"
+										type="text"
 										name="precio"
 									/>
 								</div>
@@ -475,7 +475,7 @@ export const GetWork = ({ match, history }) => {
 									<label>descuento</label>
 									<input
 										onChange={handleInputChange}
-										type="number"
+										type="text"
 										name="descuento"
 										value={descuento}
 									/>

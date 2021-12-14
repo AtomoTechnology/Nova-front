@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	Link,
 	Redirect,
 } from 'react-router-dom';
 import { Register } from '../components/auth/Register';
@@ -13,16 +12,14 @@ import { NavbarLateral } from '../components/navbar/NavbarLateral';
 import { Orders } from '../components/orders/Orders';
 import { AddUser } from '../components/users/AddUser';
 import { GetUser } from '../components/users/GetUser';
-import { User } from '../components/users/User';
 import { Users } from '../components/users/Users';
 import { AddWork } from '../components/works/AddWork';
 import { GetWork } from '../components/works/GetWork';
-import { Work } from '../components/works/Work';
 import { Works } from '../components/works/Works';
-import moment from 'moment';
 import { Histories } from '../components/works/Histories';
-import { Alert } from '../helpers/Alert';
 import { Footer } from '../components/navbar/Footer';
+import { WorkEdit } from '../components/works/WorkEdit';
+import { News } from '../components/News';
 export default function Dashboard() {
 	// const [workStates, setWorkStates] = useState([]);
 
@@ -81,6 +78,8 @@ export default function Dashboard() {
 						<Route exact path="/works/:workId/" component={GetWork} />
 						<Route exact path="/orders" component={Orders} />
 						<Route exact path="/works/histories/all" component={Histories} />
+						<Route exact path="/work/edit/:id" component={WorkEdit} />
+						<Route exaxt path="/news" component={News} />
 
 						<Route exact path="/clients/:clientId" component={GetUser} />
 						<Route exact path="/client/add" component={AddUser} />

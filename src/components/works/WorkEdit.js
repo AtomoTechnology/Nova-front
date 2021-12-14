@@ -1,17 +1,25 @@
+import { moment } from 'moment';
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { createWork, getAllWorks } from '../../action/worksAction';
+import { fetchWithToken } from '../../helpers/fetchWithOutToken';
 import { useForm } from '../../hooks/useForm';
-import { startGettingAllClient } from '../../action/clientsAction';
-import { showMultiplesImg } from '../../helpers/CodeShowImg';
+import Swal from 'sweetalert2';
+import { getOneWork } from '../../action/worksAction';
+const Toast = Swal.mixin({
+	toast: true,
+	position: 'bottom-end',
+	showConfirmButton: false,
+	timer: 4000,
+	timerProgressBar: true,
+	didOpen: (toast) => {
+		toast.addEventListener('mouseenter', Swal.stopTimer);
+		toast.addEventListener('mouseleave', Swal.resumeTimer);
+	},
+});
 
-export const AddWork = ({ history }) => {
+export const WorkEdit = ({ match, history }) => {
 	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(startGettingAllClient());
-	}, [dispatch]);
-
+	// const [thework, setThework] = useState({});
 	const { clients } = useSelector((state) => state.clients);
 	const [errores, setErrores] = useState([]);
 	const [patronError, setPatronError] = useState(false);
@@ -20,36 +28,34 @@ export const AddWork = ({ history }) => {
 	const [tiene_Contrasena, setTieneContrasena] = useState(false);
 	const [es_patron, setEs_patron] = useState(false);
 	const [passwordPatron, setContraseña] = useState('');
-
 	const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-	const [numberImages, setNumberImages] = useState(0);
-	const [files, setFiles] = useState(null);
 	const [estados, setEstados] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [oneClientForm, setOneClientForm] = useState(null);
 	const [linkImages, setLinkImages] = useState(null);
-
+	// useEffect(() => {
+	// 	dispatch(startGettingAllClient());
+	// }, [dispatch]);
+	const workId = match.params.id;
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP_URL}state`)
-			.then((res) => res.json())
-			.then((data) => {
-				console.log(data);
-				setEstados(data.states);
-			});
-	}, [setEstados]);
+		dispatch(getOneWork(workId));
+	}, [dispatch, workId]);
+
+	const { work } = useSelector((state) => state.works);
+	console.log(work);
 	const [values, handleInputChange, reset] = useForm({
-		marca: '',
-		modelo: '',
-		emei: '',
-		estado: '',
-		precio: 0,
-		descuento: 0,
-		fachasEncontradas: '',
-		observaciones: '',
+		marca: work?.marca,
+		modelo: work?.modelo,
+		emei: work?.emei,
+		estado: work?.estado?.name,
+		precio: work?.precio,
+		descuento: work?.descuento,
+		fachasEncontradas: work?.fachasEncontradas,
+		observaciones: work?.observaciones,
 		descripcion: '',
 		recargo: 0,
 		cliente: '',
-		fechaInicio: moment().format('yyyy MM DD'),
+		// fechaInicio: moment().format('yyyy MM DD'),
 		fechaFin: null,
 		tieneContrasena: tiene_Contrasena,
 		esPatron: es_patron,
@@ -57,8 +63,6 @@ export const AddWork = ({ history }) => {
 		patron: '',
 		total: 0,
 	});
-
-	console.log(oneClientForm);
 	const {
 		marca,
 		modelo,
@@ -75,8 +79,7 @@ export const AddWork = ({ history }) => {
 		tieneContrasena,
 		contrasena,
 		patron,
-	} = values;
-
+	} = work;
 	const changeCheckPassword = (e) => {
 		if (e.target.checked) {
 			setCheckPassword(true);
@@ -109,10 +112,9 @@ export const AddWork = ({ history }) => {
 		setLoading(true);
 		if (verifyForm()) {
 			// console.log(values);
-			dispatch(createWork(values, linkImages));
+			// dispatch(createWork(values, linkImages));
 			reset();
-			// dispatch(getAllWorks());
-			history.replace('/works');
+			// history.push('/works');
 			// window.location.replace('/works');
 		} else {
 			console.log(errores);
@@ -178,37 +180,9 @@ export const AddWork = ({ history }) => {
 			return false;
 		}
 	};
-	let imgs = [];
-
-	// const imageChange = (e) => {
-	// 	setFiles(e.target.files);
-	// 	// for (let index = 0; index < e.target.files.length; index++) {
-	// 	//   imgs.push(index);
-	// 	// }
-
-	// 	let arrayImg = [];
-	// 	if (e.target.files) {
-	// 		for (let index = 0; index < e.target.files.length; index++) {
-	// 			console.log('images');
-
-	// 			var reader = new FileReader();
-
-	// 			reader.onload = (ev) => {
-	// 				let img = ev.target.result;
-	// 				arrayImg.push(img);
-	// 			};
-	// 			reader.readAsDataURL(e.target.files[index]);
-	// 		}
-	// 	}
-
-	// 	console.log('lenght ' + arrayImg.length);
-	// 	setLinkImages(arrayImg);
-	// 	showMultiplesImg(e.target.files);
-	// };
-
 	return (
 		<div className="work-add">
-			<h3>Agregar Trabajo</h3>
+			<h3>Editar Trabajo </h3>
 			<form
 				onSubmit={handleSubmitLogin}
 				encType="multipart/form-data"
@@ -223,7 +197,7 @@ export const AddWork = ({ history }) => {
 						</label>
 						<input
 							onChange={handleInputChange}
-							value={marca}
+							value={work?.marca}
 							type="text"
 							name="marca"
 							placeholder="ingresa la marca"
@@ -327,10 +301,10 @@ export const AddWork = ({ history }) => {
 						<input
 							onChange={handleInputChange}
 							value={emei}
-							type="text"
+							type="number"
 							name="emei"
-							// min={1}
-							// minLength={25}
+							min={1}
+							minLength={25}
 						/>
 						{/* {errores.emei ? (
 							<h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
@@ -343,7 +317,7 @@ export const AddWork = ({ history }) => {
 						<input
 							value={recargo}
 							onChange={handleInputChange}
-							type="text"
+							type="number"
 							name="recargo"
 							min={0}
 						/>
@@ -353,7 +327,7 @@ export const AddWork = ({ history }) => {
 						<input
 							value={precio}
 							onChange={handleInputChange}
-							type="text"
+							type="number"
 							name="precio"
 							min={0}
 						/>
@@ -362,7 +336,7 @@ export const AddWork = ({ history }) => {
 						<label>descuento</label>
 						<input
 							onChange={handleInputChange}
-							type="text"
+							type="number"
 							name="descuento"
 							value={descuento}
 							min={0}

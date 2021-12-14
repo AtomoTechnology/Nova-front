@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { startLogout } from '../../action/authAction';
 import NavaLogo from '../../templatePics/logo03.png';
+import NavaLogoWhite from '../../templatePics/logoNovaWhite.png';
 // import userLogo from "../../assets/img/userLogo.png";
 
 export const NavbarLateral = () => {
@@ -73,8 +74,8 @@ export const NavbarLateral = () => {
 					<div className="navegation-header">
 						<i onClick={manipulateInterface} class="fas fa-bars"></i>
 						<div className="img">
-							{/* <img src={NavaLogo} alt="Logo Nova" width="25" /> */}
-							<span>Nova Technology</span>
+							<img src={NavaLogoWhite} alt="Logo Nova" width="25" />
+							{/* <span>Nova Technology</span> */}
 						</div>
 					</div>
 					<ul>

@@ -14,12 +14,13 @@ export const Works = () => {
 	const [codigo, setCodigo] = useState('');
 	const [loadingWorks, setLoadingWorks] = useState(true);
 	const [result, setResult] = useState([]);
+	const [idChange, setIdChange] = useState(null);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(getAllWorks());
 		setLoadingWorks(false);
-	}, []);
+	}, [idChange, setIdChange]);
 
 	let { works } = useSelector((state) => state.works);
 
@@ -109,8 +110,22 @@ export const Works = () => {
 			) : (
 				<div className="works-grid p-1">
 					{result.length <= 0
-						? works.map((work) => <Work key={work._id} work={work} />)
-						: result.map((work) => <Work key={work._id} work={work} />)}
+						? works.map((work) => (
+								<Work
+									idChange={idChange}
+									setIdChange={setIdChange}
+									key={work._id}
+									work={work}
+								/>
+						  ))
+						: result.map((work) => (
+								<Work
+									idChange={idChange}
+									setIdChange={setIdChange}
+									key={work._id}
+									work={work}
+								/>
+						  ))}
 				</div>
 			)}
 		</div>

@@ -38,16 +38,16 @@
 }
 .gastos {
 	display: none;
-	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-	background: rgb(243, 243, 243);
-	padding: 5px;
-	justify-content: center;
-	justify-items: center;
-	align-items: center;
-	grid-gap: 0.3rem;
+	// grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	// background: rgb(243, 243, 243);
+	// padding: 5px;
+	// justify-content: center;
+	// justify-items: center;
+	// align-items: center;
+	// grid-gap: 0.3rem;
 	transition: 10s ease-in-out;
 	&.active {
-		display: grid;
+		display: table;
 	}
 }
 .gasto {

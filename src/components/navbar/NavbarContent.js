@@ -152,16 +152,29 @@ export const NavbarContent = () => {
 								<span className="title">Agregar Trabajo</span>
 							</Link>
 						</li>
-						<li className="menu-item link-lateral" onClick={activeLink}>
-							<span className="cartel">Historial de Trabajo</span>
+						{role === 'admin' && (
+							<li className="menu-item link-lateral" onClick={activeLink}>
+								<span className="cartel">Historial de Trabajo</span>
 
-							<Link to="/works/histories/all">
+								<Link to="/works/histories/all">
+									<span className="icon">
+										<i class="fas fa-history"></i>{' '}
+									</span>
+									<span className="title">Historial De Trabajo</span>
+								</Link>
+							</li>
+						)}
+
+						<li className="menu-item link-lateral" onClick={activeLink}>
+							<span className="cartel">Novedades</span>
+							<Link to="/news">
 								<span className="icon">
-									<i class="fas fa-history"></i>{' '}
+									<i class="fas fa-star-and-crescent"></i>{' '}
 								</span>
-								<span className="title">Historial De Trabajo</span>
+								<span className="title">Novedades</span>
 							</Link>
 						</li>
+
 						<li onClick={handleLogout} className="menu-item">
 							<span className="cartel">Cerrar Sesion</span>
 
