@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Nova-front/static/css/main.98912731.chunk.css",
-    "main.js": "/Nova-front/static/js/main.43733671.chunk.js",
-    "main.js.map": "/Nova-front/static/js/main.43733671.chunk.js.map",
+    "main.js": "/Nova-front/static/js/main.9ae67bd2.chunk.js",
+    "main.js.map": "/Nova-front/static/js/main.9ae67bd2.chunk.js.map",
     "runtime-main.js": "/Nova-front/static/js/runtime-main.fb87ccd6.js",
     "runtime-main.js.map": "/Nova-front/static/js/runtime-main.fb87ccd6.js.map",
     "static/js/2.3c531030.chunk.js": "/Nova-front/static/js/2.3c531030.chunk.js",
@@ -21,6 +21,6 @@
     "static/js/runtime-main.fb87ccd6.js",
     "static/js/2.3c531030.chunk.js",
     "static/css/main.98912731.chunk.css",
-    "static/js/main.43733671.chunk.js"
+    "static/js/main.9ae67bd2.chunk.js"
   ]
 }
