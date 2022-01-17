@@ -4,6 +4,9 @@ const initialState = {
   works: [],
   worksState: [],
   work: null,
+  total: 0,
+  page: 1,
+  results: 0,
 };
 
 export const workReducer = (state = initialState, action) => {
@@ -11,7 +14,10 @@ export const workReducer = (state = initialState, action) => {
     case types.getAllWorks:
       return {
         ...state,
-        works: action.payload,
+        works: action.payload.works,
+        total: action.payload.total,
+        page: action.payload.page,
+        results: action.payload.results,
       };
     case types.setOneWork:
       return {

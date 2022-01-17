@@ -22,7 +22,7 @@
   align-items: center;
 }
 .sk-circle .sk-child:before {
-  content: "";
+  content: '';
   display: block;
   margin: 0 auto;
   width: 15%;
@@ -158,16 +158,29 @@
   }
 }
 
-.spinner {
-  margin: 100px auto 0;
+.spinner-big {
+  margin: 50px auto 0;
   width: 70px;
+}
+.spinner-small {
+  margin: 1px auto 0;
+  width: 30px;
+}
+.spinner-big > div {
+  width: 18px;
+  height: 18px;
+}
+.spinner-small > div {
+  width: 10px;
+  height: 10px;
+}
+.spinner {
   text-align: center;
 }
 
 .spinner > div {
-  width: 18px;
-  height: 18px;
-  background-color: #333;
+  // background-color: #333;
+  background-color: $color-primary;
 
   border-radius: 100%;
   display: inline-block;

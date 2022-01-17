@@ -1,7 +1,8 @@
-import { types } from "../types/types";
+import { types } from '../types/types';
 
 const initialState = {
   checking: true,
+  updatePasswordError: '',
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -20,6 +21,11 @@ export const authReducer = (state = initialState, action) => {
     case types.logout:
       return {
         checking: false,
+      };
+    case types.updatePassword:
+      return {
+        ...state,
+        updatePasswordError: action.payload,
       };
     default:
       return state;
