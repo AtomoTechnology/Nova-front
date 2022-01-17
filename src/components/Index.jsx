@@ -2,7 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export const Index = () => {
-  return (
+
+  // FIXME: do something there TODO: 
+   return (
     <div className="taller-principal flex justify-center items-center gap-4 flex-col bg-gray-300 h-screen w-full">
       <span>
         ¿Ya tiene una cuenta ?

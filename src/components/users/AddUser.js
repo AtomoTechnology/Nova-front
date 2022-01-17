@@ -24,7 +24,7 @@ export const AddUser = ({ history }) => {
     password: '',
     passwordConfirm: '',
     email: '',
-    role: '',
+    role: 'user',
   });
 
   let { name, dni, phone1, phone2, direction, nota, password, passwordConfirm, email, role } =

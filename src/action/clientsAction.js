@@ -46,7 +46,7 @@ export const startGettingOneClient = (clientId) => {
 export const startEditClient = (data, clientId) => {
   return async (dispatch) => {
     try {
-      const resp = await fetchWithToken(`users/updateMe`, data, 'PATCH');
+      const resp = await fetchWithToken(`users/${clientId}`, data, 'PATCH');
       const body = await resp.json();
       //   const worksEditOk = convertDate(body.updateWork);
       if (body.status === types.statusSuccess) {
@@ -95,6 +95,21 @@ export const startDeleteClient = (clientId) => {
 export const startCreatingClient = (user, file) => {
   return async (dispatch) => {
     try {
+      console.log(user);
+      // return;
+      const resp = await fetchWithOutToken('users/signup', user, 'POST');
+      const clientCreated = await resp.json();
+      if (clientCreated.status === types.statusSuccess) {
+        Toast.fire({
+          icon: 'success',
+          title: 'Usuario creado con existo.',
+        });
+      } else {
+        Toast.fire({
+          icon: 'error',
+          title: clientCreated.message,
+        });
+      }
       // console.log(client);
       // console.log(file)
       // const resp = await fetchWithToken("clients", client, "POST");
@@ -102,52 +117,39 @@ export const startCreatingClient = (user, file) => {
       // const clientCreated = await resp.json();
       // console.log(clientCreated);
       // if (clientCreated.ok) {
-      if (file) {
-        const res = await fetchWithOutToken('clients/upload', { file }, 'POST');
-        // const formData = new FormData();
-        // formData.append("file", file);
-        // const token = localStorage.getItem("token") || "";
-        // const resp1 = await axios.post(
-        //   `${process.env.REACT_APP_URL}clients/uploadFile`,
-        //   formData,
-        //   {
-        //     Headers: {
-        //       "Content-Type": "multipart/form-data",
-        //       // "x-token": token,
-        //     },
-        //   }
-        // );
-        const body = await res.json();
-        console.log(body);
-        if (body.ok) {
-          user.pathImg = body.url;
-          console.log(user);
-          const resp = await fetchWithToken('clients', user, 'POST');
-          const clientCreated = await resp.json();
-          console.log(clientCreated);
-          if (clientCreated.ok) {
-            Toast.fire({
-              icon: 'success',
-              title: clientCreated.msg,
-            });
-          }
-        }
-      } else {
-        const resp = await fetchWithToken('users/signup', user, 'POST');
-        const clientCreated = await resp.json();
-        console.log(clientCreated);
-        if (clientCreated.status === types.statusSuccess) {
-          Toast.fire({
-            icon: 'success',
-            title: 'Usuario creado con existo.',
-          });
-        } else {
-          Toast.fire({
-            icon: 'error',
-            title: clientCreated.message,
-          });
-        }
-      }
+      // if (file) {
+      //   // const res = await fetchWithOutToken('clients/upload', { file }, 'POST');
+      //   // const formData = new FormData();
+      //   // formData.append("file", file);
+      //   // const token = localStorage.getItem("token") || "";
+      //   // const resp1 = await axios.post(
+      //   //   `${process.env.REACT_APP_URL}clients/uploadFile`,
+      //   //   formData,
+      //   //   {
+      //   //     Headers: {
+      //   //       "Content-Type": "multipart/form-data",
+      //   //       // "x-token": token,
+      //   //     },
+      //   //   }
+      //   // );
+      //   // const body = await res.json();
+      //   // console.log(body);
+      //   // if (body.ok) {
+      //   //   user.pathImg = body.url;
+      //   //   console.log(user);
+      //   //   const resp = await fetchWithToken('clients', user, 'POST');
+      //   //   const clientCreated = await resp.json();
+      //   //   console.log(clientCreated);
+      //   //   if (clientCreated.ok) {
+      //   //     Toast.fire({
+      //   //       icon: 'success',
+      //   //       title: clientCreated.msg,
+      //   //     });
+      //   //   }
+      //   // }
+      // } else {
+
+      // }
 
       // }
     } catch (error) {

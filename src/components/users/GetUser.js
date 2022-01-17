@@ -37,7 +37,7 @@ export const GetUser = ({ match, history }) => {
     phone2: client?.phone2,
     direction: client?.direction,
     nota: client?.nota,
-    email: client?.email,
+    email: client?.email ? client.email : '',
   });
 
   useEffect(() => {
@@ -179,6 +179,7 @@ export const GetUser = ({ match, history }) => {
           <div className="user-info">
             <h4>Nombre : {client?.name}</h4>
             <h4>DNI : {client?.dni}</h4>
+            <h4>DNI : {client?.email ? client?.email : '---'}</h4>
             <h4>Dirección : {client?.direction ? client.direction : '---'}</h4>
             <h4>Tel 01 : {client?.phone1}</h4>
             <h4>Tel 02 : {client?.phone2 ? client.phone2 : '---'}</h4>
