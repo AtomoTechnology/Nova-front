@@ -21,11 +21,11 @@ export const Gasto = ({ gasto, setOutGoingChange, outGoingChange }) => {
     const res = await fetchWithToken(`outgoings/${gasto._id}`, [], 'DELETE');
     const body = await res.json();
     // console.log(body);
-    if (body.ok) {
+    if (body.status === 'success') {
       setOutGoingChange(!outGoingChange);
       Toast.fire({
         icon: 'success',
-        title: body.msg,
+        title: 'Gasto borrado con exito',
       });
     }
   };

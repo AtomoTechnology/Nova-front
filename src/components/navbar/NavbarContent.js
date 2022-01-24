@@ -56,7 +56,7 @@ export const NavbarContent = () => {
             <img src={userLogo} alt="logo user commun" />
           )}
 
-          <span className="user-name">{username}</span>
+          <span className="user-name">{username.split(' ')[0]}</span>
         </div>
         <div className="menu-user">
           <ul>

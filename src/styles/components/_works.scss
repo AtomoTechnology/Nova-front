@@ -138,6 +138,23 @@
   }
 }
 
+.work-client {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  color: inherit;
+  transition: 300ms ease-in-out;
+  box-shadow: 1px 1px 10px rgb(0 0 0 / 8%);
+  border-radius: 2px;
+  padding: 5px;
+  border: 0.3px solid rgba(0, 0, 0, 0.082);
+  overflow: hidden;
+  i {
+    margin: 0px 5px;
+  }
+}
 .work {
   display: flex;
   justify-content: space-between;
@@ -458,6 +475,9 @@ button {
   }
 }
 @media (max-width: 500px) {
+  .works-grid-client {
+    grid-template-columns: 1fr;
+  }
   .works-grid {
     grid-template-columns: 1fr;
   }

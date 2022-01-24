@@ -24,7 +24,7 @@ export default function AppRoute() {
   }
   return (
     <Router>
-      <div>
+      <>
         <Switch>
           <PublicRoute isLogged={!!uid} component={Index} exact path="/index" />
           <PublicRoute isLogged={!!uid} exact path="/login" component={Login} />
@@ -32,7 +32,7 @@ export default function AppRoute() {
           <PrivateRoute isLogged={!!uid} path="/" refresh={true} component={Dashboard} />
           <Redirect to="/index" />
         </Switch>
-      </div>
+      </>
     </Router>
   );
 }

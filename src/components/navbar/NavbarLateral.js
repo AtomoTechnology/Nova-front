@@ -8,15 +8,24 @@ export const NavbarLateral = () => {
   const { role } = useSelector((state) => state.auth);
 
   const activeLink = (e) => {
-    console.log('hereee.');
-    const links = document.querySelectorAll('.link-lateral');
-    // links.classList.toggle('active');
-    // links.classList.add('hidden');
-    links.forEach((el) => {
-      el.classList.toggle('active');
-      // console.log(el.classList);
-    });
-    console.log(links, links.length);
+    // const links = document.querySelectorAll('.');
+    // let marker = document.getElementById('marker');
+    // function moveIndicator(e) {
+    //   marker.style.bottom = e.offsetLeft + 'px';
+    //   marker.style.width = e.offsetWidth + 'px';
+    //   console.log(e.offsetLeft + 'px', e.offsetWidth + 'px');
+    // }
+    // // links.classList.toggle('active');
+    // // links.classList.add('hidden');
+    // links.forEach((el) => {
+    //   console.log('estoy');
+    //   el.addEventListener('mousemove', (e) => {
+    //     moveIndicator(el);
+    //   });
+    //   // el.classList.toggle('active');
+    //   // console.log(el.classList);
+    // });
+    // console.log(links, links.length);
     // e.target.parentElement.parentElement.classList.toggle('active');
   };
 
@@ -35,7 +44,7 @@ export const NavbarLateral = () => {
     document.querySelector('.content-header').classList.toggle('toggleContentHeader');
   };
   return (
-    <div className="navbar">
+    <div className="navbar active-mini-menu">
       <div className="navbar__container">
         <i onClick={handleNavbar} id="btn-close-mobil" className="fas fa-times"></i>
         <div className="navegation">
@@ -45,8 +54,8 @@ export const NavbarLateral = () => {
               <img src={NavaLogoWhite} alt="Logo Nova" width="25" />
             </div>
           </div>
-          <ul>
-            <li className="menu-item link-lateral" onClick={activeLink}>
+          <ul id="menu-lateral-big" className="menu-lateral">
+            <li className="menu-item link-lateral " onClick={activeLink}>
               <span className="cartel">Home</span>
               <Link to="/" className="">
                 <span className="icon">
@@ -58,7 +67,7 @@ export const NavbarLateral = () => {
 
             {role !== 'user' && (
               <>
-                <li className="menu-item link-lateral" onClick={activeLink}>
+                <li className="menu-item link-lateral " onClick={activeLink}>
                   <span className="cartel">Clientes</span>
                   <Link to="/clients">
                     <span className="icon">
@@ -67,7 +76,7 @@ export const NavbarLateral = () => {
                     <span className="title">Clientes</span>
                   </Link>
                 </li>
-                <li className="menu-item link-lateral" onClick={activeLink}>
+                <li className="menu-item link-lateral " onClick={activeLink}>
                   <span className="cartel">Trabajos</span>
                   <Link to="/works">
                     <span className="icon">
@@ -77,7 +86,7 @@ export const NavbarLateral = () => {
                   </Link>
                 </li>
 
-                <li className="menu-item link-lateral" onClick={activeLink}>
+                <li className="menu-item link-lateral " onClick={activeLink}>
                   <span className="cartel">Agregar Cliente</span>
                   <Link to="/client/add">
                     <span className="icon">
@@ -86,7 +95,7 @@ export const NavbarLateral = () => {
                     <span className="title">Agregar Cliente</span>
                   </Link>
                 </li>
-                <li className="menu-item link-lateral" onClick={activeLink}>
+                <li className="menu-item link-lateral " onClick={activeLink}>
                   <span className="cartel">Agregar Trabajo</span>
 
                   <Link to="/work/add">
@@ -98,7 +107,7 @@ export const NavbarLateral = () => {
                 </li>
 
                 {role === 'admin' && (
-                  <li className="menu-item link-lateral" onClick={activeLink}>
+                  <li className="menu-item link-lateral " onClick={activeLink}>
                     <span className="cartel">Historial de Trabajo</span>
 
                     <Link to="/works/histories/all">
@@ -111,6 +120,7 @@ export const NavbarLateral = () => {
                 )}
               </>
             )}
+            {/* <div id="marker" className="marker"></div> */}
 
             {/* <li onClick={handleLogout} className="menu-item">
 							<span className="cartel">Cerrar Sesion</span>

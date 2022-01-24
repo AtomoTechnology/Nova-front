@@ -34,7 +34,6 @@ export const startGettingOneClient = (clientId) => {
       const resp = await fetchWithToken(`users/${clientId}`);
       const user = await resp.json();
       if (user.status === types.statusSuccess) {
-        console.log(user);
         dispatch(setOneClient(user.data.user));
       }
     } catch (error) {

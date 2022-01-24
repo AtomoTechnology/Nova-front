@@ -2,6 +2,7 @@ import { fetchWithOutToken, fetchWithToken } from '../helpers/fetchWithOutToken.
 import { types } from '../types/types.js';
 
 import Swal from 'sweetalert2';
+import { showAlert } from '../components/alerts.js';
 
 export const startLogin = (dni, password) => {
   return async (dispatch) => {
@@ -19,8 +20,10 @@ export const startLogin = (dni, password) => {
           role: body.data.user.role,
         })
       );
+      showAlert('success', 'Inicio de sesion con exito');
     } else {
-      Swal.fire('error', body.message, 'error');
+      showAlert('error', body.message);
+      // Swal.fire('error', body.message, 'error');
     }
   };
 };
@@ -85,6 +88,8 @@ export const startLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('token-start-date');
     dispatch(logout());
+    // showAlert('success', 'Saliste del sistema');
+
     // console.log("logout");
   };
 };

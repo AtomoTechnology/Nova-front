@@ -77,12 +77,12 @@ select {
 
   .content-principal {
     display: flex;
-    width: 80%;
+    width: calc(100% - 80px);
     // max-width: auto;
     // width: 1px;
     transition: 500ms;
     flex-direction: column;
-    margin-left: 20%;
+    margin-left: 80px;
     .content-principal-margin {
       margin-top: 50px;
       padding-bottom: 1.2rem;
@@ -90,12 +90,13 @@ select {
     }
   }
 }
+
 .toggleContentPrincipal {
-  width: calc(100% - 80px) !important;
-  margin-left: 80px !important;
+  width: calc(100% - 20%) !important;
+  margin-left: 20% !important;
 }
 .toggleContentHeader {
-  width: calc(100% - 80px) !important;
+  width: calc(100% - 20%) !important;
   // .cartel {
   // 	display: block;
   // }
