@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/Nova-front/static/css/main.799c029c.chunk.css",
-    "main.js": "/Nova-front/static/js/main.5dee1f00.chunk.js",
-    "main.js.map": "/Nova-front/static/js/main.5dee1f00.chunk.js.map",
+    "main.css": "/Nova-front/static/css/main.b5f127c0.chunk.css",
+    "main.js": "/Nova-front/static/js/main.711c4ea3.chunk.js",
+    "main.js.map": "/Nova-front/static/js/main.711c4ea3.chunk.js.map",
     "runtime-main.js": "/Nova-front/static/js/runtime-main.fb87ccd6.js",
     "runtime-main.js.map": "/Nova-front/static/js/runtime-main.fb87ccd6.js.map",
     "static/js/2.3c531030.chunk.js": "/Nova-front/static/js/2.3c531030.chunk.js",
     "static/js/2.3c531030.chunk.js.map": "/Nova-front/static/js/2.3c531030.chunk.js.map",
     "index.html": "/Nova-front/index.html",
-    "static/css/main.799c029c.chunk.css.map": "/Nova-front/static/css/main.799c029c.chunk.css.map",
+    "static/css/main.b5f127c0.chunk.css.map": "/Nova-front/static/css/main.b5f127c0.chunk.css.map",
     "static/js/2.3c531030.chunk.js.LICENSE.txt": "/Nova-front/static/js/2.3c531030.chunk.js.LICENSE.txt",
     "static/media/3.37f87e4b.png": "/Nova-front/static/media/3.37f87e4b.png",
     "static/media/adminLogo.4d8edb82.png": "/Nova-front/static/media/adminLogo.4d8edb82.png",
@@ -21,7 +21,7 @@
   "entrypoints": [
     "static/js/runtime-main.fb87ccd6.js",
     "static/js/2.3c531030.chunk.js",
-    "static/css/main.799c029c.chunk.css",
-    "static/js/main.5dee1f00.chunk.js"
+    "static/css/main.b5f127c0.chunk.css",
+    "static/js/main.711c4ea3.chunk.js"
   ]
 }
