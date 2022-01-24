@@ -38,8 +38,8 @@ export const Histories = () => {
   useEffect(async () => {
     const resp = await fetchWithToken('works/historialWork/all');
     const works = await resp.json();
-    if (works.ok) {
-      setWorks(works.works);
+    if (works.status === 'success') {
+      setWorks(works.data.data);
     }
     setLoadingHistories(false);
   }, []);
@@ -50,8 +50,8 @@ export const Histories = () => {
   const getOutgoings = async () => {
     const res = await fetchWithToken('outgoings');
     const body = await res.json();
-    if (body.ok) {
-      setGastos(body.gastos);
+    if (body.status === 'success') {
+      setGastos(body.data.data);
     }
   };
   useEffect(() => {
@@ -119,10 +119,10 @@ export const Histories = () => {
     if (description != '' && amount != '' && description.length < 50) {
       const res = await fetchWithToken('outgoings', values, 'POST');
       const body = await res.json();
-      if (body.ok) {
+      if (body.status === 'success') {
         Toast.fire({
           icon: 'success',
-          title: body.msg,
+          title: 'Gasto agregado con exito...',
         });
         reset();
         openModalAddOutgoing();
@@ -130,7 +130,7 @@ export const Histories = () => {
       } else {
         Toast.fire({
           icon: 'error',
-          title: body.msg,
+          title: body.message,
         });
       }
     } else {
@@ -194,10 +194,10 @@ export const Histories = () => {
                 value={startDate}
                 onChange={handleStartDate}
               />
-              <i
+              {/* <i
                 onClick={clearStartDate}
                 className="fas fa-times flex h-full items-center justify-center top-0  cursor-pointer ml-1 p-2 text-red-700 text-lg right-0 absolute"
-              ></i>
+              ></i> */}
             </div>
           </div>
 
@@ -210,10 +210,10 @@ export const Histories = () => {
                 value={endDate}
                 onChange={handleEndtDate}
               />
-              <i
+              {/* <i
                 onClick={clearEndDate}
                 className="fas fa-times flex h-full items-center justify-center top-0  cursor-pointer ml-1 p-2 text-red-700 text-lg right-0 absolute"
-              ></i>
+              ></i> */}
             </div>
           </div>
         </div>
