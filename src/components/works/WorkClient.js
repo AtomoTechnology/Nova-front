@@ -29,23 +29,23 @@ export const WorkClient = ({ work, history }) => {
       break;
   }
 
-  const DeleteWorkById = () => {
-    Swal.fire({
-      title: 'Estás seguro ?',
-      text: 'Al aceptar se borrará el trabajo definitivamente!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Borrar!',
-      cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(DeleteWork(work?._id));
-        history.push('/works');
-      }
-    });
-  };
+  // const DeleteWorkById = () => {
+  //   Swal.fire({
+  //     title: 'Estás seguro ?',
+  //     text: 'Al aceptar se borrará el trabajo definitivamente!',
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#3085d6',
+  //     cancelButtonColor: '#d33',
+  //     confirmButtonText: 'Si, Borrar!',
+  //     cancelButtonText: 'Cancelar',
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       dispatch(DeleteWork(work?._id));
+  //       history.push('/works');
+  //     }
+  //   });
+  // };
 
   const toogleHeaderAction = (e) => {
     const all = document.querySelectorAll('.header-action');
@@ -60,7 +60,7 @@ export const WorkClient = ({ work, history }) => {
       <Link to={`/works/${work._id}`} className="title p-1">
         <span className={'capitalize text-' + color}>
           {work?.marca + ' - ' + work?.modelo}
-          {work?.tieneContrasena && <i class="fas fa-lock work-lock"></i>}
+          {work?.tieneContrasena && <i className="fas fa-lock work-lock"></i>}
         </span>
       </Link>
       <div className="observaciones p-1">

@@ -166,11 +166,20 @@
   margin: 1px auto 0;
   width: 30px;
 }
+.spinner-btn {
+  margin: 1px auto 0;
+  width: fit-content;
+  background-color: rgb(238, 238, 238);
+}
 .spinner-big > div {
   width: 18px;
   height: 18px;
 }
 .spinner-small > div {
+  width: 10px;
+  height: 10px;
+}
+.spinner-btn > div {
   width: 10px;
   height: 10px;
 }

@@ -6,7 +6,6 @@ export const PrivateRoute = ({ isLogged, component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      // este props son [history,location,match]
       component={(props) => (isLogged ? <Component {...props} /> : <Redirect to="/index" />)}
     />
   );

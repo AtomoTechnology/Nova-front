@@ -1,7 +1,6 @@
-import { fetchWithOutToken, fetchWithToken } from '../helpers/fetchWithOutToken';
+import { fetchWithToken } from '../helpers/fetchWithOutToken';
 import { types } from '../types/types';
 
-import { convertDate } from '../helpers/convertDateWork';
 import Swal from 'sweetalert2';
 const Toast = Swal.mixin({
   toast: true,
@@ -20,16 +19,10 @@ export const getAllWorks = (limit, page = 1) => {
     try {
       const works = await fetchWithToken(`works?page=${page}&limit=${limit}`);
       const body = await works.json();
-      // console.log(body);
-      // const worksOk = convertDate(body.works);
-      // console.log(worksOk);
-      // return 1;
       if (body.status === types.statusSuccess) {
         dispatch(setWorks(body.data.works, body.total, body.page, body.results));
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 };
 
@@ -38,7 +31,6 @@ export const getOneWork = (workId) => {
     try {
       const work = await fetchWithToken(`works/${workId}`);
       const body = await work.json();
-      // console.log(body.work);
       if (body.ok) {
         dispatch(setWorkOne(body.work));
       } else {
@@ -58,17 +50,13 @@ export const getOneWork = (workId) => {
 
 export const createWork = (work) => {
   return async (dispatch) => {
-    // return;
     try {
       let precio = parseInt(work.precio);
       let descuento = (precio * parseInt(work.descuento)) / 100;
       let recargo = (precio * work.recargo) / 100;
       work.total = precio + recargo - descuento;
-      // console.log(work);
-      // return;
       const res2 = await fetchWithToken('works', work, 'POST');
       const body2 = await res2.json();
-      // return;
       if (body2.status === types.statusSuccess) {
         Toast.fire({
           icon: 'success',
@@ -80,36 +68,7 @@ export const createWork = (work) => {
           title: body2.message,
         });
       }
-      // if (files) {
-      //   const res = await fetchWithOutToken('works/uploadFileWork', files, 'POST');
-      //   const body = await res.json();
-      //   if (body.ok) {
-      //     work.images = body.pathImg;
-      //     const res2 = await fetchWithToken('works', work, 'POST');
-      //     const body2 = await res2.json();
-      //     if (body2.ok) {
-      //       dispatch(getAllWorks());
-      //       Toast.fire({
-      //         icon: 'success',
-      //         title: 'Se agregó con exito el trabajo!!!',
-      //       });
-      //     } else {
-      //       Toast.fire({
-      //         icon: 'error',
-      //         title: body2.msg,
-      //       });
-      //     }
-      //   }
-      // } else {
 
-      // }
-
-      // return ;
-      // const resp = await fetchWithToken("works", work, "POST");
-      // const body = await resp.json();
-      // console.log(body);
-      // if (body.ok) {
-      //   if (files) {
       //     let formData = new FormData();
       //     for (let index = 0; index < files.length; index++) {
       //       formData.append("files", files[index]);
@@ -123,34 +82,7 @@ export const createWork = (work) => {
       //         },
       //       }
       //     );
-
-      //     const body1 = await resp1.data;
-      //     console.log(body1);
-
-      //     if (body1.ok) {
-      //       body.work.images = body1.imagenFormat;
-      //       console.log(body);
-
-      //       const resp2 = await fetchWithToken(
-      //         `works/${body.work._id}`,
-      //         body.work,
-      //         "PUT"
-      //       );
-      //       const body2 = await resp2.json();
-      //       console.log(body2);
-      //       if (body2.ok) {
-      //         // Toast.fire("Agregar Cliente", "existo...", "success");
-      //       }
-      //     }
-      //     // values.file = body.fileName;
-      //   }
-      //   Swal.fire("success", "Se agregó correctamente el trabajo", "success");
-      // } else {
-      //   Swal.fire("error", "Hubo un fallo al hacer la petition!!!", "error");
-      // }
-      // console.log(body);
     } catch (error) {
-      console.log(error);
       Swal.fire('error', 'Hubo un fallo al hacer la petition...', 'error');
     }
   };
@@ -166,8 +98,6 @@ export const startEditWork = (work, workId) => {
 
       const resp = await fetchWithToken(`works/${workId}`, work, 'PATCH');
       const body = await resp.json();
-      //   const worksEditOk = convertDate(body.updateWork);
-      console.log(body);
       if (body.status === types.statusSuccess) {
         dispatch(setWorkOne(body.data.work));
         Toast.fire({
@@ -204,7 +134,6 @@ export const DeleteWork = (workId) => {
 
 export const filterWorksState = (estado, works) => {
   return (dispatch) => {
-    console.log(estado);
     dispatch(filterState(estado, works));
   };
 };

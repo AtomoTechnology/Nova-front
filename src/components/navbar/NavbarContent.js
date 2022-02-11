@@ -43,12 +43,18 @@ export const NavbarContent = () => {
   return (
     <div className="content-header">
       <i onClick={handleNavbar} id="btn-open-menu-mobile" className="fas fa-bars"></i>
-      <div
-        onMouseOut={outMenuUser}
-        onMouseOver={overMenuUser}
-        onClick={mobileToggle}
-        className="content-header-right"
-      >
+      <div className="messages relative">
+        <Link to="/queries" className="text-white">
+          {/* <span className="absolute top-0 right-0 flex items-center justify-center w-6 h-6  rounded-full text-white jhm-rounded text-center bg-red-500">
+            9
+          </span> */}
+          <span className="icon text-white">
+            <i id="" className="fas fa-envelope text-white"></i>
+          </span>
+        </Link>
+      </div>
+
+      <div onMouseOut={outMenuUser} onMouseOver={overMenuUser} onClick={mobileToggle} className="content-header-right">
         <div className="user-logo">
           {role === 'admin' ? (
             <img src={userLogoAdmin} alt="logo admin" />
@@ -64,7 +70,7 @@ export const NavbarContent = () => {
               <span className="cartel">Home</span>
               <Link to="/" className="">
                 <span className="icon">
-                  <i class="fas fa-home"></i>
+                  <i className="fas fa-home"></i>
                 </span>
                 <span className="title">Home</span>
               </Link>
@@ -76,7 +82,7 @@ export const NavbarContent = () => {
                   <span className="cartel">Clientes</span>
                   <Link to="/clients">
                     <span className="icon">
-                      <i class="fas fa-users"></i>{' '}
+                      <i className="fas fa-users"></i>{' '}
                     </span>
                     <span className="title">Clientes</span>
                   </Link>
@@ -95,7 +101,7 @@ export const NavbarContent = () => {
                   <span className="cartel">Agregar Cliente</span>
                   <Link to="/client/add">
                     <span className="icon">
-                      <i class="fas fa-plus-circle"></i>
+                      <i className="fas fa-plus-circle"></i>
                     </span>
                     <span className="title">Agregar Cliente</span>
                   </Link>
@@ -105,7 +111,7 @@ export const NavbarContent = () => {
 
                   <Link to="/work/add">
                     <span className="icon">
-                      <i class="fas fa-calendar-plus"></i>
+                      <i className="fas fa-calendar-plus"></i>
                     </span>
                     <span className="title">Agregar Trabajo</span>
                   </Link>
@@ -116,7 +122,7 @@ export const NavbarContent = () => {
 
                     <Link to="/works/histories/all">
                       <span className="icon">
-                        <i class="fas fa-history"></i>{' '}
+                        <i className="fas fa-history"></i>{' '}
                       </span>
                       <span className="title">Hist. Trab/Gastos</span>
                     </Link>
@@ -127,7 +133,7 @@ export const NavbarContent = () => {
                   <span className="cartel">Novedades</span>
                   <Link to="/news">
                     <span className="icon">
-                      <i class="fas fa-star-and-crescent"></i>{' '}
+                      <i className="fas fa-star-and-crescent"></i>{' '}
                     </span>
                     <span className="title">Novedades</span>
                   </Link>
@@ -139,7 +145,7 @@ export const NavbarContent = () => {
               {/* <span className="cartel">Mis Datos</span> */}
               <Link to={`/clients/${uid}`}>
                 <span className="icon">
-                  <i class="fas fa-user-circle"></i>{' '}
+                  <i className="fas fa-user-circle"></i>{' '}
                 </span>
                 <span className="title">Mis Datos</span>
               </Link>

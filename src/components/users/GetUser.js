@@ -3,21 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { Work } from '../works/Work';
 // import moment from 'moment';
 import userLogo from '../../templatePics/userLogo.png';
-import {
-  getWorksClient,
-  startDeleteClient,
-  startEditClient,
-  startGettingOneClient,
-} from '../../action/clientsAction';
+import { getWorksClient, startDeleteClient, startEditClient, startGettingOneClient } from '../../action/clientsAction';
 import { useForm } from '../../hooks/useForm';
 import { SmallLoading } from '../SmallLoading';
 import { Link } from 'react-router-dom';
 import { updatePassword } from '../../action/authAction';
 import { WorkClient } from '../works/WorkClient';
-import { fetchWithToken } from '../../helpers/fetchWithOutToken';
+// import { fetchWithToken } from '../../helpers/fetchWithOutToken';
 
 export const GetUser = ({ match, history }) => {
-  const dispatch = useDispatch();
   const [loadingWorkUser, setLoadingWorkUser] = useState(true);
   const [errores, setErrores] = useState([]);
   const { role, uid } = useSelector((state) => state.auth);
@@ -25,13 +19,21 @@ export const GetUser = ({ match, history }) => {
   const [idChange, setIdChange] = useState(null);
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const dispatch = useDispatch();
 
   const clientId = match.params.clientId;
   useEffect(() => {
     dispatch(startGettingOneClient(clientId));
   }, [dispatch, clientId]);
 
+  useEffect(() => {
+    dispatch(getWorksClient(clientId));
+    setLoadingWorkUser(false);
+  }, [dispatch, setLoadingWorkUser, clientId]);
+
+  let { clientWorks } = useSelector((state) => state.clients);
   const { client } = useSelector((state) => state.clients);
+
   console.log(client);
   const [values, handleInputChange, reset] = useForm({
     name: client?.name,
@@ -46,6 +48,10 @@ export const GetUser = ({ match, history }) => {
     passwordConfirm: '',
   });
 
+  const { name, dni, phone1, phone2, direction, nota, email, currentPassword, password, passwordConfirm } = values;
+
+  console.log(values);
+
   const handleUpdateClient = (e) => {
     e.preventDefault();
     setAddingUser(true);
@@ -57,27 +63,6 @@ export const GetUser = ({ match, history }) => {
     }
     setAddingUser(false);
   };
-
-  const {
-    name,
-    dni,
-    phone1,
-    phone2,
-    direction,
-    nota,
-    email,
-    currentPassword,
-    password,
-    passwordConfirm,
-  } = values;
-  console.log(values);
-
-  useEffect(() => {
-    dispatch(getWorksClient(client?._id));
-    setLoadingWorkUser(false);
-  }, [dispatch, setLoadingWorkUser, client?._id]);
-
-  let { clientWorks } = useSelector((state) => state.clients);
 
   const showModalClient = () => {
     document.querySelector('.modal-client-img').classList.toggle('hidden');
@@ -97,10 +82,7 @@ export const GetUser = ({ match, history }) => {
     }, 500);
   };
 
-  // form manage
-  // do the login method
-
-  const handleSubmitLogin = (e) => {
+  const UpdatePassword = (e) => {
     e.preventDefault();
     setLoading(true);
     if (verifyFormPass()) {
@@ -179,16 +161,11 @@ export const GetUser = ({ match, history }) => {
             <h3>
               Estas seguro de borrar el cliente? <br></br>
               <br></br>
-              <span className="username bg-gray-800 text-red-300 p-2 mt-1 shadow rounded">
-                {client?.dni}
-              </span>
+              <span className="username bg-gray-800 text-red-300 p-2 mt-1 shadow rounded">{client?.dni}</span>
             </h3>
             <div className="delete-cliente-response">
               <div className="user-header-action flex justify-between gap-2">
-                <button
-                  className=" bg-red-600 shadow-md rounded-full hover:bg-red-700 "
-                  onClick={deleteCliente}
-                >
+                <button className=" bg-red-600 shadow-md rounded-full hover:bg-red-700 " onClick={deleteCliente}>
                   SI
                 </button>
                 <button
@@ -203,15 +180,12 @@ export const GetUser = ({ match, history }) => {
         </div>
       </div>
 
-      <div className="user-setting m-auto my-2 w-10/12 m-1 ">
+      <div className="user-setting m-auto my-2 w-10/12  ">
         <div className="flex justify-between   shadow ">
           <div className="one-user-option bg-pink-700 w-60 bg-gradient-to-r from-pink-400 to-pink-500 rounded-l">
             <ul className="mt-10 sticky top-14">
               <li className="menu-item my-2 ">
-                <a
-                  className="hover:bg-pink-300  hover:border-l-4  hover:border-gray-100 p-2 "
-                  href="#misdatos"
-                >
+                <a className="hover:bg-pink-300  hover:border-l-4  hover:border-gray-100 p-2 " href="#misdatos">
                   <span className="title">Mis Datos</span>
                 </a>
               </li>
@@ -224,10 +198,7 @@ export const GetUser = ({ match, history }) => {
                 </a>
               </li>
               <li className="menu-item my-2  ">
-                <a
-                  className="hover:bg-pink-300  hover:border-l-4  hover:border-gray-100 p-2 "
-                  href="#mistrabajos"
-                >
+                <a className="hover:bg-pink-300  hover:border-l-4  hover:border-gray-100 p-2 " href="#mistrabajos">
                   <span className="title">Mis Trabajos</span>
                 </a>
               </li>
@@ -254,9 +225,7 @@ export const GetUser = ({ match, history }) => {
                       className="shadow"
                     />
                     {errores.name ? (
-                      <span className="text-red-500 text-center bg-red-100 p-1">
-                        El nombre es obligatorio
-                      </span>
+                      <span className="text-red-500 text-center bg-red-100 p-1">El nombre es obligatorio</span>
                     ) : null}{' '}
                   </div>
                   <div>
@@ -351,11 +320,11 @@ export const GetUser = ({ match, history }) => {
                 {role === 'admin' && (
                   <div className="user-header-action justify-end my-2 mb-3 flex gap-2">
                     <span
-                      className=" hover:bg-blue-700 hover:text-white border-2 border-gray-200 hover:shadow-md rounded-full px-3 py-1 text-gray-900 cursor-pointer w-fit hover:bg-blue-900 "
+                      className="hover:text-white border-2 border-gray-200 hover:shadow-md rounded-full px-3 py-1 text-gray-900 cursor-pointer w-fit bg-green-500 hover:bg-green-900 "
                       onClick={toggleModalEditClient}
                       type="button"
                     >
-                      Edit
+                      Editar
                     </span>
                     <span
                       onClick={toggleModalDeleteClient}
@@ -370,11 +339,11 @@ export const GetUser = ({ match, history }) => {
                 {role !== 'admin' && client?._id === uid && (
                   <div className="flex justify-end">
                     <span
-                      className=" hover:bg-blue-700 hover:text-white border-2 border-gray-200 hover:shadow-md rounded-full px-3 py-1 text-gray-900 cursor-pointer w-fit hover:bg-blue-900 "
+                      className="hover:text-white border-2 !bg-green-600 border-gray-200 hover:shadow-md rounded-full px-3 py-1 text-gray-900 cursor-pointer w-fit hover:bg-green-800 "
                       onClick={toggleModalEditClient}
                       type="button"
                     >
-                      Edit
+                      Editar
                     </span>
                   </div>
                 )}
@@ -403,7 +372,7 @@ export const GetUser = ({ match, history }) => {
               <>
                 <hr className="my-3" />
                 <form
-                  onSubmit={handleSubmitLogin}
+                  onSubmit={UpdatePassword}
                   id="cambiarcontraseña"
                   className="update-password-form w-9/12 m-auto my-4"
                 >
@@ -448,10 +417,7 @@ export const GetUser = ({ match, history }) => {
                   ) : null}{' '}
                   <br />
                   <div className="flex justify-end my-7">
-                    <button
-                      className="w-44 rounded-full bg-green-600 hover:bg-green-700"
-                      type="submit"
-                    >
+                    <button className="w-44 rounded-full bg-green-600 hover:bg-green-700" type="submit">
                       {loading ? <SmallLoading size="small" text="" /> : 'Cambiar Contraseña'}
                     </button>
                   </div>
@@ -469,20 +435,15 @@ export const GetUser = ({ match, history }) => {
                     <SmallLoading />
                   ) : (
                     clientWorks.map((work) => (
-                      <WorkClient
-                        key={work._id}
-                        setIdChange={setIdChange}
-                        idChange={idChange}
-                        work={work}
-                      />
+                      <WorkClient key={work._id} setIdChange={setIdChange} idChange={idChange} work={work} />
                     ))
                   )
                 ) : (
-                  <div className="no-result bg-white p-1 text-center">
+                  <div className="no-result bg-white p-2 bg-red-200 text-center mx-2">
                     <h1 className="no-works">
                       <span>{client?.name} </span>nunca hizo un trabajo...
                     </h1>
-                    <i class="fas fa-sad-tear text-red-600 text-3xl"></i>
+                    <i className="fas fa-sad-tear text-red-600 text-3xl"></i>
                   </div>
                 )}
                 <div className="bg-gray-200 add-work-user shadow rounded hover:bg-gray-300 hover:shadow-lg">
@@ -490,24 +451,11 @@ export const GetUser = ({ match, history }) => {
                     to={`/work/add#${client?._id}`}
                     className="flex justify-center items-center h-full text-pink-500"
                   >
-                    <i class="fas fa-plus-circle duration-800"></i>
+                    <i className="fas fa-plus-circle duration-800"></i>
                   </Link>
                 </div>
               </div>
             }
-            {/* <h4>Nombre : {client?.name}</h4>
-            <h4>DNI : {client?.dni}</h4>
-            <h4>DNI : {client?.email ? client?.email : '---'}</h4>
-            <h4>Dirección : {client?.direction ? client.direction : '---'}</h4>
-            <h4>Tel 01 : {client?.phone1}</h4>
-            <h4>Tel 02 : {client?.phone2 ? client.phone2 : '---'}</h4>
-            <h4>Nota : {client?.nota ? client.nota : '---'}</h4>
-            <h4>Fecha de Alta : {moment(client?.createAt).format('DD-MM-yyyy HH:mm:ss')}</h4> */}
-            {client?._id === uid && (
-              <Link className="text-green-600" to="/user/update-password">
-                Cambiar contraseña
-              </Link>
-            )}
           </div>
 
           {/* <Link to="/users/userId">Ver Usuario</Link> */}
@@ -516,7 +464,7 @@ export const GetUser = ({ match, history }) => {
       {/* <hr /> */}
       {/* <div className="search-box-userworks">
 				<form className="w-full">
-					<i class="fas fa-search"></i>
+					<i className="fas fa-search"></i>
 					<input
 						// value={searchvalue}
 						onChange={(e) => {
@@ -553,9 +501,7 @@ export const GetUser = ({ match, history }) => {
                   className="shadow"
                 />
                 {errores.name ? (
-                  <span className="text-red-500 text-center bg-red-100 p-1">
-                    El nombre es obligatorio
-                  </span>
+                  <span className="text-red-500 text-center bg-red-100 p-1">El nombre es obligatorio</span>
                 ) : null}{' '}
               </div>
               <div>
@@ -654,23 +600,16 @@ export const GetUser = ({ match, history }) => {
       </div>
 
       <div className="modal-client-img hidden absolute z-10 bg-gray-600 w-full bg-opacity-50 place-content-center max-h-auto min-h-screen flex justify-center items-center top-0 left-0">
-        <div
-          onClick={showModalClient}
-          className="overlay  absolute h-full w-full top-0 left-0"
-        ></div>
+        <div onClick={showModalClient} className="overlay  absolute h-full w-full top-0 left-0"></div>
 
         <div id="img-client" className="flex justify-center  items-center">
-          <img
-            className="max-w-lg z-20 border-2 border-bg-red-200"
-            alt="logo user"
-            src={userLogo}
-          />
+          <img className="max-w-lg z-20 border-2 border-bg-red-200" alt="logo user" src={userLogo} />
         </div>
         <span
           onClick={showModalClient}
           className="absolute text-center flex justify-center items-center text-right top-10 right-10 h-10 w-10 rounded-full bg-white shadow-md p-1 cursor-pointer"
         >
-          <i class="far fa-times-circle text-3xl text-red-300"></i>
+          <i className="far fa-times-circle text-3xl text-red-300"></i>
         </span>
       </div>
     </div>

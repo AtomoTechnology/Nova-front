@@ -46,7 +46,7 @@ export const OrderWork = ({ match, history }) => {
       <PDFExport ref={body}>
         <div className="pdf">
           <header>
-            <div class="info-header">
+            <div className="info-header">
               <h3>SERVICIO Y REPARACIÓN DE TELÉFONOS CELULARES</h3>
               <p>CUIT: 20-37308578-3</p>
               <p>TRABICHET NICOLAS MAXIMILIANO</p>
@@ -56,10 +56,10 @@ export const OrderWork = ({ match, history }) => {
             </div>
             <div className="logo-nova">
               <img src={nova} width={100} alt="Logo Nova" />
-              <section class="main-header">
-                <div class="fecha-orden">
+              <section className="main-header">
+                <div className="fecha-orden">
                   <h3>Nro Orden :{work?.codigo}</h3>
-                  <h3 class="orden-fecha">Fecha :{moment(new Date()).format('DD-MM-YYYY')}</h3>
+                  <h3 className="orden-fecha">Fecha :{moment(new Date()).format('DD-MM-YYYY')}</h3>
                   <span>Cliente : {work?.cliente?.name} </span>
                   <span> DNI : {work?.cliente?.dni}</span>
                 </div>
@@ -70,18 +70,18 @@ export const OrderWork = ({ match, history }) => {
 
           <main className="main-content">
             <div className="main-content-data">
-              {/* <section class="datos-cliente">
+              {/* <section className="datos-cliente">
                 <h4>Datos del Cliente</h4>
-                <div class="cliente">
+                <div className="cliente">
                   <span>Direccion :${work?.cliente?.direction}</span>
                   <span>Localidad :</span>
                   <span>telefono :${work?.cliente?.phone1}</span>
                   <span>E_mail :</span>
                 </div>
               </section> */}
-              <section class="datos-equipo">
+              <section className="datos-equipo">
                 <h2>Datos del Equipo</h2>
-                <div class="equipo">
+                <div className="equipo">
                   <span>Marca/modelo :{work?.marca + ' - ' + work?.modelo} </span>
                   <span>Imei : {work?.emei}</span>
                   {work?.tieneContraseña ? (
@@ -98,7 +98,7 @@ export const OrderWork = ({ match, history }) => {
                 </div>
               </section>
             </div>
-            <section class="leyes-box">
+            <section className="leyes-box">
               <h3>BASES Y CONDICIONES:</h3>
               <ol className="leyes">
                 <li>
@@ -167,16 +167,16 @@ export const OrderWork = ({ match, history }) => {
               </ol>
             </section>
           </main>
-          <footer class="footer-pdf">
+          <footer className="footer-pdf">
             <h3>DATOS DEL SERVICIO TÉCNICO y FIRMA</h3>
-            <section class="firmas">
-              <div class="firma-content">
+            <section className="firmas">
+              <div className="firma-content">
                 <p>Firma del cliente : ..................</p>
                 <p>Aclaracion : ................</p>
                 <p>DNI : ................... ................</p>
               </div>
             </section>
-            {/* <div class="fecha-entrega">
+            {/* <div className="fecha-entrega">
               <h3>
                 <span>Entrega Equipo </span>
                 <span>Fecha ....... </span>

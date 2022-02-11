@@ -49,7 +49,7 @@ export const Gasto = ({ gasto, setOutGoingChange, outGoingChange }) => {
 
   return (
     // <div className="gasto">
-    // 	<i class="fas fa-dollar-sign"></i>
+    // 	<i className="fas fa-dollar-sign"></i>
     // 	<div className="gasto-content">
     // 		<h5>{gasto.description} </h5>
     // 		<div className="amout-date">
@@ -68,7 +68,7 @@ export const Gasto = ({ gasto, setOutGoingChange, outGoingChange }) => {
       <td className="flex-1 p-2 text-red-600">
         <i
           onClick={confirmDelete}
-          class="fas fa-trash p-2 shadow  rounded-full text-white bg-red-800 hover:shadow-md hover:bg-red-600 hover:p-3"
+          className="fas fa-trash p-2 shadow  rounded-full text-white bg-red-800 hover:shadow-md hover:bg-red-600 hover:p-3"
         ></i>
       </td>
     </tr>

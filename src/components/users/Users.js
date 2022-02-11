@@ -43,10 +43,10 @@ export const Users = () => {
 
   return (
     <div className="users">
-      <span className="title-header">Clientes</span>
+      {/* <span className="title-header">Clientes</span> */}
       <div className="add-client-flotante">
         <Link to="/client/add">
-          <i class="fas fa-plus-circle"></i>
+          <i className="fas fa-plus-circle"></i>
         </Link>
       </div>
       {clients.length >= 10 && (
@@ -56,7 +56,7 @@ export const Users = () => {
             <span>Buscar Cliente por nombre y/o DNI</span>
           </div>
           <div className="search-box-userworks bg-gray-800 ">
-            {/* <i class="fas fa-search text-gray-900 bg-gray-100 p-3"></i> */}
+            {/* <i className="fas fa-search text-gray-900 bg-gray-100 p-3"></i> */}
 
             <form className="w-full">
               <input
@@ -72,7 +72,7 @@ export const Users = () => {
             </form>
             <i
               onClick={handleCloseBtn}
-              class="fas fa-times cursor-pointer duration-500 text-gray-600  right-3 bg-gray-100 hover:text-white hover:bg-red-500"
+              className="fas fa-times cursor-pointer duration-500 text-gray-600  right-3 bg-gray-100 hover:text-white hover:bg-red-500"
             ></i>
           </div>
         </div>

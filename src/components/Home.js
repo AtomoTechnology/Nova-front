@@ -5,28 +5,23 @@ import { getWorksClient, startGettingAllClient } from '../action/clientsAction';
 import { getAllWorks } from '../action/worksAction';
 import moment from 'moment';
 import { WorkState } from './works/WorkState';
-
 import { SmallLoading } from './SmallLoading';
-// import { Work } from './works/Work';
 import { WorkWithOut } from './works/WorkWithOut';
-import { fetchWithToken } from '../helpers/fetchWithOutToken';
-import { types } from '../types/types';
 import { Work } from './works/Work';
 
 export const Home = () => {
   const dispatch = useDispatch();
   const [workStates, setWorkStates] = useState([]);
-  // const [userWorks, setUserWorks] = useState([]);
-  // const [confirmWorks, setConfirmWorks] = useState([]);
   const [loadingWorkState, setLoadingWorkState] = useState(true);
   const { role, uid } = useSelector((state) => state.auth);
-  // const [loadingConfirmWork, setLoadingConfirmWork] = useState(true);
+
   useEffect(() => {
     dispatch(startGettingAllClient());
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(getAllWorks());
+    setLoadingWorkState(false);
   }, [dispatch]);
 
   useEffect(() => {
@@ -36,16 +31,15 @@ export const Home = () => {
   const { clients, clientWorks } = useSelector((state) => state.clients);
   const { works, total } = useSelector((state) => state.works);
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_URL}work_state`)
-      .then((res) => res.json())
-      .then((data) => {
-        setWorkStates(data.work_state);
-        setLoadingWorkState(false);
-      });
-  }, [setLoadingWorkState, setWorkStates]);
+  // useEffect(() => {
+  //   fetch(`${process.env.REACT_APP_URL}work_state`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setWorkStates(data.work_state);
+  //       setLoadingWorkState(false);
+  //     });
+  // }, [setLoadingWorkState, setWorkStates]);
 
-  // setConfirmWorks(works.filter((cw) => cw.estado.name === 'Entregado'));
   var confirmWorks = [];
   works.forEach((cw) => {
     if (cw.estado.name === 'Terminado') {
@@ -70,7 +64,7 @@ export const Home = () => {
 
   for (let i = 0; i < works.length; i++) {
     let fecha = moment(
-      moment(works[i].states[works[i].states.length - 1].fecha).format('YYYY-MM-DD')
+      moment(works[i].states[works[i].states.length - 1]?.fecha).format('YYYY-MM-DD')
     );
     if (
       ahora.diff(fecha, 'days') >= 3 &&
@@ -80,22 +74,6 @@ export const Home = () => {
       workWithoutChangeState.push(works[i]);
     }
   }
-
-  // console.log(workWithoutChangeState);
-
-  // const pruebas = [];
-  // workStates.forEach((ws) => {
-  //   let fecha = moment(moment(ws.state[ws.state.length - 1].fecha).format('YYYY-MM-DD'));
-  //   if (
-  //     ahora.diff(fecha, 'days') >= 3 &&
-  //     (ws.state[ws.state.length - 1].nombre === 'Revision' ||
-  //       ws.state[ws.state.length - 1].nombre === 'Presupuesto') &&
-  //     ws.work
-  //   ) {
-  //     pruebas.push(ws);
-  //   }
-  // });
-  // console.log(pruebas);
 
   const GoToTheLeft = (e) => {
     const carrouselLanguages = document.getElementById(
@@ -123,11 +101,6 @@ export const Home = () => {
             </div>
             <i className="fas fa-user text-gray-900"></i>
           </div>
-          {/* <div className="users-foot rounded-b">
-            <div to="clients">
-              mas info<i className="fas fa-angle-double-right"></i>{" "}
-            </div>
-          </div> */}
         </Link>
         <Link to="works" className="works">
           <div className="works-content">

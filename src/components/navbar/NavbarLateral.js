@@ -1,33 +1,36 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { startLogout } from '../../action/authAction';
 import NavaLogoWhite from '../../templatePics/logoNovaWhite.png';
 
-export const NavbarLateral = () => {
+export const NavbarLateral = ({ history }) => {
   const { role } = useSelector((state) => state.auth);
 
-  const activeLink = (e) => {
-    // const links = document.querySelectorAll('.');
-    // let marker = document.getElementById('marker');
-    // function moveIndicator(e) {
-    //   marker.style.bottom = e.offsetLeft + 'px';
-    //   marker.style.width = e.offsetWidth + 'px';
-    //   console.log(e.offsetLeft + 'px', e.offsetWidth + 'px');
-    // }
-    // // links.classList.toggle('active');
-    // // links.classList.add('hidden');
-    // links.forEach((el) => {
-    //   console.log('estoy');
-    //   el.addEventListener('mousemove', (e) => {
-    //     moveIndicator(el);
-    //   });
-    //   // el.classList.toggle('active');
-    //   // console.log(el.classList);
-    // });
-    // console.log(links, links.length);
-    // e.target.parentElement.parentElement.classList.toggle('active');
-  };
+  useLayoutEffect(() => {
+    // console.log();
+    if (history.location.pathname === '/') {
+      document.querySelector('.link-lateral-home')?.classList.add('active');
+    }
+    if (history.location.pathname.includes('/works') && history.location.pathname.length === 6) {
+      document.querySelector('.link-lateral-works')?.classList.add('active');
+    }
+    if (history.location.pathname.includes('/clients')) {
+      document.querySelector('.link-lateral-clientes')?.classList.add('active');
+    }
+    if (history.location.pathname.includes('/client/add')) {
+      document.querySelector('.link-lateral-client-add')?.classList.add('active');
+    }
+    if (history.location.pathname.includes('/work/add')) {
+      document.querySelector('.link-lateral-work-add')?.classList.add('active');
+    }
+    if (history.location.pathname.includes('/works/histories')) {
+      document.querySelector('.link-lateral-histories')?.classList.add('active');
+    }
+    if (history.location.pathname.includes('/createquery')) {
+      document.querySelector('.link-lateral-create-query')?.classList.add('active');
+    }
+  }, [history.location.pathname]);
 
   const dispatch = useDispatch();
 
@@ -49,34 +52,46 @@ export const NavbarLateral = () => {
         <i onClick={handleNavbar} id="btn-close-mobil" className="fas fa-times"></i>
         <div className="navegation">
           <div className="navegation-header">
-            <i onClick={manipulateInterface} class="fas fa-bars"></i>
+            <i onClick={manipulateInterface} className="fas fa-bars"></i>
             <div className="img">
               <img src={NavaLogoWhite} alt="Logo Nova" width="25" />
             </div>
           </div>
           <ul id="menu-lateral-big" className="menu-lateral">
-            <li className="menu-item link-lateral " onClick={activeLink}>
+            <li className="menu-item link-lateral link-lateral-home">
               <span className="cartel">Home</span>
               <Link to="/" className="">
                 <span className="icon">
-                  <i class="fas fa-home"></i>
+                  <i className="fas fa-home"></i>
                 </span>
                 <span className="title">Home</span>
               </Link>
             </li>
 
+            {role === 'user' && (
+              <li className="menu-item link-lateral link-lateral-create-query">
+                <span className="cartel">Consultas</span>
+                <Link to="/createquery" className="">
+                  <span className="icon">
+                    <i className="fas fa-question"></i>
+                  </span>
+                  <span className="title"> Consulta </span>
+                </Link>
+              </li>
+            )}
+
             {role !== 'user' && (
               <>
-                <li className="menu-item link-lateral " onClick={activeLink}>
+                <li className="menu-item link-lateral link-lateral-clientes">
                   <span className="cartel">Clientes</span>
                   <Link to="/clients">
                     <span className="icon">
-                      <i class="fas fa-users"></i>{' '}
+                      <i className="fas fa-users"></i>{' '}
                     </span>
                     <span className="title">Clientes</span>
                   </Link>
                 </li>
-                <li className="menu-item link-lateral " onClick={activeLink}>
+                <li className="menu-item link-lateral link-lateral-works">
                   <span className="cartel">Trabajos</span>
                   <Link to="/works">
                     <span className="icon">
@@ -86,33 +101,33 @@ export const NavbarLateral = () => {
                   </Link>
                 </li>
 
-                <li className="menu-item link-lateral " onClick={activeLink}>
+                <li className="menu-item link-lateral link-lateral-client-add">
                   <span className="cartel">Agregar Cliente</span>
                   <Link to="/client/add">
                     <span className="icon">
-                      <i class="fas fa-plus-circle"></i>
+                      <i className="fas fa-plus-circle"></i>
                     </span>
                     <span className="title">Agregar Cliente</span>
                   </Link>
                 </li>
-                <li className="menu-item link-lateral " onClick={activeLink}>
+                <li className="menu-item link-lateral link-lateral-work-add">
                   <span className="cartel">Agregar Trabajo</span>
 
                   <Link to="/work/add">
                     <span className="icon">
-                      <i class="fas fa-calendar-plus"></i>
+                      <i className="fas fa-calendar-plus"></i>
                     </span>
                     <span className="title">Agregar Trabajo</span>
                   </Link>
                 </li>
 
                 {role === 'admin' && (
-                  <li className="menu-item link-lateral " onClick={activeLink}>
+                  <li className="menu-item link-lateral link-lateral-histories ">
                     <span className="cartel">Historial de Trabajo</span>
 
                     <Link to="/works/histories/all">
                       <span className="icon">
-                        <i class="fas fa-history"></i>{' '}
+                        <i className="fas fa-history"></i>{' '}
                       </span>
                       <span className="title">Hist. Trab/Gastos</span>
                     </Link>

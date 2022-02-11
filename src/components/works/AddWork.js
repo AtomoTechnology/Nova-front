@@ -195,31 +195,23 @@ export const AddWork = ({ history, refresh, setRefresh }) => {
   // };
 
   return (
-    <div className="work-add">
-      <h3>Agregar Trabajo</h3>
+    <div className="work-add 2xl:w-2/5 2xl:m-auto 2xl:my-4 my-4">
       <form
         onSubmit={handleSubmitLogin}
         encType="multipart/form-data"
         method="POST"
-        className="work-add-form"
+        className="work-add-form shadow-xl  w-4/5 bg-white p-4"
       >
+        <h3 className="title-form">Agregar Trabajo</h3>
         <div className="grid-content">
           <div>
             <label>
               Marca
               <span className="text-red-600">*</span>
             </label>
-            <input
-              onChange={handleInputChange}
-              value={marca}
-              type="text"
-              name="marca"
-              placeholder="ingresa la marca"
-            />
+            <input onChange={handleInputChange} value={marca} type="text" name="marca" placeholder="ingresa la marca" />
             {errores.marca ? (
-              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-                La marca es obligatoria
-              </h5>
+              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">La marca es obligatoria</h5>
             ) : null}
           </div>
           <div>
@@ -235,9 +227,7 @@ export const AddWork = ({ history, refresh, setRefresh }) => {
               placeholder="ingresa el modelo"
             />
             {errores.modelo ? (
-              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-                El modelo es obligatoria
-              </h5>
+              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">El modelo es obligatoria</h5>
             ) : null}
           </div>
 
@@ -281,9 +271,7 @@ export const AddWork = ({ history, refresh, setRefresh }) => {
               </datalist>
             </div>
             {errores.cliente ? (
-              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-                Debe seleccionar un cliente
-              </h5>
+              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">Debe seleccionar un cliente</h5>
             ) : null}
           </div>
           <div>
@@ -303,9 +291,7 @@ export const AddWork = ({ history, refresh, setRefresh }) => {
               ))}
             </select>
             {errores.estado ? (
-              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-                El estado es obligatorio
-              </h5>
+              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">El estado es obligatorio</h5>
             ) : null}
           </div>
           <div>
@@ -318,7 +304,7 @@ export const AddWork = ({ history, refresh, setRefresh }) => {
               value={emei}
               type="text"
               name="emei"
-              placeholder="ingrese el email "
+              placeholder="ingrese el emei/nro serie "
               // min={1}
               // minLength={25}
             />
@@ -376,9 +362,7 @@ export const AddWork = ({ history, refresh, setRefresh }) => {
             {' '}
           </textarea>
           {errores.observaciones ? (
-            <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-              La(s) observaciones es obligatoria
-            </h5>
+            <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">La(s) observaciones es obligatoria</h5>
           ) : null}
           <label>Falla(s) Detectada(s)</label>
           <textarea
@@ -398,12 +382,7 @@ export const AddWork = ({ history, refresh, setRefresh }) => {
         </div>
         <div className="flex items-center">
           <label className="labelPassword">¿Tienes contraseña ?</label>
-          <input
-            onClick={changeCheckPassword}
-            name="tieneContrasena"
-            className="checkPassword"
-            type="checkbox"
-          />
+          <input onClick={changeCheckPassword} name="tieneContrasena" className="checkPassword" type="checkbox" />
         </div>
 
         <br />
@@ -411,12 +390,7 @@ export const AddWork = ({ history, refresh, setRefresh }) => {
           <div className="">
             <div className="flex items-center mb-1">
               <label className="labelPassword">¿Es patron ?</label>
-              <input
-                onClick={changeCheckPatron}
-                className="checkPatron"
-                name="checkPatron"
-                type="checkbox"
-              />
+              <input onClick={changeCheckPatron} className="checkPatron" name="checkPatron" type="checkbox" />
             </div>
 
             <div id="input-password">
@@ -448,12 +422,12 @@ export const AddWork = ({ history, refresh, setRefresh }) => {
                 onClick={(e) => {
                   setContraseña(passwordPatron + e.target.textContent);
                   values.patron = passwordPatron + e.target.textContent;
-                  e.target.classList.add('bg-blue-600');
+                  e.target.classList.add('bg-gray-800');
                   e.target.classList.add('text-gray-900');
                   e.target.classList.add('cursor-not-allowed');
                   e.target.classList.add('disabled');
                 }}
-                className=" flex justify-center m-auto dat w-12 h-12 flex items-center text-white justify-center cursor-pointer hover:bg-blue-600 duration-500 rounded-full bg-red-600"
+                className=" flex  m-auto dat w-12 h-12  items-center text-white justify-center cursor-pointer hover:bg-blue-600 duration-500 rounded-full bg-red-600"
               >
                 {n}
               </button>
@@ -461,9 +435,7 @@ export const AddWork = ({ history, refresh, setRefresh }) => {
           </div>
         )}
         {patronError ? (
-          <h5 className="bg-red-100 text-red-800 p-2 mt-4 text-center">
-            La Contraseña es obligatoria
-          </h5>
+          <h5 className="bg-red-100 text-red-800 p-2 mt-4 text-center">La Contraseña es obligatoria</h5>
         ) : null}
 
         <br />
@@ -508,7 +480,7 @@ export const AddWork = ({ history, refresh, setRefresh }) => {
 				</div>
 				<br /> */}
 
-        <button className="btn" type="submit">
+        <button className="btn bg-red-500 hover:bg-red-800 jhm-shadow" type="submit">
           {loading ? 'Espere...' : '  Agregar Trabajo'}
         </button>
       </form>

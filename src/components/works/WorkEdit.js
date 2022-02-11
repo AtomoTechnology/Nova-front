@@ -42,7 +42,7 @@ export const WorkEdit = ({ match, history }) => {
     observaciones: work?.observaciones,
     descripcion: work?.descripcion,
     recargo: work?.recargo,
-    cliente: work?.cliente._id,
+    cliente: work?.cliente?._id,
     tieneContrasena: work?.tieneContrasena,
     esPatron: work?.esPatron,
     contrasena: work?.contrasena,
@@ -173,8 +173,9 @@ export const WorkEdit = ({ match, history }) => {
   };
   return (
     <div className="work-add relative">
-      <div className=" absolute left-0 top-0 text-center uppercase flex gap-2  ">
+      <div className=" absolute  left-0 top-0 text-center uppercase flex gap-2  ">
         <button
+          className="btn bg-gray-800 hover:bg-gray-900 "
           onClick={() => {
             history.goBack();
           }}
@@ -182,33 +183,25 @@ export const WorkEdit = ({ match, history }) => {
           Volver
         </button>
       </div>
-      <h3>
-        Editar Trabajo
-        <span className="underline text-blue-600 ml-1">{work?.codigo}</span>
-      </h3>
       <form
         onSubmit={handleSubmitLogin}
         encType="multipart/form-data"
         method="POST"
-        className="work-add-form"
+        className="work-add-form bg-white p-8 mt-12 odd: w-4/5"
       >
+        <h3 className="title-form">
+          Editar Trabajo
+          <span className="underline text-blue-600 ml-1">{work?.codigo}</span>
+        </h3>
         <div className="grid-content">
           <div>
             <label>
               Marca
               <span className="text-red-600">*</span>
             </label>
-            <input
-              onChange={handleInputChange}
-              value={marca}
-              type="text"
-              name="marca"
-              placeholder="ingresa la marca"
-            />
+            <input onChange={handleInputChange} value={marca} type="text" name="marca" placeholder="ingresa la marca" />
             {errores.marca ? (
-              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-                La marca es obligatoria
-              </h5>
+              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">La marca es obligatoria</h5>
             ) : null}
           </div>
           <div>
@@ -224,9 +217,7 @@ export const WorkEdit = ({ match, history }) => {
               placeholder="ingresa el modelo"
             />
             {errores.modelo ? (
-              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-                El modelo es obligatoria
-              </h5>
+              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">El modelo es obligatoria</h5>
             ) : null}
           </div>
 
@@ -250,13 +241,7 @@ export const WorkEdit = ({ match, history }) => {
 									</option>
 								))}
 							</select> */}
-              <input
-                type="text"
-                value={cliente}
-                onChange={handleInputChange}
-                name="cliente"
-                list="clientes"
-              />
+              <input type="text" value={cliente} onChange={handleInputChange} name="cliente" list="clientes" />
               <datalist name="cliente" id="clientes">
                 <option value="" disabled>
                   Elegir un cliente
@@ -269,9 +254,7 @@ export const WorkEdit = ({ match, history }) => {
               </datalist>
             </div>
             {errores.cliente ? (
-              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-                Debe seleccionar un cliente
-              </h5>
+              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">Debe seleccionar un cliente</h5>
             ) : null}
           </div>
           <div>
@@ -290,9 +273,7 @@ export const WorkEdit = ({ match, history }) => {
               ))}
             </select>
             {errores.estado ? (
-              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-                El estado es obligatorio
-              </h5>
+              <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">El estado es obligatorio</h5>
             ) : null}
           </div>
           <div>
@@ -300,14 +281,7 @@ export const WorkEdit = ({ match, history }) => {
               Emei / Serie
               {/* <span className="text-red-600">*</span> */}
             </label>
-            <input
-              onChange={handleInputChange}
-              value={emei}
-              type="number"
-              name="emei"
-              min={1}
-              minLength={25}
-            />
+            <input onChange={handleInputChange} value={emei} type="number" name="emei" min={1} minLength={25} />
             {/* {errores.emei ? (
 							<h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
 								El emei es obligatoria, debe tener 15 numeros
@@ -320,33 +294,15 @@ export const WorkEdit = ({ match, history }) => {
               {' '}
               <div>
                 <label>recargo</label>
-                <input
-                  value={recargo}
-                  onChange={handleInputChange}
-                  type="text"
-                  name="recargo"
-                  min={0}
-                />
+                <input value={recargo} onChange={handleInputChange} type="text" name="recargo" min={0} />
               </div>
               <div>
                 <label>precio</label>
-                <input
-                  value={precio}
-                  onChange={handleInputChange}
-                  type="text"
-                  name="precio"
-                  min={0}
-                />
+                <input value={precio} onChange={handleInputChange} type="text" name="precio" min={0} />
               </div>
               <div>
                 <label>descuento</label>
-                <input
-                  onChange={handleInputChange}
-                  type="text"
-                  name="descuento"
-                  value={descuento}
-                  min={0}
-                />
+                <input onChange={handleInputChange} type="text" name="descuento" value={descuento} min={0} />
               </div>
             </>
           )}
@@ -360,16 +316,10 @@ export const WorkEdit = ({ match, history }) => {
             {' '}
           </textarea>
           {errores.observaciones ? (
-            <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-              La(s) observaciones es obligatoria
-            </h5>
+            <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">La(s) observaciones es obligatoria</h5>
           ) : null}
           <label>Falla(s) Detectada(s)</label>
-          <textarea
-            value={fachasEncontradas}
-            onChange={handleInputChange}
-            name="fachasEncontradas"
-          />
+          <textarea value={fachasEncontradas} onChange={handleInputChange} name="fachasEncontradas" />
 
           <label>Descripción del trabajo a realizar</label>
           <textarea value={descripcion} onChange={handleInputChange} name="descripcion" />
@@ -385,12 +335,7 @@ export const WorkEdit = ({ match, history }) => {
 
         <div className="flex items-center">
           <label className="labelPassword">¿Tienes contraseña ?</label>
-          <input
-            onClick={changeCheckPassword}
-            name="tieneContrasena"
-            className="checkPassword"
-            type="checkbox"
-          />
+          <input onClick={changeCheckPassword} name="tieneContrasena" className="checkPassword" type="checkbox" />
         </div>
 
         <br />
@@ -398,12 +343,7 @@ export const WorkEdit = ({ match, history }) => {
           <div className="">
             <div className="flex items-center mb-1">
               <label className="labelPassword">¿Es patron ?</label>
-              <input
-                onClick={changeCheckPatron}
-                className="checkPatron"
-                name="checkPatron"
-                type="checkbox"
-              />
+              <input onClick={changeCheckPatron} className="checkPatron" name="checkPatron" type="checkbox" />
             </div>
 
             <div id="input-password">
@@ -440,7 +380,7 @@ export const WorkEdit = ({ match, history }) => {
                   e.target.classList.add('cursor-not-allowed');
                   e.target.classList.add('disabled');
                 }}
-                className=" flex justify-center m-auto dat w-12 h-12 flex items-center text-white justify-center cursor-pointer hover:bg-blue-600 duration-500 rounded-full bg-red-600"
+                className="justify-center m-auto dat w-12 h-12 flex items-center text-white cursor-pointer hover:bg-blue-600 duration-500 rounded-full bg-red-600"
               >
                 {n}
               </button>
@@ -448,9 +388,7 @@ export const WorkEdit = ({ match, history }) => {
           </div>
         )}
         {patronError ? (
-          <h5 className="bg-red-100 text-red-800 p-2 mt-4 text-center">
-            La Contraseña es obligatoria
-          </h5>
+          <h5 className="bg-red-100 text-red-800 p-2 mt-4 text-center">La Contraseña es obligatoria</h5>
         ) : null}
 
         <br />
@@ -495,7 +433,7 @@ export const WorkEdit = ({ match, history }) => {
 				</div>
 				<br /> */}
 
-        <button className="btn" type="submit">
+        <button disabled={loading} className="btn bg-red-500 hover:bg-red-700" type="submit">
           {loading ? 'Espere...' : '  Guardar Trabajo '}
         </button>
       </form>

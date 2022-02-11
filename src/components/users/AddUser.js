@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { startCreatingClient } from '../../action/clientsAction';
 import { useForm } from '../../hooks/useForm';
+import logo from '../../templatePics/logo03.png';
 
 export const AddUser = ({ history }) => {
   const dispatch = useDispatch();
@@ -27,8 +28,7 @@ export const AddUser = ({ history }) => {
     role: 'user',
   });
 
-  let { name, dni, phone1, phone2, direction, nota, password, passwordConfirm, email, role } =
-    values;
+  let { name, dni, phone1, phone2, direction, nota, password, passwordConfirm, email, role } = values;
 
   const imageChange = (e) => {
     // setFile(e.target.files[0]);
@@ -106,9 +106,17 @@ export const AddUser = ({ history }) => {
   };
 
   return (
-    <div className="user-add my-2 ">
-      <h3 className="text-lg">Crear Cuenta</h3>
-      <form onSubmit={handleCreateClient} className="user-add-form  rounded">
+    <div className="user-add py-4 bg-gray-800 ">
+      <div
+        onClick={() => {
+          history.push('/index');
+        }}
+        className="header-logo hover:shadow-lg mt-8 bg-white cursor-pointer"
+      >
+        <img src={logo} width="45" alt="Nova Technology" />
+      </div>
+      <form onSubmit={handleCreateClient} className="user-add-form rounded p-4">
+        <h3 className="title-form">Crear tu Cuenta</h3>
         <div className="form-grid">
           <div>
             <label>
@@ -123,9 +131,7 @@ export const AddUser = ({ history }) => {
               className="shadow"
             />
             {errores.name ? (
-              <span className="text-red-500 text-center bg-red-100 p-1">
-                El nombre es obligatorio
-              </span>
+              <span className="text-red-500 text-center bg-red-100 p-1">El nombre es obligatorio</span>
             ) : null}{' '}
           </div>
           <div>
@@ -141,13 +147,13 @@ export const AddUser = ({ history }) => {
               className="shadow"
             />
             {errores.dni ? (
-              <span className="text-red-500 text-center bg-red-100 p-1">
-                El dni es obligatorio. [8 , 11] digitos
-              </span>
+              <span className="text-red-500 text-center bg-red-100 p-1">El dni es obligatorio. [8 , 11] digitos</span>
             ) : null}
           </div>
           <div>
-            <label>Correo</label>
+            <label>
+              Correo <span className="text-red-600">*</span>
+            </label>
             <input
               className="shadow"
               onChange={handleInputChange}
@@ -157,9 +163,7 @@ export const AddUser = ({ history }) => {
               placeholder="Ingrese su correo electronico"
             />
             {errores.email ? (
-              <span className="text-red-500 text-center bg-red-100 p-1">
-                El email es obligatorio y debe ser valido
-              </span>
+              <span className="text-red-500 text-center bg-red-100 p-1">El email es obligatorio y debe ser valido</span>
             ) : null}
           </div>
           {auth.role === 'admin' && (
@@ -224,9 +228,7 @@ export const AddUser = ({ history }) => {
               placeholder="Repetir contraseña"
             />
             {errores.passwordConfirm ? (
-              <span className="text-red-500 text-center bg-red-100 p-1">
-                Las Contraseñas no coinciden
-              </span>
+              <span className="text-red-500 text-center bg-red-100 p-1">Las Contraseñas no coinciden</span>
             ) : null}
           </div>
 
@@ -291,16 +293,13 @@ export const AddUser = ({ history }) => {
         </div> */}
         {/* <img className="w-32 imgLoad" alt="loading " /> */}
         <br />
-        <button disabled={addingUser} className="btn shadow-lg" type="submit">
-          {addingUser ? 'agregando Usuario' : ' Agregar Cliente'}
+        <button disabled={addingUser} className="btn jhm-shadow bg-red-500 hover:bg-red-700" type="submit">
+          {addingUser ? 'Creando cuenta...' : 'Crear Cuenta'}
         </button>
-        <div className="register-section text-sx text-blue-600 text-center ">
+        <div className="register-section my-4 text-sx text-blue-600 text-center ">
           <span className="text-sm">
             ¿Ya tiene una cuenta ?
-            <Link
-              to="/login"
-              className="text-pink-800 ml-1 hover:text-pink-700 hover:shadow hover:bg-gray-300 p-1"
-            >
+            <Link to="/login" className="text-pink-800 ml-1 hover:text-pink-700 hover:shadow hover:underline p-1">
               Inicia Session
             </Link>
           </span>

@@ -180,7 +180,6 @@ export const Histories = () => {
           </div>
         </div>
       </div>
-      <span className="title-header">historiales Trabajos/Gastos</span>
 
       <div className="search search-histories p-3 mt-2  sticky bg-white">
         <h1 className="text-4xl text-green-500 mb-1  p-1 ">Filtrar</h1>
@@ -225,7 +224,7 @@ export const Histories = () => {
         <div className="">
           <div onClick={toggleEntregados} className="entregados-header gastos-header">
             <span>Trab. Entregados</span>
-            <i class="fas fa-angle-double-down"></i>
+            <i className="fas fa-angle-double-down"></i>
           </div>
           <table className="shadow-md work-entregados active">
             <thead className="bg-green-300 p-3">
@@ -245,10 +244,10 @@ export const Histories = () => {
           </table>
           <div onClick={toggleGastos} className="gastos-header">
             <span>Gastos</span>
-            <i class="fas fa-angle-double-down"></i>
+            <i className="fas fa-angle-double-down"></i>
             <div onClick={openModalAddOutgoing} className="add-gastos-flotante cursor-pointer">
               <div to="#">
-                <i class="fas fa-plus-circle"></i>
+                <i className="fas fa-plus-circle"></i>
                 <span className="agregar-gasto">Agregar Gastos</span>
               </div>
             </div>
@@ -284,7 +283,7 @@ export const Histories = () => {
         <div className="">
           <div onClick={toggleEntregados} className="entregados-header gastos-header">
             <span>Trab. Entregados</span>
-            <i class="fas fa-angle-double-down"></i>
+            <i className="fas fa-angle-double-down"></i>
           </div>
           <table className="shadow-md work-entregados active">
             <thead className="bg-green-300 p-3">
@@ -304,10 +303,10 @@ export const Histories = () => {
           </table>
           <div onClick={toggleGastos} className="gastos-header">
             <span>Gastos</span>
-            <i class="fas fa-angle-double-down"></i>
+            <i className="fas fa-angle-double-down"></i>
             <div onClick={openModalAddOutgoing} className="add-gastos-flotante cursor-pointer">
               <div to="#">
-                <i class="fas fa-plus-circle"></i>
+                <i className="fas fa-plus-circle"></i>
                 <span className="agregar-gasto">Agregar Gastos</span>
               </div>
             </div>

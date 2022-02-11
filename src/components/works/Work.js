@@ -72,16 +72,16 @@ export const Work = ({ work, history }) => {
           <div className="header-action  relative">
             <i
               onClick={toogleHeaderAction}
-              class="fas fa-ellipsis-v rounded cursor-pointer w-8 h-8 shadow bg-gray-100  flex justify-center items-center hover:shadow-md hover:rounded-full hover:bg-blue-100"
+              className="fas fa-ellipsis-v rounded cursor-pointer w-8 h-8 shadow bg-gray-100  flex justify-center items-center hover:shadow-md hover:rounded-full hover:bg-blue-100"
             ></i>
             <div className="hidden absolute flex justify-center gap-2 items-center right-0 p-1 bg-gray-100  shadow  ">
               <span className="w-8 h-8 rounded-full cursor-pointer hover:shadow-md hover:text-red-500  text-red-700  shadow p-1 flex justify-center items-center text-center bg-white">
-                <i class="fas fa-trash " onClick={DeleteWorkById}></i>
+                <i className="fas fa-trash " onClick={DeleteWorkById}></i>
               </span>
               {/* <span className="w-8 h-8 text-gray-700 cursor-pointer hover:shadow-md hover:text-gray-500 rounded-full shadow p-1 flex justify-center items-center text-center bg-white">
                 <Link to={'/work/edit/' + work?._id}>
                   <i
-                    class="fas fa-edit  "
+                    className="fas fa-edit  "
                     // onClick={() => {
                     //   history.push(`/work/edit/${work?._id}`);
                     // }}
@@ -89,7 +89,7 @@ export const Work = ({ work, history }) => {
                 </Link>
               </span> */}
               {/* <span className="w-8 h-8 text-yellow-700 cursor-pointer hover:shadow-md hover:text-yellow-500 rounded-full shadow p-1 flex justify-center items-center text-center bg-white">
-                <i class="fas fa-trash"></i>
+                <i className="fas fa-trash"></i>
               </span> */}
             </div>
           </div>
@@ -98,7 +98,7 @@ export const Work = ({ work, history }) => {
       <Link to={`/works/${work._id}`} className="title p-1">
         <span className={'capitalize text-' + color}>
           {work?.marca + ' - ' + work?.modelo}
-          {work?.tieneContrasena && <i class="fas fa-lock work-lock"></i>}
+          {work?.tieneContrasena && <i className="fas fa-lock work-lock"></i>}
         </span>
       </Link>
       <div className="observaciones p-1">

@@ -138,7 +138,7 @@ export const GetWork = ({ match, history }) => {
           }}
           className="text-white w-8 h-8 bg-gray-600 p-1 rounded-full hover:bg-gray-800 "
         >
-          <i class="fas fa-arrow-circle-left"></i>
+          <i className="fas fa-arrow-circle-left"></i>
         </button>
         {role !== 'user' && (
           <>
@@ -146,13 +146,13 @@ export const GetWork = ({ match, history }) => {
               to={`/work/edit/${workId}`}
               className="text-white bg-pink-600 p-1 w-8 h-8 rounded-full hover:bg-pink-800  "
             >
-              <i class="fas fa-edit"></i>
+              <i className="fas fa-edit"></i>
             </Link>
             <button
               onClick={DeleteWorkById}
               className="text-white w-8 h-8 bg-red-600 p-1 rounded-full hover:bg-red-800 "
             >
-              <i class="fas fa-trash"></i>
+              <i className="fas fa-trash"></i>
             </button>
           </>
         )}

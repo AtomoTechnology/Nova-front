@@ -113,22 +113,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #e8e8e8;
   width: 100%;
   flex-direction: column;
   gap: 1rem;
-  // height: 90vh;
-  h3 {
-    color: $color-primary;
-    font-size: 25px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-align: center;
-    margin: 5px 0px;
-    // background-color: aqua;
-  }
   form {
-    // box-shadow: $shadow;
     background-color: white;
     box-shadow: 1px 1px 20px #11182724;
     width: 70%;
@@ -141,27 +129,6 @@
         display: flex;
         flex-direction: column;
         gap: 4px;
-      }
-    }
-    // background-color: #fff;
-
-    // align-items: center;
-    padding: 10px;
-    // box-shadow: 1px 1px 10px rgba(214, 213, 213, 0.7);
-
-    label {
-      display: block;
-      color: $gray;
-      font-size: 17px;
-      text-transform: capitalize;
-    }
-    input {
-      // border-bottom: 2px solid $gray;
-    }
-    button {
-      background-color: $color-primary;
-      &:hover {
-        background-color: darken($color: $color-primary, $amount: 10);
       }
     }
   }
@@ -178,10 +145,7 @@
   border-top: 10px solid #ff3d1b;
   border-radius: 4px;
 }
-.result-search {
-  // box-shadow: 1px 1px 10px rgba(214, 213, 213, 0.7);
-  // background: #f9f9fb;
-}
+
 #searchClientInput {
   color: rgb(1, 8, 37);
 }
@@ -354,19 +318,6 @@
   }
 }
 
-.title-header {
-  font-size: 25px;
-  // font-family: 'Teko';
-  text-transform: uppercase;
-  background: rgb(241, 241, 241);
-  background-color: $color-primary;
-  text-align: center;
-  color: white;
-  padding: 5px;
-  box-shadow: $shadow;
-  margin: 10px 0px !important;
-}
-
 // user edit form
 .edit-client {
   position: fixed;
@@ -500,7 +451,7 @@
   width: 100%;
   span {
     font-size: 50px;
-    font-weight: 500;
+    font-weight: 700;
     text-align: center;
     text-transform: uppercase;
   }

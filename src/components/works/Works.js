@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAllWorks } from '../../action/worksAction';
-import { fetchWithToken } from '../../helpers/fetchWithOutToken';
 import { useForm } from '../../hooks/useForm';
 import { SmallLoading } from '../SmallLoading';
 import { Work } from './Work';
@@ -18,22 +17,11 @@ export const Works = ({ history }) => {
   const [idChange, setIdChange] = useState(null);
   const [limit, setLimit] = useState(50);
   const [actualPage, setPage] = useState(1);
-  const [allWork, setAllWork] = useState([]);
-  //   const [works, setWorks] = useState([]);
-  // const LoadWorks = () => {
-  //   console.log(limit, actualPage);
-  //   setPage(actualPage + 1);
-  //   setLoadingWorks(true);
-  // };
 
   useEffect(async () => {
-    // setLoadingWorks(true);
+    setLoadingWorks(true);
     dispatch(getAllWorks(limit, actualPage));
-    // const works = await fetchWithToken(`works`);
-    // const body = await works.json();
-    // setAllWork(body.data.works);
     setResult([]);
-
     setLoadingWorks(false);
   }, [dispatch, limit, actualPage, setLoadingWorks, loadingWorks]);
   const { works, total, page, results } = useSelector((state) => state.works);
@@ -46,15 +34,14 @@ export const Works = ({ history }) => {
     }
   }, [estado]);
 
-  console.log(result, works);
   useEffect(() => {
-    // setResult(works);
     if (codigo !== '') {
       setResult(works.filter((w) => w.codigo.includes(codigo)));
     } else {
       setResult([]);
     }
   }, [codigo]);
+
   const stateArray = [
     'Revision',
     'Presupuesto',
@@ -94,7 +81,7 @@ export const Works = ({ history }) => {
               Indica la pagina que quieres acceder
             </span>
           </div>
-          {/* <i class="fas fa-filter w-8 h-8 rounded-full shadow flex items-center justify-center bg-red-700 text-white cursor-pointer hover:bg-red-800 hover:shadow-md "></i> */}
+          {/* <i className="fas fa-filter w-8 h-8 rounded-full shadow flex items-center justify-center bg-red-700 text-white cursor-pointer hover:bg-red-800 hover:shadow-md "></i> */}
         </div>
 
         <div className="overflow-hidden  my-1 ">
@@ -128,7 +115,7 @@ export const Works = ({ history }) => {
         </div>
 
         <div className="limit-box">
-          <span>Limit</span>
+          {/* <span>Limit</span> */}
           <select
             className=""
             name="limit"
@@ -138,6 +125,9 @@ export const Works = ({ history }) => {
             }}
             value={limit}
           >
+            <option value="" disabled>
+              Limite
+            </option>
             <option value="10">10</option>
             <option value="20">20</option>
             <option value="30">30</option>
@@ -148,7 +138,7 @@ export const Works = ({ history }) => {
       </div>
       <div className="add-client-flotante">
         <Link to="/work/add">
-          <i class="fas fa-plus-circle"></i>
+          <i className="fas fa-plus-circle"></i>
         </Link>
       </div>
 
@@ -177,52 +167,55 @@ export const Works = ({ history }) => {
         </button>
       </div> */}
 
-      <div className="pagination">
-        <ul className="pagination-list">
-          <li
-            onClick={() => {
-              if (actualPage > 0) setPage(actualPage - 1);
-            }}
-            className="pagination-item-previous cursor-pointer mr-2 hover:text-green-700"
-          >
-            <i class="fas fa-angle-left p-2 rounded-full shadow w-8 h-8 text-2xl text-white flex items-center bg-blue-600 hover:shadow-md hover:bg-red-700 "></i>
-          </li>
-
-          {[1, 2, 3, 4].map((el) => (
-            <li className="pagination-item" key={el} onClick={() => setPage(el)}>
-              {el}
+      {page > 1 && (
+        <div className="pagination">
+          <ul className="pagination-list">
+            <li
+              onClick={() => {
+                if (actualPage > 0) setPage(actualPage - 1);
+              }}
+              className="pagination-item-previous cursor-pointer mr-2 hover:text-green-700"
+            >
+              <i className="fas fa-angle-left p-2 rounded-full shadow w-8 h-8 text-2xl text-white flex items-center bg-blue-600 hover:shadow-md hover:bg-red-700 "></i>
             </li>
-          ))}
 
-          <li>...</li>
-          <li
-            className="pagination-item"
-            key={Math.ceil(arrayPage[arrayPage.length - 1] / 2)}
-            onClick={() => setPage(Math.ceil(arrayPage[arrayPage.length - 1] / 2))}
-          >
-            {Math.ceil(arrayPage[arrayPage.length - 1] / 2)}
-          </li>
+            {page > 3 && (
+              <>
+                {[1, 2, 3].map((el) => (
+                  <li className="pagination-item" key={el} onClick={() => setPage(el)}>
+                    {el}
+                  </li>
+                ))}
+                <li>...</li>
+                <li
+                  className="pagination-item"
+                  key={Math.ceil(arrayPage[arrayPage.length - 1] / 2)}
+                  onClick={() => setPage(Math.ceil(arrayPage[arrayPage.length - 1] / 2))}
+                >
+                  {Math.ceil(arrayPage[arrayPage.length - 1] / 2)}
+                </li>
+                <li>...</li>
+                <li
+                  className="pagination-item"
+                  key={arrayPage[arrayPage.length - 1]}
+                  onClick={() => setPage(arrayPage[arrayPage.length - 1])}
+                >
+                  {arrayPage[arrayPage.length - 1]}
+                </li>
+              </>
+            )}
 
-          <li>...</li>
-
-          <li
-            className="pagination-item"
-            key={arrayPage[arrayPage.length - 1]}
-            onClick={() => setPage(arrayPage[arrayPage.length - 1])}
-          >
-            {arrayPage[arrayPage.length - 1]}
-          </li>
-
-          <li
-            onClick={() => {
-              if (actualPage < page) setPage(actualPage + 1);
-            }}
-            className="pagination-item-next cursor-pointer ml-2 hover:text-pink-700"
-          >
-            <i class="fas fa-angle-right  p-2 rounded-full shadow w-8 h-8 text-2xl text-white flex items-center bg-blue-600 hover:shadow-md hover:bg-red-700"></i>
-          </li>
-        </ul>
-      </div>
+            <li
+              onClick={() => {
+                if (actualPage < page) setPage(actualPage + 1);
+              }}
+              className="pagination-item-next cursor-pointer ml-2 hover:text-pink-700"
+            >
+              <i className="fas fa-angle-right  p-2 rounded-full shadow w-8 h-8 text-2xl text-white flex items-center bg-blue-600 hover:shadow-md hover:bg-red-700"></i>
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
