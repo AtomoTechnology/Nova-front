@@ -5,7 +5,7 @@ import { updatePassword } from '../../action/authAction';
 import { useForm } from '../../hooks/useForm';
 import { SmallLoading } from '../SmallLoading';
 
-export const UpdatePassword = () => {
+const UpdatePassword = () => {
   const dispatch = useDispatch();
   const [values, handleInputChange, reset] = useForm({
     currentPassword: '',
@@ -56,12 +56,7 @@ export const UpdatePassword = () => {
     <div className="update-password">
       <form onSubmit={handleSubmitLogin} className="update-password-form">
         <label>Actual contraseña</label>
-        <input
-          value={currentPassword}
-          onChange={handleInputChange}
-          type="password"
-          name="currentPassword"
-        />
+        <input value={currentPassword} onChange={handleInputChange} type="password" name="currentPassword" />
         {errores.currentPassword ? (
           <span className="update-password-error block my-1 text-red-500 text-center bg-red-100 p-1">
             Ingresa su contraseña vieja{' '}
@@ -75,12 +70,7 @@ export const UpdatePassword = () => {
           </span>
         ) : null}{' '}
         <label>Confirma Contraseña</label>
-        <input
-          value={passwordConfirm}
-          onChange={handleInputChange}
-          type="password"
-          name="passwordConfirm"
-        />
+        <input value={passwordConfirm} onChange={handleInputChange} type="password" name="passwordConfirm" />
         {errores.passwordConfirm ? (
           <span className="update-password-error block my-1 text-red-500 text-center bg-red-100 p-1">
             Las contraseñas no coinciden
@@ -94,3 +84,4 @@ export const UpdatePassword = () => {
     </div>
   );
 };
+export default UpdatePassword;

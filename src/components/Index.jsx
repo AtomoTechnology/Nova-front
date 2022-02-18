@@ -1,21 +1,36 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logoNova from './../templatePics/logoNovaSmall.png';
 import bg from './../templatePics/bg.jpg';
 import bgwhite from './../templatePics/logoNovaWhite.png';
+import man from './../templatePics/man.jpg';
+import fiveg from './../templatePics/5g.jpg';
+import repair from './../templatePics/repair.jpg';
 import $ from 'jquery';
-export const Index = () => {
-  const nextImg = () => {
-    const banner = document.querySelector('#banner-content-imgs');
-    banner.scrollLeft += Math.ceil(banner.offsetWidth);
-  };
+import { fetchWithOutToken, fetchWithToken } from '../helpers/fetchWithOutToken';
 
-  const previosImg = () => {
-    const banner = document.querySelector('#banner-content-imgs');
-    banner.scrollLeft -= Math.ceil(banner.offsetWidth);
-  };
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { Pagination, Navigation } from 'swiper';
+import { Banner } from './Banner';
+
+export const Index = () => {
+  const [banners, setBanners] = useState([]);
+  useEffect(async () => {
+    const res = await fetchWithOutToken('banners');
+    const body = await res.json();
+    setBanners(body.data.banners);
+    console.log(body.data.banners);
+  }, []);
+
   return (
     <div className="index">
+      <Banner />
+
       <div className="welcome flex justify-around items-center p-2 bg-gray-800 text-white">
         <div className="">
           <span>Horario de atención: Lunes‑Viernes 09:30‑17:30</span>
@@ -43,7 +58,7 @@ export const Index = () => {
           </a>
         </div>
       </div>
-      <div className="flex justify-between p-2 items-center gap-2 w-full bg-gray-100 sticky top-0">
+      <div className="flex justify-between p-2 items-center z-20 gap-2 w-full bg-gray-100 sticky top-0">
         <div className="flex gap-3 justify-around items-center">
           <div
             onClick={() => {
@@ -92,25 +107,24 @@ export const Index = () => {
       </div>
 
       {/* //banner  */}
-      <div className="banner -z-10 w-11/12 flex flex-col  relative my-2 m-auto bg-white shadow-lg " id="banner">
-        <div className="banner-text relative z-10 sm:absolute sm:top-2/4 sm:left-1/5 sm:translate-x-1/2   sm:-translate-y-1/2 sm:w-80 p-4 shadow-2xl rounded-sm  bg-white">
-          <span className="">
-            In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual
-            form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a
-            placeholder before the final copy is available.
-          </span>
-        </div>
-        {/* <div className="btn-banner absolute  flex justify-between h-full items-center ">
-          <button onClick={previosImg} className="btn-shadow w-8 h-8 p-1 rounded-full">
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <button onClick={nextImg} className="btn-shadow w-8 h-8 p-1 rounded-full">
-            <i className="fas fa-chevron-right"></i>
-          </button>
-        </div> */}
-        <div id="banner-content-imgs" className="banner-content items-center relative flex">
-          <img src={bg} alt="" />
-        </div>
+      <div className="banner  w-11/12 my-2 m-auto bg-white shadow-lg " id="banner">
+        {/* <div id="banner-content-imgs" className="banner-content items-center relative flex"> */}
+        <Swiper
+          pagination={{
+            type: 'fraction',
+          }}
+          navigation={true}
+          modules={[Pagination, Navigation]}
+          className="mySwiper h-96"
+        >
+          {banners.map((b) => (
+            <SwiperSlide>
+              <img src={b.photo} alt={b.id} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        {/* </div> */}
       </div>
 
       {/* //services  */}

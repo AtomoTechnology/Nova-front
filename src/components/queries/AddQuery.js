@@ -4,7 +4,7 @@ import { fetchWithToken } from '../../helpers/fetchWithOutToken';
 import { useForm } from '../../hooks/useForm';
 import { showAlert } from '../alerts';
 
-export const AddQuery = ({ history }) => {
+const AddQuery = ({ history }) => {
   console.log(history);
   const [values, handleInputChange, reset] = useForm({ message: '' });
   const [ok, setOk] = useState(true);
@@ -74,3 +74,4 @@ export const AddQuery = ({ history }) => {
     </div>
   );
 };
+export default AddQuery;

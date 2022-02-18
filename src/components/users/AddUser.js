@@ -5,7 +5,7 @@ import { startCreatingClient } from '../../action/clientsAction';
 import { useForm } from '../../hooks/useForm';
 import logo from '../../templatePics/logo03.png';
 
-export const AddUser = ({ history }) => {
+const AddUser = ({ history }) => {
   const dispatch = useDispatch();
   const [errores, setErrores] = useState([]);
   const [addingUser, setAddingUser] = useState(false);
@@ -308,3 +308,4 @@ export const AddUser = ({ history }) => {
     </div>
   );
 };
+export default AddUser;

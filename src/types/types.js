@@ -5,6 +5,7 @@ export const types = {
   logout: '[auth] start logout',
 
   getAllWorks: '[work] get all works',
+  getAllHistories: '[histories] get all works turned in',
   getAllOrders: '[order] get all orders',
   setOneWork: '[work] set one work',
 

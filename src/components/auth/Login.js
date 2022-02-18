@@ -49,7 +49,7 @@ export const Login = ({ history }) => {
     }
   };
   return (
-    <div className="auth__login bg-blue-500 w-full h-screen flex flex-col justify-center items-center gap-7 ">
+    <div className="auth__login bg-red-500 w-full h-screen flex flex-col justify-center items-center gap-7 ">
       <div
         onClick={() => {
           history.push('/index');

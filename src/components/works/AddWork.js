@@ -5,8 +5,7 @@ import { createWork, getAllWorks } from '../../action/worksAction';
 import { useForm } from '../../hooks/useForm';
 import { startGettingAllClient } from '../../action/clientsAction';
 import { GetStates } from '../../helpers/getStates';
-
-export const AddWork = ({ history, refresh, setRefresh }) => {
+const AddWork = ({ history, refresh, setRefresh }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(startGettingAllClient());
@@ -487,3 +486,4 @@ export const AddWork = ({ history, refresh, setRefresh }) => {
     </div>
   );
 };
+export default AddWork;

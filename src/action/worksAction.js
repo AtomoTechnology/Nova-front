@@ -25,6 +25,20 @@ export const getAllWorks = (limit, page = 1) => {
     } catch (error) {}
   };
 };
+export const GetHistories = () => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetchWithToken('works/historialWork/all');
+      const works = await resp.json();
+      console.log(works.data.data);
+      if (works.status === types.statusSuccess) {
+        dispatch(setHistories(works.data.data));
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+};
 
 export const getOneWork = (workId) => {
   return async (dispatch) => {
@@ -153,6 +167,12 @@ const setWorks = (works, total, page, results) => ({
     total,
     page,
     results,
+  },
+});
+const setHistories = (works) => ({
+  type: types.getAllHistories,
+  payload: {
+    works,
   },
 });
 const setWorkOne = (work) => ({

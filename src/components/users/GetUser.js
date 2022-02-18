@@ -11,7 +11,7 @@ import { updatePassword } from '../../action/authAction';
 import { WorkClient } from '../works/WorkClient';
 // import { fetchWithToken } from '../../helpers/fetchWithOutToken';
 
-export const GetUser = ({ match, history }) => {
+const GetUser = ({ match, history }) => {
   const [loadingWorkUser, setLoadingWorkUser] = useState(true);
   const [errores, setErrores] = useState([]);
   const { role, uid } = useSelector((state) => state.auth);
@@ -615,3 +615,4 @@ export const GetUser = ({ match, history }) => {
     </div>
   );
 };
+export default GetUser;

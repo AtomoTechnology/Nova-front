@@ -10,7 +10,7 @@ import moment from 'moment';
 import { GetStates } from '../../helpers/getStates';
 import Swal from 'sweetalert2';
 
-export const GetWork = ({ match, history }) => {
+const GetWork = ({ match, history }) => {
   const dispatch = useDispatch();
   // useEffect(() => {
   //   dispatch(startGettingAllClient());
@@ -229,10 +229,7 @@ export const GetWork = ({ match, history }) => {
               <p className="transition duration-1000 ease-in-out">
                 Observaciones : <br /> {work?.observaciones.slice(0, l)}
                 {work?.observaciones.length > 200 ? (
-                  <span
-                    onClick={handleObservaciones1}
-                    className="ver-mas cursor-pointer text-white duration-500"
-                  >
+                  <span onClick={handleObservaciones1} className="ver-mas cursor-pointer text-white duration-500">
                     ...Ver Más
                   </span>
                 ) : null}
@@ -265,9 +262,7 @@ export const GetWork = ({ match, history }) => {
 
       {work?.esPatron && (
         <div className="patron grid grid-cols-2 p-2 shadow my-2">
-          <div className="text-green-500 text-4xl text-center flex justify-center items-center">
-            {work?.patron}
-          </div>
+          <div className="text-green-500 text-4xl text-center flex justify-center items-center">{work?.patron}</div>
           <div className="patron grid grid-cols-3 gap-2 my-1">
             {numeros.map((n) => (
               <button
@@ -296,3 +291,4 @@ export const GetWork = ({ match, history }) => {
     </div>
   );
 };
+export default GetWork;

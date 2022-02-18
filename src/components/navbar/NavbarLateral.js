@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { startLogout } from '../../action/authAction';
 import NavaLogoWhite from '../../templatePics/logoNovaWhite.png';
 
-export const NavbarLateral = ({ history }) => {
+const NavbarLateral = ({ history }) => {
   const { role } = useSelector((state) => state.auth);
 
   useLayoutEffect(() => {
@@ -176,3 +176,5 @@ export const NavbarLateral = ({ history }) => {
     </div>
   );
 };
+
+export default NavbarLateral;

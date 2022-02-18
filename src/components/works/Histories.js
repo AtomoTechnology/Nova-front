@@ -6,6 +6,9 @@ import { SmallLoading } from '../SmallLoading';
 import { History } from './History';
 import Swal from 'sweetalert2';
 import { Gasto } from '../gastos/Gasto';
+import { useDispatch, useSelector } from 'react-redux';
+import { GetHistories } from '../../action/worksAction';
+import $ from 'jquery';
 
 const Toast = Swal.mixin({
   toast: true,
@@ -19,7 +22,7 @@ const Toast = Swal.mixin({
   },
 });
 const initialDate = moment(new Date()).format('YYYY-MM-DD');
-export const Histories = () => {
+const Histories = () => {
   const [works, setWorks] = useState([]);
   const [startDate, setStartDate] = useState(initialDate);
   const [endDate, setEndDate] = useState(initialDate);
@@ -28,21 +31,21 @@ export const Histories = () => {
   const [gastos, setGastos] = useState([]);
   const [gastosFiltrados, setGastosFiltrados] = useState([]);
   const [outGoingChange, setOutGoingChange] = useState(false);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    setLoadingHistories(true);
+    dispatch(GetHistories());
+    setLoadingHistories(false);
+  }, []);
+
+  const { histories } = useSelector((state) => state.histories);
+  console.log(histories);
   const [values, handleInputChange, reset] = useForm({
     description: '',
     amount: 0,
   });
   const { description, amount } = values;
-
-  useEffect(async () => {
-    const resp = await fetchWithToken('works/historialWork/all');
-    const works = await resp.json();
-    if (works.status === 'success') {
-      setWorks(works.data.data);
-    }
-    setLoadingHistories(false);
-  }, []);
 
   const handleEndtDate = (e) => {
     setEndDate(e.target.value);
@@ -63,7 +66,7 @@ export const Histories = () => {
   };
   useEffect(() => {
     setSearchWorks(
-      works.filter(
+      histories.filter(
         (w) =>
           moment(moment(w.fechaFin).format('YYYY-MM-DD')).isSameOrAfter(startDate) &&
           moment(moment(w.fechaFin).format('YYYY-MM-DD')).isSameOrBefore(endDate)
@@ -85,8 +88,8 @@ export const Histories = () => {
       total2 += wk.total;
     });
   }
-  if (works && works.length > 0) {
-    works.map((wk) => {
+  if (histories && histories.length > 0) {
+    histories.map((wk) => {
       total1 += wk.total;
     });
   }
@@ -144,6 +147,11 @@ export const Histories = () => {
   const toggleEntregados = () => {
     document.querySelector('.work-entregados').classList.toggle('active');
   };
+
+  const toggleFiterBox = () => {
+    $('.search-histories').toggleClass('hidden');
+  };
+
   return (
     <div>
       <div className="add-outgoing-box">
@@ -157,12 +165,7 @@ export const Histories = () => {
             <form onSubmit={agregarGasto}>
               <fieldset>
                 <label htmlFor="description">Descripcion</label>
-                <input
-                  type="text"
-                  name="description"
-                  onChange={handleInputChange}
-                  value={description}
-                />
+                <input type="text" name="description" onChange={handleInputChange} value={description} />
               </fieldset>
               <fieldset>
                 <label htmlFor="amount">Costo</label>
@@ -181,40 +184,44 @@ export const Histories = () => {
         </div>
       </div>
 
-      <div className="search search-histories p-3 mt-2  sticky bg-white">
-        <h1 className="text-4xl text-green-500 mb-1  p-1 ">Filtrar</h1>
-        <div className="flex box-input-filter mb-2 justify-between gap-1">
-          <div className="flex-grow relative">
-            <div className="start-day capitalize text-green-400 text-2xl">fecha Inicio</div>
-            <div className="relative">
-              <input
-                className="text-gray-900 bg-gray-200 rounded-none cursor-pointer"
-                type="Date"
-                value={startDate}
-                onChange={handleStartDate}
-              />
-              {/* <i
-                onClick={clearStartDate}
-                className="fas fa-times flex h-full items-center justify-center top-0  cursor-pointer ml-1 p-2 text-red-700 text-lg right-0 absolute"
-              ></i> */}
-            </div>
+      <i
+        onClick={toggleFiterBox}
+        class="fas fa-sliders-h m-2 sticky text-white cursor-pointer   top-12 hover:bg-red-600 p-2 shadow-lg filter-toggle "
+      ></i>
+      <div className="search search-histories top-0 w-full sm:!m-0 sm:top-12 sm:left-32 p-3 mt-2 hidden fixed sm:w-fit bg-white">
+        {/* <h1 className="text-4xl text-green-500 mb-1  p-1 ">Filtrar</h1> */}
+        <div className="flex flex-col gap-4 items-center  box-input-filter mb-2 justify-between">
+          <div className="relative bg-gray-200 flex w-full p-2 justify-center items-center">
+            {/* <div className="start-day capitalize text-green-400 text-2xl"> */}
+            {/* <i class="fas fa-calendar-alt"></i> */}
+            {/* </div> */}
+            {/* <div className="relative"> */}
+            <input
+              className="text-gray-900 p-0 bg-gray-200  rounded-none cursor-pointer"
+              type="Date"
+              value={startDate}
+              onChange={handleStartDate}
+            />
+            {/* </div> */}
+          </div>
+          <div className=" flex bg-gray-200 w-full p-2 justify-center items-center relative">
+            {/* <div className=" capitalize text-green-400 text-2xl">
+              <i class="fas fa-calendar-alt bg-gray-800"></i>
+            </div> */}
+            {/* <div className="relative"> */}
+            <input
+              className="text-gray-900 p-0 bg-gray-200  rounded-none cursor-pointer"
+              type="Date"
+              value={endDate}
+              onChange={handleEndtDate}
+            />
+
+            {/* </div> */}
           </div>
 
-          <div className="flex-grow relative">
-            <div className="end-day capitalize text-green-400 text-2xl">fecha Fin</div>
-            <div className="relative">
-              <input
-                className="text-gray-900 bg-gray-200 rounded-none cursor-pointer"
-                type="Date"
-                value={endDate}
-                onChange={handleEndtDate}
-              />
-              {/* <i
-                onClick={clearEndDate}
-                className="fas fa-times flex h-full items-center justify-center top-0  cursor-pointer ml-1 p-2 text-red-700 text-lg right-0 absolute"
-              ></i> */}
-            </div>
-          </div>
+          <button onClick={toggleFiterBox} className="btn w-full jhm-shadow bg-red-500">
+            OK
+          </button>
         </div>
       </div>
 
@@ -296,7 +303,7 @@ export const Histories = () => {
               </tr>
             </thead>
             <tbody>
-              {works.map((w) => (
+              {histories.map((w) => (
                 <History key={w._id} work={w} />
               ))}
             </tbody>
@@ -341,3 +348,4 @@ export const Histories = () => {
     </div>
   );
 };
+export default Histories;

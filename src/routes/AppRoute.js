@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
+import AddUser from '../components/users/AddUser';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import { startChecking } from '../action/authAction';
 import { Login } from '../components/auth/Login';
 import { Index } from '../components/Index';
 import { Loading } from '../components/Loading';
-import { AddUser } from '../components/users/AddUser';
 import { CheckState } from '../components/works/CheckState';
 import Dashboard from './Dashboard';
 import { PrivateRoute } from './PrivateRoute';

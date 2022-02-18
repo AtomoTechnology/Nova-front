@@ -28,7 +28,7 @@
     "redux-thunk": "^2.3.0",
     "sass": "^1.43.4",
     "sweetalert2": "^10.15.5",
-    "swiper": "^6.5.7",
+    "swiper": "^8.0.6",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

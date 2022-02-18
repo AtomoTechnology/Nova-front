@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getWorksClient, startGettingAllClient } from '../action/clientsAction';
@@ -9,11 +9,46 @@ import { SmallLoading } from './SmallLoading';
 import { WorkWithOut } from './works/WorkWithOut';
 import { Work } from './works/Work';
 
-export const Home = () => {
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+// import required modules
+import { Pagination, Navigation } from 'swiper';
+const Home = () => {
   const dispatch = useDispatch();
   const [workStates, setWorkStates] = useState([]);
   const [loadingWorkState, setLoadingWorkState] = useState(true);
   const { role, uid } = useSelector((state) => state.auth);
+
+  // useLayoutEffect(() => {
+  //   var swiper = new Swiper('.mySwiper', {
+  //     slidesPerView: 3,
+  //     spaceBetween: 10,
+  //     // init: false,
+  //     pagination: {
+  //       el: '.swiper-pagination',
+  //       clickable: true,
+  //     },
+  //     breakpoints: {
+  //       640: {
+  //         slidesPerView: 1,
+  //         spaceBetween: 10,
+  //       },
+  //       768: {
+  //         slidesPerView: 3,
+  //         spaceBetween: 30,
+  //       },
+  //       1024: {
+  //         slidesPerView: 5,
+  //         spaceBetween: 50,
+  //       },
+  //     },
+  //   });
+  // }, []);
 
   useEffect(() => {
     dispatch(startGettingAllClient());
@@ -63,9 +98,7 @@ export const Home = () => {
   const workWithoutChangeState = [];
 
   for (let i = 0; i < works.length; i++) {
-    let fecha = moment(
-      moment(works[i].states[works[i].states.length - 1]?.fecha).format('YYYY-MM-DD')
-    );
+    let fecha = moment(moment(works[i].states[works[i].states.length - 1]?.fecha).format('YYYY-MM-DD'));
     if (
       ahora.diff(fecha, 'days') >= 3 &&
       (works[i].states[works[i].states.length - 1].nombre === 'Revision' ||
@@ -76,16 +109,12 @@ export const Home = () => {
   }
 
   const GoToTheLeft = (e) => {
-    const carrouselLanguages = document.getElementById(
-      e.target.parentElement.parentElement.classList[0]
-    );
+    const carrouselLanguages = document.getElementById(e.target.parentElement.parentElement.classList[0]);
 
     carrouselLanguages.scrollLeft -= carrouselLanguages.offsetWidth;
   };
   const GoToTheRight = async (e) => {
-    const carrouselLanguages = document.getElementById(
-      e.target.parentElement.parentElement.classList[0]
-    );
+    const carrouselLanguages = document.getElementById(e.target.parentElement.parentElement.classList[0]);
     carrouselLanguages.scrollLeft += carrouselLanguages.offsetWidth;
   };
 
@@ -114,13 +143,7 @@ export const Home = () => {
         <a href="#worksaviso" className="works-avisos">
           <div className="works-content">
             <div className="content-left">
-              <span>
-                {loadingWorkState ? (
-                  <SmallLoading text="" size="small" />
-                ) : (
-                  workWithoutChangeState.length
-                )}
-              </span>
+              <span>{loadingWorkState ? <SmallLoading text="" size="small" /> : workWithoutChangeState.length}</span>
               <h3>Avisos</h3>
             </div>
             <i className="fas fa-flag text-red-700"></i>
@@ -141,7 +164,44 @@ export const Home = () => {
           <div id="worksaviso" className="home__section-recent-works shadow my-1 p-2">
             <h3 className="text-red-400">AVISO</h3>
 
-            <div>
+            <Swiper
+              // slidesPerView={4}
+              // spaceBetween={30}
+              // slidesPerGroup={3}
+              // loop={true}
+              // loopFillGroupWithBlank={true}
+              breakpoints={{
+                // when window width is >= 640px
+                500: {
+                  width: 500,
+                  slidesPerView: 1,
+                },
+
+                // when window width is >= 768px
+                768: {
+                  width: 768,
+                  slidesPerView: 2,
+                },
+                1200: {
+                  width: 1200,
+                  slidesPerView: 3,
+                },
+              }}
+              pagination={{
+                clickable: true,
+              }}
+              navigation={true}
+              modules={[Pagination, Navigation]}
+              className="mySwiper"
+            >
+              {workWithoutChangeState.map((wk) => (
+                <SwiperSlide>
+                  <WorkState key={wk?._id} work={wk} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            {/* <div>
               <div className="avisos" id="avisos">
                 <button
                   className="btn btn-left-carrousel"
@@ -159,7 +219,7 @@ export const Home = () => {
                   <i className="fa fa-angle-double-right" aria-hidden="true"></i>
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         )
       ) : (
@@ -172,7 +232,44 @@ export const Home = () => {
           <div id="worksconfirm" className="home__section-recent-works shadow my-1 p-2">
             <h3 className="text-red-400">Trabajos Terminados</h3>
 
-            <div>
+            <Swiper
+              // slidesPerView={4}
+              // spaceBetween={30}
+              // slidesPerGroup={3}
+              // loop={true}
+              // loopFillGroupWithBlank={true}
+              breakpoints={{
+                // when window width is >= 640px
+                500: {
+                  width: 500,
+                  slidesPerView: 1,
+                },
+
+                // when window width is >= 768px
+                768: {
+                  width: 768,
+                  slidesPerView: 2,
+                },
+                1200: {
+                  width: 1200,
+                  slidesPerView: 3,
+                },
+              }}
+              pagination={{
+                clickable: true,
+              }}
+              navigation={true}
+              modules={[Pagination, Navigation]}
+              className="mySwiper"
+            >
+              {confirmWorks.map((wk) => (
+                <SwiperSlide>
+                  <WorkWithOut key={wk?._id} work={wk} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            {/* <div>
               <div className="confirmados" id="confirmados">
                 <button
                   className="btn btn-left-carrousel"
@@ -190,7 +287,7 @@ export const Home = () => {
                   <i className="fa fa-angle-double-right" aria-hidden="true"></i>
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         )
         // :
@@ -203,10 +300,10 @@ export const Home = () => {
     <div className="works ">
       <span className="title-header"> Mis Trabajos </span>
       <div className="works-grid p-1 my-2">
-        {clientWorks.length >= 0
-          ? clientWorks.map((work) => <Work key={work._id} work={work} />)
-          : null}
+        {clientWorks.length >= 0 ? clientWorks.map((work) => <Work key={work._id} work={work} />) : null}
       </div>
     </div>
   );
 };
+
+export default Home;

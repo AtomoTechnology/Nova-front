@@ -6,7 +6,7 @@ import { useForm } from '../../hooks/useForm';
 import { SmallLoading } from '../SmallLoading';
 import { Work } from './Work';
 
-export const Works = ({ history }) => {
+const Works = ({ history }) => {
   const dispatch = useDispatch();
 
   const [values, handleInputChange] = useForm({ estado: '' });
@@ -42,14 +42,7 @@ export const Works = ({ history }) => {
     }
   }, [codigo]);
 
-  const stateArray = [
-    'Revision',
-    'Presupuesto',
-    'En Reparacion',
-    'Terminado',
-    'Entregado',
-    'Todos',
-  ];
+  const stateArray = ['Revision', 'Presupuesto', 'En Reparacion', 'Terminado', 'Entregado', 'Todos'];
 
   let arrayPage = [];
   for (let i = 1; i <= page; i++) {
@@ -86,12 +79,7 @@ export const Works = ({ history }) => {
 
         <div className="overflow-hidden  my-1 ">
           <form className="flex w-full flex-wrap lg:justify-center gap-y-2 flex-col sm:flex-row md:justify-between items-center sm:gap-x-2">
-            <select
-              className=" shadow  sm:w-min w-full"
-              name="estado"
-              onChange={handleInputChange}
-              value={estado}
-            >
+            <select className=" shadow  sm:w-min w-full" name="estado" onChange={handleInputChange} value={estado}>
               <option value="" disabled>
                 Filtrar por estado
               </option>
@@ -153,9 +141,7 @@ export const Works = ({ history }) => {
         <div className="works-grid p-1">
           {result.length <= 0
             ? works.map((work) => <Work history={history} key={work._id} work={work} />)
-            : result.map((work) => (
-                <Work idChange={idChange} setIdChange={setIdChange} key={work._id} work={work} />
-              ))}
+            : result.map((work) => <Work idChange={idChange} setIdChange={setIdChange} key={work._id} work={work} />)}
         </div>
       )}
       {/* <div className="load-works-box">
@@ -219,3 +205,4 @@ export const Works = ({ history }) => {
     </div>
   );
 };
+export default Works;

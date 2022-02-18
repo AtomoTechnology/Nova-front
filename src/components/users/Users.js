@@ -8,7 +8,7 @@ import { SmallLoading } from '../SmallLoading';
 import { User } from './User';
 // import { UserSearch } from './UserSearch';
 
-export const Users = () => {
+const Users = () => {
   const dispatch = useDispatch();
   // const [searchClient, setSearchClient] = useState("");
   const [searchClient, setSearchClient] = useState('');
@@ -28,9 +28,7 @@ export const Users = () => {
     setLoadingUser(true);
     setResult(
       clients.filter(
-        (cl) =>
-          cl.dni.includes(searchClient) ||
-          cl.name.toLowerCase().includes(searchClient.toLowerCase())
+        (cl) => cl.dni.includes(searchClient) || cl.name.toLowerCase().includes(searchClient.toLowerCase())
       )
     );
     setLoadingUser(false);
@@ -119,3 +117,5 @@ export const Users = () => {
     </div>
   );
 };
+
+export default Users;

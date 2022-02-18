@@ -10,7 +10,7 @@ import userChat from './../../templatePics/userchat.png';
 import Swal from 'sweetalert2';
 import $ from 'jquery';
 
-export const Queries = () => {
+const Queries = () => {
   const [queries, setQueries] = useState([]);
   const [selectedQuery, setSelectedQuery] = useState(null);
   const [response, setResponse] = useState('');
@@ -314,3 +314,4 @@ export const Queries = () => {
     </div>
   );
 };
+export default Queries;

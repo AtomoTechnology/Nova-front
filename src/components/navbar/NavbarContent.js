@@ -5,7 +5,7 @@ import { startLogout } from '../../action/authAction';
 import userLogo from '../../templatePics/userLogo.png';
 import userLogoAdmin from '../../templatePics/adminLogo.png';
 
-export const NavbarContent = () => {
+const NavbarContent = () => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(startLogout());
@@ -177,3 +177,5 @@ export const NavbarContent = () => {
     </div>
   );
 };
+
+export default NavbarContent;

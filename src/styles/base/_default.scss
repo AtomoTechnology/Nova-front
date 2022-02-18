@@ -9,15 +9,13 @@ body {
   background: #e8e8e8;
   font-weight: 500;
 }
-// a {
-// 	text-decoration: none;
-// 	cursor: pointer;
-// 	// color: rgb(189, 189, 189);
-// 	font-size: 16px;
-// 	&:hover {
-// 		text-decoration: none;
-// 	}
-// }
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 button {
   padding: 5px 10px;
   outline: none;

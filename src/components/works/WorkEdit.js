@@ -5,7 +5,7 @@ import { getOneWork, startEditWork } from '../../action/worksAction';
 import { fetchWithToken } from '../../helpers/fetchWithOutToken';
 import { startGettingAllClient } from '../../action/clientsAction';
 
-export const WorkEdit = ({ match, history }) => {
+const WorkEdit = ({ match, history }) => {
   const dispatch = useDispatch();
   const [errores, setErrores] = useState([]);
   const [patronError, setPatronError] = useState(false);
@@ -440,3 +440,4 @@ export const WorkEdit = ({ match, history }) => {
     </div>
   );
 };
+export default WorkEdit;
