@@ -3,9 +3,6 @@ import { Link, NavLink } from 'react-router-dom';
 import logoNova from './../templatePics/logoNovaSmall.png';
 import bg from './../templatePics/bg.jpg';
 import bgwhite from './../templatePics/logoNovaWhite.png';
-import man from './../templatePics/man.jpg';
-import fiveg from './../templatePics/5g.jpg';
-import repair from './../templatePics/repair.jpg';
 import $ from 'jquery';
 import { fetchWithOutToken, fetchWithToken } from '../helpers/fetchWithOutToken';
 
@@ -16,7 +13,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Pagination, Navigation } from 'swiper';
-import { Banner } from './Banner';
 
 export const Index = () => {
   const [banners, setBanners] = useState([]);
@@ -24,13 +20,10 @@ export const Index = () => {
     const res = await fetchWithOutToken('banners');
     const body = await res.json();
     setBanners(body.data.banners);
-    console.log(body.data.banners);
   }, []);
 
   return (
     <div className="index">
-      <Banner />
-
       <div className="welcome flex justify-around items-center p-2 bg-gray-800 text-white">
         <div className="">
           <span>Horario de atención: Lunes‑Viernes 09:30‑17:30</span>
@@ -107,25 +100,25 @@ export const Index = () => {
       </div>
 
       {/* //banner  */}
-      <div className="banner  w-11/12 my-2 m-auto bg-white shadow-lg " id="banner">
-        {/* <div id="banner-content-imgs" className="banner-content items-center relative flex"> */}
-        <Swiper
-          pagination={{
-            type: 'fraction',
-          }}
-          navigation={true}
-          modules={[Pagination, Navigation]}
-          className="mySwiper h-96"
-        >
-          {banners.map((b) => (
-            <SwiperSlide>
-              <img src={b.photo} alt={b.id} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+      {/* <div className="banner  w-11/12 my-2 m-auto " id="banner"> */}
+      {/* <div id="banner-content-imgs" className="banner-content items-center relative flex"> */}
+      <Swiper
+        pagination={{
+          type: 'fraction',
+        }}
+        navigation={true}
+        modules={[Pagination, Navigation]}
+        className="mySwiper sm:h-72 my-1"
+      >
+        {banners.map((b) => (
+          <SwiperSlide>
+            <img src={b.photo} alt={b.id} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-        {/* </div> */}
-      </div>
+      {/* </div> */}
+      {/* </div> */}
 
       {/* //services  */}
       <div className="services w-11/12 p-4  my-2 m-auto bg-white shadow-lg " id="services">

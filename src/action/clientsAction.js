@@ -90,17 +90,13 @@ export const startCreatingClient = (user, file) => {
       const result = await resp.json();
       console.log(result);
       if (result.status === types.statusSuccess) {
-        showAlert('success', 'Cuenta creada con exito.🙌👏✔.');
-        // Toast.fire({
-        //   icon: 'success',
-        //   title: 'Usuario creado con existo.',
-        // });
+        showAlert('success', 'Cuenta creada con exito.🙌👏✔.Ahora podes iniciar sesion');
         setTimeout(() => {
           window.location = '/login';
         }, 3000);
       } else {
         showAlert('error', result.message);
-        window.location = '/login';
+        // window.location = '/login';
       }
     } catch (error) {
       showAlert('error', error.message);

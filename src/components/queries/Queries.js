@@ -58,7 +58,7 @@ const Queries = () => {
   //   }
   // }, 20000);
 
-  const { uid } = useSelector((state) => state.auth);
+  const { uid, role } = useSelector((state) => state.auth);
 
   const addResponse = async (e) => {
     setLoadingResponse(true);
@@ -177,7 +177,7 @@ const Queries = () => {
       <div className="query-chat justify-center items-center bg-gray-300 relative">
         {selectedQuery ? (
           <div className="w-full ">
-            <div className="query-header z-auto  w-full sticky  top-12 border-b border-2 p-2 flex justify-between items-center cursor-pointer gap-2 hover:bg-gray-200 bg-gray-100 ">
+            <div className="query-header  w-full sticky  top-12 border-b border-2 p-2 flex justify-between items-center cursor-pointer gap-2 hover:bg-gray-200 bg-gray-100 ">
               <div className="flex justify-between gap-2 items-center">
                 <i
                   onClick={() => {
@@ -201,9 +201,12 @@ const Queries = () => {
                 >
                   <i className="fas fa-sync-alt w-8 h-8 rounded-full jhm-shadow flex items-center duration-150 justify-center bg-green-500 hover:bg-green-600 "></i>
                 </div>
-                <div onClick={DeleteQueryById} className="action-chat">
-                  <i className="fas fa-trash w-8 h-8 rounded-full jhm-shadow flex items-center duration-150 justify-center  bg-red-500 hover:bg-red-600 "></i>
-                </div>
+                {role === 'admin' && (
+                  <div onClick={DeleteQueryById} className="action-chat">
+                    <i className="fas fa-trash w-8 h-8 rounded-full jhm-shadow flex items-center duration-150 justify-center  bg-red-500 hover:bg-red-600 "></i>
+                  </div>
+                )}
+
                 {/* <div className="action-chat">
                   <i className="fas fa-sync-alt w-8 h-8 rounded-full jhm-shadow flex items-center duration-150 justify-center bg-green-500 hover:bg-green-600 "></i>
                 </div> */}

@@ -30,7 +30,6 @@ export const GetHistories = () => {
     try {
       const resp = await fetchWithToken('works/historialWork/all');
       const works = await resp.json();
-      console.log(works.data.data);
       if (works.status === types.statusSuccess) {
         dispatch(setHistories(works.data.data));
       }

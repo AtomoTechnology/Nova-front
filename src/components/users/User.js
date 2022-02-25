@@ -4,13 +4,9 @@ export const User = ({ client }) => {
   // console.log(client);
   return (
     <Link to={`clients/${client._id}`} className="user">
-      <div className="img-user bg-blue-600 ">
+      <div className="img-user sm:bg-blue-600 ">
         {client?.photo ? (
-          <img
-            className="rounded-full mt-12  w-24 h-24 shadow-md bg-gray-800 "
-            src={client?.photo}
-            alt={client?.name}
-          />
+          <img className="rounded-full  sm:mt-12  w-24 h-24 shadow-lg" src={client?.photo} alt={client?.name} />
         ) : (
           <AvatarDefault username={client?.name} />
         )}

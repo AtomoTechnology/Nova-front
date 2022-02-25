@@ -5,7 +5,9 @@ import NavbarContent from '../components/navbar/NavbarContent';
 import Footer from '../components/navbar/Footer';
 import { Loading } from '../components/Loading';
 import NavbarLateral from '../components/navbar/NavbarLateral';
+import { ErrorApp } from '../components/ErrorApp';
 const Home = React.lazy(() => import('../components/Home'));
+const Banners = React.lazy(() => import('../components/Banners'));
 const Users = React.lazy(() => import('../components/users/Users'));
 const Works = React.lazy(() => import('../components/works/Works'));
 const AddUser = React.lazy(() => import('../components/users/AddUser'));
@@ -42,6 +44,7 @@ export default function Dashboard({ history }) {
               <Route exaxt path="/news" component={News} />
               <Route exaxt path="/queries" component={Queries} />
               <Route exaxt path="/createquery" component={AddQuery} />
+              <Route exaxt path="/banners" component={Banners} />
 
               <Route exact path="/clients/:clientId" component={GetUser} />
               <Route exact path="/client/add" component={AddUser} />
@@ -49,7 +52,9 @@ export default function Dashboard({ history }) {
               <Route exact path="/work/add">
                 <AddWork history={history} />
               </Route>
-              <Redirect to="/" />
+              <Route path="*" component={ErrorApp} />
+
+              {/* <Redirect to="/" /> */}
             </Switch>
           </React.Suspense>
         </div>

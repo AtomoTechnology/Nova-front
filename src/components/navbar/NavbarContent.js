@@ -43,11 +43,12 @@ const NavbarContent = () => {
   return (
     <div className="content-header">
       <i onClick={handleNavbar} id="btn-open-menu-mobile" className="fas fa-bars"></i>
+
       <div className="messages relative">
         <Link to="/queries" className="text-white">
-          {/* <span className="absolute top-0 right-0 flex items-center justify-center w-6 h-6  rounded-full text-white jhm-rounded text-center bg-red-500">
+          <span className="absolute top-0 right-0 flex items-center justify-center w-6 h-6  rounded-full text-white jhm-rounded text-center bg-red-500">
             9
-          </span> */}
+          </span>
           <span className="icon text-white">
             <i id="" className="fas fa-envelope text-white"></i>
           </span>
@@ -129,6 +130,14 @@ const NavbarContent = () => {
                   </li>
                 )}
 
+                <li className="menu-item">
+                  <Link to="/banners">
+                    <span className="icon">
+                      <i className="fas fa-braille"></i>
+                    </span>
+                    <span className="title">Banners</span>
+                  </Link>
+                </li>
                 <li className="menu-item" onClick={activeLink}>
                   <span className="cartel">Novedades</span>
                   <Link to="/news">

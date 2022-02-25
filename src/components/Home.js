@@ -18,38 +18,18 @@ import 'swiper/css/navigation';
 
 // import required modules
 import { Pagination, Navigation } from 'swiper';
+import { fetchWithOutToken } from '../helpers/fetchWithOutToken';
 const Home = () => {
   const dispatch = useDispatch();
   const [workStates, setWorkStates] = useState([]);
   const [loadingWorkState, setLoadingWorkState] = useState(true);
   const { role, uid } = useSelector((state) => state.auth);
-
-  // useLayoutEffect(() => {
-  //   var swiper = new Swiper('.mySwiper', {
-  //     slidesPerView: 3,
-  //     spaceBetween: 10,
-  //     // init: false,
-  //     pagination: {
-  //       el: '.swiper-pagination',
-  //       clickable: true,
-  //     },
-  //     breakpoints: {
-  //       640: {
-  //         slidesPerView: 1,
-  //         spaceBetween: 10,
-  //       },
-  //       768: {
-  //         slidesPerView: 3,
-  //         spaceBetween: 30,
-  //       },
-  //       1024: {
-  //         slidesPerView: 5,
-  //         spaceBetween: 50,
-  //       },
-  //     },
-  //   });
-  // }, []);
-
+  const [banners, setBanners] = useState([]);
+  useEffect(async () => {
+    const res = await fetchWithOutToken('banners');
+    const body = await res.json();
+    setBanners(body.data.banners);
+  }, []);
   useEffect(() => {
     dispatch(startGettingAllClient());
   }, [dispatch]);
@@ -65,15 +45,6 @@ const Home = () => {
 
   const { clients, clientWorks } = useSelector((state) => state.clients);
   const { works, total } = useSelector((state) => state.works);
-
-  // useEffect(() => {
-  //   fetch(`${process.env.REACT_APP_URL}work_state`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setWorkStates(data.work_state);
-  //       setLoadingWorkState(false);
-  //     });
-  // }, [setLoadingWorkState, setWorkStates]);
 
   var confirmWorks = [];
   works.forEach((cw) => {
@@ -107,16 +78,6 @@ const Home = () => {
       workWithoutChangeState.push(works[i]);
     }
   }
-
-  const GoToTheLeft = (e) => {
-    const carrouselLanguages = document.getElementById(e.target.parentElement.parentElement.classList[0]);
-
-    carrouselLanguages.scrollLeft -= carrouselLanguages.offsetWidth;
-  };
-  const GoToTheRight = async (e) => {
-    const carrouselLanguages = document.getElementById(e.target.parentElement.parentElement.classList[0]);
-    carrouselLanguages.scrollLeft += carrouselLanguages.offsetWidth;
-  };
 
   return role !== 'user' ? (
     <div className="home">
@@ -195,8 +156,8 @@ const Home = () => {
               className="mySwiper"
             >
               {workWithoutChangeState.map((wk) => (
-                <SwiperSlide>
-                  <WorkState key={wk?._id} work={wk} />
+                <SwiperSlide key={wk._id}>
+                  <WorkState work={wk} />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -263,8 +224,8 @@ const Home = () => {
               className="mySwiper"
             >
               {confirmWorks.map((wk) => (
-                <SwiperSlide>
-                  <WorkWithOut key={wk?._id} work={wk} />
+                <SwiperSlide key={wk?._id}>
+                  <WorkWithOut work={wk} />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -297,10 +258,31 @@ const Home = () => {
       }
     </div>
   ) : (
-    <div className="works ">
-      <span className="title-header"> Mis Trabajos </span>
-      <div className="works-grid p-1 my-2">
-        {clientWorks.length >= 0 ? clientWorks.map((work) => <Work key={work._id} work={work} />) : null}
+    <div className="m-4">
+      <Swiper
+        pagination={{
+          type: 'fraction',
+        }}
+        navigation={true}
+        modules={[Pagination, Navigation]}
+        className="mySwiper sm:h-72 bg-white shadow my-2"
+      >
+        {banners.map((b) => (
+          <SwiperSlide>
+            <img src={b.photo} alt={b.id} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      {}
+      <div className="clients-works my-2">
+        <span className="title-form !mb-0"> Mis Trabajos </span>
+        <div className="works-grid p-1">
+          {clientWorks.length > 0 ? (
+            clientWorks.map((work) => <Work key={work._id} work={work} />)
+          ) : (
+            <span>Todavia no hiciste ningun trabajo</span>
+          )}
+        </div>
       </div>
     </div>
   );

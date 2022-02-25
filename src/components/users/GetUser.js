@@ -34,7 +34,6 @@ const GetUser = ({ match, history }) => {
   let { clientWorks } = useSelector((state) => state.clients);
   const { client } = useSelector((state) => state.clients);
 
-  console.log(client);
   const [values, handleInputChange, reset] = useForm({
     name: client?.name,
     dni: client?.dni,
@@ -49,8 +48,6 @@ const GetUser = ({ match, history }) => {
   });
 
   const { name, dni, phone1, phone2, direction, nota, email, currentPassword, password, passwordConfirm } = values;
-
-  console.log(values);
 
   const handleUpdateClient = (e) => {
     e.preventDefault();
@@ -182,7 +179,7 @@ const GetUser = ({ match, history }) => {
 
       <div className="user-setting m-auto my-2 w-10/12  ">
         <div className="flex justify-between   shadow ">
-          <div className="one-user-option bg-pink-700 w-60 bg-gradient-to-r from-pink-400 to-pink-500 rounded-l">
+          <div className="one-user-option hidden sm:block bg-pink-700 w-60 bg-gradient-to-r from-pink-400 to-pink-500 rounded-l">
             <ul className="mt-10 sticky top-14">
               <li className="menu-item my-2 ">
                 <a className="hover:bg-pink-300  hover:border-l-4  hover:border-gray-100 p-2 " href="#misdatos">
@@ -204,7 +201,7 @@ const GetUser = ({ match, history }) => {
               </li>
             </ul>
           </div>
-          <div className="user-info w-full rounded-r p-2 w-9/12 m-auto bg-white">
+          <div className="user-info w-full rounded-r p-2 sm:w-9/12 m-auto bg-white">
             <div id="misdatos" className="m-auto mt-3 w-9/12">
               <form className="">
                 <span onClick={toggleModalEditClient} className="close absolute right-2 top-2">
@@ -213,105 +210,37 @@ const GetUser = ({ match, history }) => {
                 {/* <h3>Actualizar Cliente</h3> */}
                 <div className="form-grid">
                   <div>
-                    <label>
-                      Nombre Cliente <span className="text-red-600">*</span>
-                    </label>
-                    <input
-                      // onChange={handleInputChange}
-                      value={client?.name}
-                      type="text"
-                      name="name"
-                      placeholder="ingresa el nombre"
-                      className="shadow"
-                    />
-                    {errores.name ? (
-                      <span className="text-red-500 text-center bg-red-100 p-1">El nombre es obligatorio</span>
-                    ) : null}{' '}
+                    <label>Nombre Cliente :</label>
+                    <span> {client?.name} </span>
                   </div>
                   <div>
-                    <label>
-                      DNI <span className="text-red-600">*</span>
-                    </label>
-                    <input
-                      // onChange={handleInputChange}
-                      value={client?.dni}
-                      type="text"
-                      placeholder="ingresa el dni"
-                      name="dni"
-                      className="shadow"
-                    />
-                    {errores.dni ? (
-                      <span className="text-red-500 text-center bg-red-100 p-1">
-                        El dni es obligatorio. [8 , 11] digitos
-                      </span>
-                    ) : null}
+                    <label>DNI :</label>
+                    <span> {client?.dni}</span>
                   </div>
                   <div>
-                    <label>Correo</label>
-                    <input
-                      className="shadow"
-                      // onChange={handleInputChange}
-                      value={client?.email ? client.email : ''}
-                      type="email"
-                      name="email"
-                      placeholder="Ingrese su correo electronico"
-                    />
-                    {errores.email ? (
-                      <span className="text-red-500 text-center bg-red-100 p-1">
-                        El email es obligatorio y debe ser valido
-                      </span>
-                    ) : null}
+                    <label>Correo : </label>
+                    <span> {client?.email}</span>
                   </div>
                   <div>
-                    <label>
-                      Telefono 1 <span className="text-red-600">*</span>
-                    </label>
-                    <input
-                      // onChange={handleInputChange}
-                      value={client?.phone1}
-                      type="text"
-                      name="phone1"
-                      placeholder="ingresa el numero de celular"
-                      className="shadow"
-                    />
-                    {errores.phone1 ? (
-                      <span className="text-red-500 text-center bg-red-100 p-1">
-                        Tenes que ingregar por lo menos un celular
-                      </span>
-                    ) : null}
+                    <label>Telefono 1 :</label>
+                    <span> {client?.phone1}</span>
                   </div>
                   <div>
-                    <label>Telefono 2</label>
-                    <input
-                      // onChange={handleInputChange}
-                      value={client?.phone2}
-                      type="text"
-                      name="phone2"
-                      placeholder="ingresa el segundo telefono"
-                      className="shadow"
-                    />{' '}
+                    <label>Telefono 2 : </label>
+                    <span> {client?.phone2}</span>
                   </div>
                   <div>
-                    <label>Dirección</label>
-                    <input
-                      className="shadow"
-                      // onChange={handleInputChange}
-                      value={client?.direction}
-                      type="text"
-                      name="direction"
-                      placeholder="ingresa la direccion"
-                    />
+                    <label>Dirección : </label>
+                    <span> {client?.direction}</span>
                   </div>
                   <div>
-                    <label>Nota</label>
-                    <input
-                      className="shadow"
-                      // onChange={handleInputChange}
-                      value={client?.nota}
-                      type="text"
-                      name="nota"
-                      placeholder="ingresa una nota"
-                    />
+                    <label>Nota : </label>
+                    <span> {client?.nota}</span>
+                  </div>
+                  {/* <hr className="my-3" /> */}
+                  <div>
+                    <label>TOTAL TRABAJOS :</label>
+                    <span> {clientWorks.length}</span>
                   </div>
                 </div>
 
@@ -331,7 +260,7 @@ const GetUser = ({ match, history }) => {
                       className="px-3 py-1 text-white w-fit bg-red-700 shadow rounded-full "
                       type="button"
                     >
-                      Borar
+                      Borrar
                     </span>
                   </div>
                 )}
@@ -425,11 +354,9 @@ const GetUser = ({ match, history }) => {
               </>
             )}
             <hr className="my-3" />
-            <div className="my-3 w-10/12 m-auto p-1 text-2Xl bg-gray-100 text-gray-800 shadow">
-              <span>TOTAL TRABAJOS : {clientWorks.length}</span>
-            </div>
+
             {
-              <div id="mistrabajos" className="works-grid-client grid grid-cols-4 m-auto w-10/12">
+              <div id="mistrabajos" className="works-grid-client grid  m-auto w-10/12">
                 {clientWorks.length > 0 ? (
                   loadingWorkUser ? (
                     <SmallLoading />
@@ -439,14 +366,14 @@ const GetUser = ({ match, history }) => {
                     ))
                   )
                 ) : (
-                  <div className="no-result bg-white p-2 bg-red-200 text-center mx-2">
+                  <div className="no-result p-2 mx-2 bg-red-200 text-center">
                     <h1 className="no-works">
                       <span>{client?.name} </span>nunca hizo un trabajo...
                     </h1>
                     <i className="fas fa-sad-tear text-red-600 text-3xl"></i>
                   </div>
                 )}
-                <div className="bg-gray-200 add-work-user shadow rounded hover:bg-gray-300 hover:shadow-lg">
+                <div className="bg-gray-200 p-2 my-2 add-work-user shadow rounded hover:bg-gray-300 hover:shadow-lg">
                   <Link
                     to={`/work/add#${client?._id}`}
                     className="flex justify-center items-center h-full text-pink-500"
@@ -592,7 +519,7 @@ const GetUser = ({ match, history }) => {
             </div>
 
             <br />
-            <button disabled={addingUser} className="btn shadow-lg" type="submit">
+            <button disabled={addingUser} className="btn bg-red-500 hover:bg-red-700" type="submit">
               {addingUser ? 'Actualizando... ' : ' Actualizar Cliente'}
             </button>
           </form>

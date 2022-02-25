@@ -102,13 +102,9 @@ const AddWork = ({ history, refresh, setRefresh }) => {
     setLoading(true);
     if (verifyForm()) {
       dispatch(createWork(values));
-
       reset();
       dispatch(getAllWorks());
-      setRefresh(!refresh);
-      // history.push(`/clients/${uid}`);
       history.push(`/works`);
-      // window.location.replace('/works');
     } else {
       console.log(errores);
       console.log(values);

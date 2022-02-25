@@ -132,6 +132,9 @@
     transform: translateY(0);
   }
 }
+.works-grid-client {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
 
 .work-client {
   display: flex;

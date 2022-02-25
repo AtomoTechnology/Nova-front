@@ -40,7 +40,6 @@ const Histories = () => {
   }, []);
 
   const { histories } = useSelector((state) => state.histories);
-  console.log(histories);
   const [values, handleInputChange, reset] = useForm({
     description: '',
     amount: 0,
@@ -186,7 +185,7 @@ const Histories = () => {
 
       <i
         onClick={toggleFiterBox}
-        class="fas fa-sliders-h m-2 sticky text-white cursor-pointer   top-12 hover:bg-red-600 p-2 shadow-lg filter-toggle "
+        className="fas fa-sliders-h m-2 sticky text-white cursor-pointer   top-12 hover:bg-red-600 p-2 shadow-lg filter-toggle "
       ></i>
       <div className="search search-histories top-0 w-full sm:!m-0 sm:top-12 sm:left-32 p-3 mt-2 hidden fixed sm:w-fit bg-white">
         {/* <h1 className="text-4xl text-green-500 mb-1  p-1 ">Filtrar</h1> */}

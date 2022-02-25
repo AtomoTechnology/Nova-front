@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { startCreatingClient } from '../../action/clientsAction';
 import { useForm } from '../../hooks/useForm';
 import logo from '../../templatePics/logo03.png';
+import { SmallLoading } from '../SmallLoading';
 
 const AddUser = ({ history }) => {
   const dispatch = useDispatch();
@@ -54,12 +55,9 @@ const AddUser = ({ history }) => {
       // console.log(urlImagen);
       dispatch(startCreatingClient(values, urlImagen));
       reset();
-      setTimeout(() => {
-        history.push('/clients');
-        // window.location.href = '/clients';
-        // window.location.replace('/clients');
-        // window.location.reload(true);
-      }, 1000);
+      // setTimeout(() => {
+      //   history.push('/clients');
+      // }, 1000);
     }
     //  else {
     //   console.log(errores);
@@ -71,6 +69,7 @@ const AddUser = ({ history }) => {
   const verifyForm = () => {
     let ok = true;
     let errors = [];
+    const regex = /^[0-9]*$/;
 
     if (!name) {
       ok = false;
@@ -84,7 +83,7 @@ const AddUser = ({ history }) => {
       ok = false;
       errors.passwordConfirm = true;
     }
-    if (!dni || dni.length < 8 || dni.length > 11) {
+    if (!dni || dni.length < 8 || dni.length > 11 || !regex.test(dni)) {
       ok = false;
       errors.dni = true;
     }
@@ -93,7 +92,7 @@ const AddUser = ({ history }) => {
       ok = false;
       errors.email = true;
     }
-    if (!phone1 || phone1.length < 7) {
+    if (!phone1 || phone1.length < 7 || !regex.test(phone1)) {
       ok = false;
       errors.phone1 = true;
     }
@@ -147,7 +146,9 @@ const AddUser = ({ history }) => {
               className="shadow"
             />
             {errores.dni ? (
-              <span className="text-red-500 text-center bg-red-100 p-1">El dni es obligatorio. [8 , 11] digitos</span>
+              <span className="text-red-500 text-center bg-red-100 p-1">
+                El dni es obligatorio. [8 , 11] digitos. Debe tener solamente numeros
+              </span>
             ) : null}
           </div>
           <div>
@@ -174,11 +175,6 @@ const AddUser = ({ history }) => {
                 <option value="tecnico"> Tecnico </option>
                 <option value="admin"> Administrador </option>
               </select>
-              {errores.email ? (
-                <span className="text-red-500 text-center bg-red-100 p-1">
-                  El email es obligatorio y debe ser valido
-                </span>
-              ) : null}
             </div>
           )}
 
@@ -195,9 +191,7 @@ const AddUser = ({ history }) => {
               className="shadow"
             />
             {errores.phone1 ? (
-              <span className="text-red-500 text-center bg-red-100 p-1">
-                Tenes que ingregar por lo menos un celular
-              </span>
+              <span className="text-red-500 text-center bg-red-100 p-1">Obligatorio y debe ser valido.</span>
             ) : null}
           </div>
 
@@ -294,7 +288,7 @@ const AddUser = ({ history }) => {
         {/* <img className="w-32 imgLoad" alt="loading " /> */}
         <br />
         <button disabled={addingUser} className="btn jhm-shadow bg-red-500 hover:bg-red-700" type="submit">
-          {addingUser ? 'Creando cuenta...' : 'Crear Cuenta'}
+          {addingUser ? <SmallLoading text="..." size="small" /> : 'Crear Cuenta'}
         </button>
         <div className="register-section my-4 text-sx text-blue-600 text-center ">
           <span className="text-sm">
