@@ -286,19 +286,42 @@
 }
 .card-service {
   width: 300px;
-  height: 250px;
+  position: relative;
+  // height: 250px;
   .img {
-    height: 70%;
+    // height: 70%;
     overflow: hidden;
     padding: 0;
     margin: 0;
   }
   .card-footer {
-    height: 30%;
-    padding: 0;
+    // height: 30%;
+    position: absolute;
+    bottom: 0;
+    padding: 1rem;
+    display: none;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: 200ms all;
+    height: 100%;
+    background-color: rgba(252, 67, 67, 0.699);
+    animation: cardServiceAnimate 200ms all;
+    span {
+      font-size: 23px;
+      font-weight: 600;
+    }
   }
   img {
     width: 100%;
+  }
+
+  &:hover {
+    transform: scale(1.01);
+    .card-footer {
+      display: flex;
+    }
   }
 }
 .mapa {
@@ -385,5 +408,17 @@
   .mapa-box,
   .banner {
     width: 60%;
+  }
+}
+
+//animations
+@keyframes cardServiceAnimate {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
   }
 }

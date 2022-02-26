@@ -3,6 +3,10 @@ import { Link, NavLink } from 'react-router-dom';
 import logoNova from './../templatePics/logoNovaSmall.png';
 import bg from './../templatePics/bg.jpg';
 import bgwhite from './../templatePics/logoNovaWhite.png';
+
+import iphone from './../templatePics/reparacionIphone.jpg';
+import multiMarca from './../templatePics/multiMarca.jpg';
+import ServicioTécnicoIphone from './../templatePics/ServicioTécnicoIphone.jpg';
 import $ from 'jquery';
 import { fetchWithOutToken, fetchWithToken } from '../helpers/fetchWithOutToken';
 
@@ -126,7 +130,7 @@ export const Index = () => {
         <div className="services-content p-3  gap-2 justify-center items-center">
           <div className="card-service hover:shadow cursor-pointer  rounded shadow-md ">
             <div className="img">
-              <img src={bg} alt="" />
+              <img src={iphone} alt="" />
             </div>
             <div className="card-footer bg-gray-100 flex items-center justify-center">
               <span>Reparación de Iphone </span>
@@ -134,7 +138,7 @@ export const Index = () => {
           </div>
           <div className="card-service hover:shadow cursor-pointer  rounded shadow-md">
             <div className="img">
-              <img src={bg} alt="" />
+              <img src={ServicioTécnicoIphone} alt="" />
             </div>
             <div className="card-footer  bg-gray-800 text-white flex items-center justify-center text-center">
               <span>Smart Watch - Ipad - Mac Book </span>
@@ -142,7 +146,7 @@ export const Index = () => {
           </div>
           <div className="card-service hover:shadow cursor-pointer  rounded shadow-md">
             <div className="img">
-              <img src={bg} alt="" />
+              <img src={multiMarca} alt="" />
             </div>
             <div className="card-footer  bg-pink-700 text-white flex items-center justify-center">
               <span>Venta de equipos Nuevos-Usados </span>
@@ -150,7 +154,7 @@ export const Index = () => {
           </div>
           <div className="card-service hover:shadow cursor-pointer  rounded shadow-md bg-sky-800">
             <div className="img">
-              <img src={bg} alt="" />
+              <img src={multiMarca} alt="" />
             </div>
             <div className="card-footer bg-yellow-700 text-white flex items-center justify-center">
               <span>Reparación de Celulares Android </span>

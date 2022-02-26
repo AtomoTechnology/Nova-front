@@ -17,7 +17,7 @@ const Toast = Swal.mixin({
 export const getAllWorks = (limit, page = 1) => {
   return async (dispatch) => {
     try {
-      const works = await fetchWithToken(`works?page=${page}&limit=${limit}`);
+      const works = await fetchWithToken(`works`);
       const body = await works.json();
       if (body.status === types.statusSuccess) {
         dispatch(setWorks(body.data.works, body.total, body.page, body.results));
@@ -25,10 +25,12 @@ export const getAllWorks = (limit, page = 1) => {
     } catch (error) {}
   };
 };
-export const GetHistories = () => {
+export const GetHistories = (startDate, endDate) => {
   return async (dispatch) => {
+    console.log(startDate, endDate);
+
     try {
-      const resp = await fetchWithToken('works/historialWork/all');
+      const resp = await fetchWithToken('works/historialWork/all', { startDate, endDate }, 'POST');
       const works = await resp.json();
       if (works.status === types.statusSuccess) {
         dispatch(setHistories(works.data.data));
@@ -36,6 +38,7 @@ export const GetHistories = () => {
     } catch (error) {
       throw error;
     }
+    console.log('estoy....');
   };
 };
 
@@ -101,13 +104,15 @@ export const createWork = (work) => {
   };
 };
 
-export const startEditWork = (work, workId) => {
+export const startEditWork = (work, workId, onlyState = false) => {
   return async (dispatch) => {
     try {
-      let precio = parseInt(work.precio);
-      let descuento = (precio * parseInt(work.descuento)) / 100;
-      let recargo = (precio * work.recargo) / 100;
-      work.total = precio + recargo - descuento;
+      if (!onlyState) {
+        let precio = parseInt(work.precio);
+        let descuento = (precio * parseInt(work.descuento)) / 100;
+        let recargo = (precio * work.recargo) / 100;
+        work.total = precio + recargo - descuento;
+      }
 
       const resp = await fetchWithToken(`works/${workId}`, work, 'PATCH');
       const body = await resp.json();

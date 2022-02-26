@@ -19,14 +19,14 @@ const GetWork = ({ match, history }) => {
   const [l, setL] = useState(200);
   const { role } = useSelector((state) => state.auth);
   const [estados, setEstados] = useState([]);
-  const [errores, setErrores] = useState([]);
-  const [allStateWork, setAllStateWork] = useState([]);
+  // const [errores, setErrores] = useState([]);
+  // const [allStateWork, setAllStateWork] = useState([]);
   const [reload, setReload] = useState(false);
   const workId = match.params.workId;
 
   useEffect(() => {
     dispatch(getOneWork(workId));
-  }, [dispatch, workId]);
+  }, [dispatch, workId, reload, setReload]);
 
   useEffect(async () => {
     const states = await GetStates();
@@ -51,18 +51,18 @@ const GetWork = ({ match, history }) => {
   //   fechaFin: work?.fechaFin,
   // });
 
-  useEffect(() => {
-    async function fetchStates() {
-      if (work?.states.length <= 0) {
-        const query = await fetchWithToken(`work_state/getStates/${workId}`);
-        const ws = await query.json();
-        if (ws.ok) {
-          setAllStateWork(ws.workState.state);
-        }
-      }
-    }
-    fetchStates();
-  }, [workId]);
+  // useEffect(() => {
+  //   async function fetchStates() {
+  //     if (work?.states.length <= 0) {
+  //       const query = await fetchWithToken(`work_state/getStates/${workId}`);
+  //       const ws = await query.json();
+  //       if (ws.ok) {
+  //         setAllStateWork(ws.workState.state);
+  //       }
+  //     }
+  //   }
+  //   fetchStates();
+  // }, [workId]);
 
   // const {
   //   marca,
@@ -128,6 +128,10 @@ const GetWork = ({ match, history }) => {
       }
     });
   };
+  const UpdateWorkState = async (e, id) => {
+    await dispatch(startEditWork({ estado: id }, workId, true));
+    setReload(!reload);
+  };
 
   return (
     <div className="one-work relative">
@@ -159,8 +163,8 @@ const GetWork = ({ match, history }) => {
       </div>
 
       <div className="one-work-grid">
-        <i className={' fas fa-mobile-alt flex justify-center items-center ' + color}></i>
-        <div className="one-work-body grid grid-cols-2 grid-rows-2 gap-2">
+        {/* <i className={' fas fa-mobile-alt flex justify-center items-center ' + color}></i> */}
+        <div className="one-work-body flex justify-center flex-wrap mt-12 gap-2">
           <div className="work-data shadow rounded bg-gray-700 text-white p-1">
             <p>Codigo : {work?.codigo} </p>
             <p>Marca : {work?.marca} </p>
@@ -201,26 +205,11 @@ const GetWork = ({ match, history }) => {
             <p>Total: {work?.total}</p>
           </div>
 
-          <div className="price-data rounded shadow bg-red-400 p-1">
-            <span className="text-white text-lg underline">Historiales de Estados </span>
-            <ol>
-              {work?.states.map((stw) => (
-                <li>{stw.nombre + ' - ' + moment(stw.fecha).format('DD-MM-YY HH:mm:ss')}</li>
-              ))}
-
-              {/* {work?.states?.length > 0
-                ? work?.states.map((stw) => (
-                    <li>{stw.nombre + ' - ' + moment(stw.fecha).format('DD-MM-YY HH:mm:ss')}</li>
-                  ))
-                : allStateWork.map((stw) => (
-                    <li>{stw.nombre + ' - ' + moment(stw.fecha).format('DD-MM-YY HH:mm:ss')}</li>
-                  ))} */}
-            </ol>
-          </div>
-
           {work?.fachasEncontradas && (
             <div className="trouble-data rounded shadow bg-green-400 p-1">
-              <p>facha(s) Encontradas : {work?.fachasEncontradas}</p>
+              <p>
+                Falla(s) Encontradas : <br /> {work?.fachasEncontradas}
+              </p>
             </div>
           )}
 
@@ -250,10 +239,22 @@ const GetWork = ({ match, history }) => {
               </p>
             </div>
           )}
+          <div className="price-data rounded shadow bg-red-400 p-1">
+            <span className="text-white text-lg underline">Historiales de Estados </span>
+            <ol>
+              {work?.states.map((stw) => (
+                <li key={stw.fecha}>{stw.nombre + ' - ' + moment(stw.fecha).format('DD-MM-YY HH:mm:ss')}</li>
+              ))}
+            </ol>
+          </div>
 
           <Link
+            style={{
+              height: '3rem!important',
+              minHeight: '3rem!important',
+            }}
             to={`/works/order/${workId}`}
-            className="bg-gray-800 flex justify-center items-center text-white text-center shadow rounded "
+            className="bg-gray-800 !min-h-12 !h-12 trouble-data flex justify-center items-center text-white text-center shadow rounded "
           >
             GENERAR PDF
           </Link>
@@ -282,10 +283,17 @@ const GetWork = ({ match, history }) => {
       )}
       {role !== 'user' && (
         <div className="update-state">
-          <button className="bg-gray-400 hover:bg-gray-600">Presupuesto</button>
-          <button className="bg-yellow-500 hover:bg-yellow-600">Terminado</button>
-          <button className="bg-green-300 hover:bg-green-400">Reparación</button>
-          <button className="bg-green-500 hover:bg-green-700">Entregado</button>
+          {estados.map((est) => (
+            <button
+              key={est._id}
+              onClick={(e) => {
+                UpdateWorkState(e, est._id);
+              }}
+              className={'btn-' + est.name}
+            >
+              {est.name}
+            </button>
+          ))}
         </div>
       )}
     </div>

@@ -46,9 +46,10 @@ const NavbarContent = () => {
 
       <div className="messages relative">
         <Link to="/queries" className="text-white">
-          <span className="absolute top-0 right-0 flex items-center justify-center w-6 h-6  rounded-full text-white jhm-rounded text-center bg-red-500">
+          {/* <span className="absolute top-0 right-0 flex items-center justify-center w-6 h-6  rounded-full text-white jhm-rounded text-center bg-red-500">
             9
-          </span>
+          </span> */}
+
           <span className="icon text-white">
             <i id="" className="fas fa-envelope text-white"></i>
           </span>

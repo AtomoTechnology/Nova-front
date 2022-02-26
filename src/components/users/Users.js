@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { startGettingAllClient } from '../../action/clientsAction';
 import { SmallLoading } from '../SmallLoading';
-// import { useForm } from "../../hooks/useForm";
-
 import { User } from './User';
-// import { UserSearch } from './UserSearch';
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -17,11 +14,16 @@ const Users = () => {
   // let { searchClient } = values;
   // console.log(searchClient);
 
-  useEffect(() => {
+  const GetAll = async () => {
     setLoadingUser(true);
-    dispatch(startGettingAllClient());
+    await dispatch(startGettingAllClient());
     setLoadingUser(false);
+  };
+
+  useEffect(() => {
+    GetAll();
   }, [dispatch]);
+
   // let result = [];
   const { clients } = useSelector((state) => state.clients);
   useEffect(() => {

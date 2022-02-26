@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAllWorks } from '../../action/worksAction';
 import { useForm } from '../../hooks/useForm';
 import { SmallLoading } from '../SmallLoading';
 import { Work } from './Work';
+import $ from 'jquery';
 
 const Works = ({ history }) => {
   const dispatch = useDispatch();
@@ -17,14 +18,12 @@ const Works = ({ history }) => {
   const [idChange, setIdChange] = useState(null);
   const [limit, setLimit] = useState(50);
   const [actualPage, setPage] = useState(1);
+  const filterBox = useRef();
 
-  useEffect(async () => {
-    setLoadingWorks(true);
-    dispatch(getAllWorks(limit, actualPage));
-    setResult([]);
-    setLoadingWorks(false);
-  }, [dispatch, limit, actualPage, setLoadingWorks, loadingWorks]);
-  const { works, total, page, results } = useSelector((state) => state.works);
+  useEffect(() => {
+    GetAll();
+  }, [dispatch]);
+  const { works } = useSelector((state) => state.works);
 
   useEffect(() => {
     if (estado === 'Todos' || estado === '') {
@@ -42,23 +41,39 @@ const Works = ({ history }) => {
     }
   }, [codigo]);
 
-  const stateArray = ['Revision', 'Presupuesto', 'En Reparacion', 'Terminado', 'Entregado', 'Todos'];
+  const GetAll = async () => {
+    setLoadingWorks(true);
+    await dispatch(getAllWorks(limit, actualPage));
+    setResult([]);
+    setLoadingWorks(false);
+  };
 
-  let arrayPage = [];
-  for (let i = 1; i <= page; i++) {
-    arrayPage.push(i);
-  }
+  const stateArray = ['Revision', 'Presupuesto', 'En Reparacion', 'Terminado', 'Entregado', 'Todos'];
+  const toggleFilterBox = () => {
+    $('.toggle-filter').toggleClass('hidden');
+  };
+  // let arrayPage = [];
+  // for (let i = 1; i <= page; i++) {
+  //   arrayPage.push(i);
+  // }
 
   return (
     <div className="works ">
-      {/* <span className="title-header"> Trabajos</span> */}
       <div className="limit-total-results search-box-all-works">
-        <span className="total-results bg-white shadow text-gray-900 p-1">
-          {results} / {total}
-        </span>
+        <div>
+          <span className="text-white">Filtrar</span>
+          <i
+            onClick={toggleFilterBox}
+            className="fas fa-sliders-h m-2 sticky text-white cursor-pointer   top-12 hover:bg-gray-800 p-2"
+          ></i>
+        </div>
 
-        <div className="page-filter flex items-center">
-          {/* <label className="text-red-700 ">Page :</label> */}
+        {/* <span className="total-results bg-white shadow text-gray-900 p-1">
+          {results} / {total}
+        </span> */}
+
+        {/* <div className="page-filter flex items-center">
+          <label className="text-red-700 ">Page :</label>
           <input
             type="text"
             placeholder="pagina"
@@ -74,36 +89,36 @@ const Works = ({ history }) => {
               Indica la pagina que quieres acceder
             </span>
           </div>
-          {/* <i className="fas fa-filter w-8 h-8 rounded-full shadow flex items-center justify-center bg-red-700 text-white cursor-pointer hover:bg-red-800 hover:shadow-md "></i> */}
-        </div>
-
-        <div className="overflow-hidden  my-1 ">
-          <form className="flex w-full flex-wrap lg:justify-center gap-y-2 flex-col sm:flex-row md:justify-between items-center sm:gap-x-2">
-            <select className=" shadow  sm:w-min w-full" name="estado" onChange={handleInputChange} value={estado}>
-              <option value="" disabled>
-                Filtrar por estado
-              </option>
-              {stateArray.map((elem) => (
-                <option key={elem} value={elem}>
-                  {elem}
+          <i className="fas fa-filter w-8 h-8 rounded-full shadow flex items-center justify-center bg-red-700 text-white cursor-pointer hover:bg-red-800 hover:shadow-md "></i>
+        </div> */}
+        <div ref={filterBox} className="toggle-filter hidden">
+          <div className="overflow-hidden  my-1 ">
+            <form className="flex w-full flex-wrap lg:justify-center gap-y-2 flex-col sm:flex-row md:justify-between items-center sm:gap-x-2">
+              <select className=" shadow  sm:w-min w-full" name="estado" onChange={handleInputChange} value={estado}>
+                <option value="" disabled>
+                  Filtrar por estado
                 </option>
-              ))}
-            </select>
-            <input
-              name="codigo"
-              className="shadow   sm:w-min w-full"
-              value={codigo}
-              onChange={(e) => {
-                setCodigo(e.target.value);
-              }}
-              placeholder="Buscar codigo de trabajo"
-              type="text"
-            />
-          </form>
+                {stateArray.map((elem) => (
+                  <option key={elem} value={elem}>
+                    {elem}
+                  </option>
+                ))}
+              </select>
+              <input
+                name="codigo"
+                className="shadow   sm:w-min w-full"
+                value={codigo}
+                onChange={(e) => {
+                  setCodigo(e.target.value);
+                }}
+                placeholder="Buscar codigo de trabajo"
+                type="text"
+              />
+            </form>
+          </div>
         </div>
 
-        <div className="limit-box">
-          {/* <span>Limit</span> */}
+        {/* <div className="limit-box">
           <select
             className=""
             name="limit"
@@ -122,8 +137,9 @@ const Works = ({ history }) => {
             <option value="40">40</option>
             <option value="50">50</option>
           </select>
-        </div>
+        </div> */}
       </div>
+
       <div className="add-client-flotante">
         <Link to="/work/add">
           <i className="fas fa-plus-circle"></i>
@@ -138,7 +154,7 @@ const Works = ({ history }) => {
       {loadingWorks ? (
         <SmallLoading />
       ) : (
-        <div className="works-grid p-1">
+        <div className="works-grid p-1 m-auto">
           {result.length <= 0
             ? works.map((work) => <Work history={history} key={work._id} work={work} />)
             : result.map((work) => <Work idChange={idChange} setIdChange={setIdChange} key={work._id} work={work} />)}
@@ -153,7 +169,7 @@ const Works = ({ history }) => {
         </button>
       </div> */}
 
-      {page > 1 && (
+      {/* {page > 1 && (
         <div className="pagination">
           <ul className="pagination-list">
             <li
@@ -201,7 +217,7 @@ const Works = ({ history }) => {
             </li>
           </ul>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

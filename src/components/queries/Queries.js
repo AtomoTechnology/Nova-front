@@ -138,7 +138,7 @@ const Queries = () => {
       <div className="queries-chats items-center justify-start flex flex-col h-full ">
         {loadingData ? (
           <SmallLoading text="Cargando..." size="small" />
-        ) : (
+        ) : queries.length > 0 ? (
           queries.map((q) => (
             <div
               onClick={(e) => {
@@ -150,7 +150,7 @@ const Queries = () => {
                 (!q.read && ' bg-gray-300 ')
               }
             >
-              <div className="queryuser-logo overflow-hidden   rounded-full w-16 h-16 shadow-md border-2">
+              <div className="queryuser-logo overflow-hidden    w-16 h-16">
                 {/* <AvatarDefault username={q.user.name} /> */}
                 <img src={userChat} alt="user logo chat" />
               </div>
@@ -163,6 +163,8 @@ const Queries = () => {
               </div>
             </div>
           ))
+        ) : (
+          <span>No tiene consultas todavia ! 🤦‍♂️</span>
         )}
         <div
           onClick={() => {
