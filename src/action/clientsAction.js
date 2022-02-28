@@ -15,13 +15,14 @@ const Toast = Swal.mixin({
   },
 });
 
-export const startGettingAllClient = () => {
+export const startGettingAllClient = (page, limit) => {
   return async (dispatch) => {
     try {
-      const resp = await fetchWithToken('users');
+      const resp = await fetchWithToken(`users?page=${page}&limit=${limit}`);
       const users = await resp.json();
       if (users.status === types.statusSuccess) {
-        dispatch(getClients(users.data.users));
+        console.log(users);
+        dispatch(getClients(users.data.users, users.page, users.totalPage, users.results));
       }
     } catch (error) {}
   };
@@ -134,9 +135,11 @@ const resetWorksClient = () => ({
   type: types.resetWorksClient,
 });
 
-const setClientWorks = (works) => ({
+const setClientWorks = (works, page, totalPage, results) => ({
   type: types.setWorksClient,
-  payload: works,
+  payload: {
+    works,
+  },
 });
 
 const setOneClient = (client) => ({
@@ -144,7 +147,12 @@ const setOneClient = (client) => ({
   payload: client,
 });
 
-const getClients = (clts) => ({
+const getClients = (users, page, totalPage, results) => ({
   type: types.getAllClients,
-  payload: clts,
+  payload: {
+    users,
+    page,
+    totalPage,
+    results,
+  },
 });

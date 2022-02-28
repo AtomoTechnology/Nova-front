@@ -95,7 +95,7 @@ const Home = () => {
         <Link to="works" className="works">
           <div className="works-content">
             <div className="content-left">
-              <span>{total}</span>
+              <span>{works.length}</span>
               <h3>Trabajos</h3>
             </div>
             <i className="fas fa-th-list text-yellow-700"></i>
