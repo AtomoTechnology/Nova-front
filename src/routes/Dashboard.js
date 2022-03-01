@@ -38,7 +38,7 @@ export default function Dashboard({ history }) {
                 <Works history={history} />
               </Route>
               <Route exact path="/works/:workId/" component={GetWork} />
-              <Route exact path="/works/histories/all" component={Histories} />
+              <Route exact path="/histories" component={Histories} />
               <Route exact path="/work/edit/:id" component={WorkEdit} />
               <Route exact path="/works/order/:id" component={OrderWork} />
               <Route exaxt path="/news" component={News} />

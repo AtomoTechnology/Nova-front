@@ -202,9 +202,12 @@ const Histories = () => {
             </thead>
             <tbody>
               {histories.length <= 0 ? (
-                <span className="title-form !text-sm text-center w-full h-full">
-                  No hay resultados para esa fecha seleccionada
-                </span>
+                <tr className="">
+                  <td>... </td>
+                  <td> ... </td>
+                  <td> ... </td>
+                  <td>...</td>
+                </tr>
               ) : (
                 histories.map((w) => <History key={w._id} work={w} />)
               )}

@@ -1,4 +1,4 @@
-import { types } from "../types/types";
+import { types } from '../types/types';
 
 const initialState = {
   works: [],
@@ -16,7 +16,6 @@ export const workReducer = (state = initialState, action) => {
         ...state,
         works: action.payload.works,
         total: action.payload.total,
-        page: action.payload.page,
         results: action.payload.results,
       };
     case types.setOneWork:

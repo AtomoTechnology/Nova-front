@@ -20,7 +20,7 @@ export const getAllWorks = (limit, page = 1) => {
       const works = await fetchWithToken(`works`);
       const body = await works.json();
       if (body.status === types.statusSuccess) {
-        dispatch(setWorks(body.data.works, body.total, body.page, body.results));
+        dispatch(setWorks(body.data.works, body.total, body.results));
       }
     } catch (error) {}
   };
@@ -164,12 +164,11 @@ const filterState = (estado, works) => ({
   },
 });
 
-const setWorks = (works, total, page, results) => ({
+const setWorks = (works, total, results) => ({
   type: types.getAllWorks,
   payload: {
     works,
     total,
-    page,
     results,
   },
 });

@@ -10,7 +10,6 @@ export const Work = ({ work, history }) => {
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth);
   let color = '';
-  // console.log(history);
   switch (work.estado.name) {
     case 'Revision':
       color = 'red-700';
@@ -52,11 +51,10 @@ export const Work = ({ work, history }) => {
     all.forEach((el) => {
       if (el !== e.target.parentElement) el.classList.remove('active');
     });
-    console.log(e.target.parentElement, e.target.parentElement.classList.toggle('active'));
   };
 
   return (
-    <div className="work">
+    <div className="work ">
       <div className="cliente-precio flex justify-between bg-gray-100  p-1 items-center">
         {work?.cliente?.pathImg ? (
           <img

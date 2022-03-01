@@ -24,7 +24,7 @@ const NavbarLateral = ({ history }) => {
     if (history.location.pathname.includes('/work/add')) {
       document.querySelector('.link-lateral-work-add')?.classList.add('active');
     }
-    if (history.location.pathname.includes('/works/histories')) {
+    if (history.location.pathname.includes('/histories')) {
       document.querySelector('.link-lateral-histories')?.classList.add('active');
     }
     if (history.location.pathname.includes('/createquery')) {
@@ -125,7 +125,7 @@ const NavbarLateral = ({ history }) => {
                   <li className="menu-item link-lateral link-lateral-histories ">
                     <span className="cartel">Historial de Trabajo</span>
 
-                    <Link to="/works/histories/all">
+                    <Link to="/histories">
                       <span className="icon">
                         <i className="fas fa-history"></i>{' '}
                       </span>

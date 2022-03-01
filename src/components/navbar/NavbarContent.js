@@ -122,7 +122,7 @@ const NavbarContent = () => {
                   <li className="menu-item link-lateral" onClick={activeLink}>
                     <span className="cartel">Historial de Trabajo</span>
 
-                    <Link to="/works/histories/all">
+                    <Link to="/histories">
                       <span className="icon">
                         <i className="fas fa-history"></i>{' '}
                       </span>

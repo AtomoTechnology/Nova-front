@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { Work } from '../works/Work';
 // import moment from 'moment';
@@ -9,6 +9,8 @@ import { SmallLoading } from '../SmallLoading';
 import { Link } from 'react-router-dom';
 import { updatePassword } from '../../action/authAction';
 import { WorkClient } from '../works/WorkClient';
+import { fetchWithToken } from '../../helpers/fetchWithOutToken';
+import { showAlert } from '../alerts';
 // import { fetchWithToken } from '../../helpers/fetchWithOutToken';
 
 const GetUser = ({ match, history }) => {
@@ -20,6 +22,9 @@ const GetUser = ({ match, history }) => {
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const dispatch = useDispatch();
+  const [photo, setPhoto] = useState('');
+  const userImageBox = useRef();
+  const [loadingUpdatePhoto, setLoadingUpdatePhoto] = useState(false);
 
   const clientId = match.params.clientId;
   useEffect(() => {
@@ -146,6 +151,35 @@ const GetUser = ({ match, history }) => {
     } else {
       return false;
     }
+  };
+
+  const ConvertPhoto = (e) => {
+    userImageBox.current.innerHTML = '';
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      let url = e.target.result;
+      let div = document.createElement('img');
+      div.classList.add(`user-image`);
+      div.width = '150px';
+      userImageBox.current.appendChild(div);
+      div.setAttribute('src', url);
+      div.setAttribute('width', 150);
+      setPhoto(url);
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  };
+
+  const UpdatePhoto = async (e) => {
+    e.preventDefault();
+    setLoadingUpdatePhoto(true);
+    const resp = await fetchWithToken(`users/updateAvatar/${clientId}`, { photo }, 'POST');
+    const body = await resp.json();
+    if (body.status === 'success') {
+      showAlert('success', body.message);
+    } else {
+      showAlert('error', body.message);
+    }
+    setLoadingUpdatePhoto(false);
   };
 
   return (
@@ -295,6 +329,21 @@ const GetUser = ({ match, history }) => {
                     </button>
                   )}
                 </div> */}
+              </form>
+            </div>
+            <hr />
+            <div className="w-9/12 shadow-sm rounded p-2 m-auto">
+              <form onSubmit={UpdatePhoto}>
+                <fieldset>
+                  <label htmlFor="photo">Subir Foto</label>
+                  <input required onChange={ConvertPhoto} type="file" accept="image/*" name="photo" />
+                </fieldset>
+                <fieldset ref={userImageBox}></fieldset>
+                <fieldset>
+                  <button disabled={loadingUpdatePhoto} type="submit" className="btn hover:bg-green-600 bg-green-500">
+                    {loadingUpdatePhoto ? <SmallLoading text="" size="small" /> : 'Actualizar imagen'}
+                  </button>
+                </fieldset>
               </form>
             </div>
             {client?._id === uid && (

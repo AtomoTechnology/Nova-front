@@ -135,11 +135,9 @@ const resetWorksClient = () => ({
   type: types.resetWorksClient,
 });
 
-const setClientWorks = (works, page, totalPage, results) => ({
+const setClientWorks = (works) => ({
   type: types.setWorksClient,
-  payload: {
-    works,
-  },
+  payload: works,
 });
 
 const setOneClient = (client) => ({
