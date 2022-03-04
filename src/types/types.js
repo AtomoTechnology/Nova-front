@@ -3,23 +3,19 @@ export const types = {
   finshLogin: '[auth] finsish login auth',
   finishChecking: '[auth] finish checking',
   logout: '[auth] start logout',
-
   getAllWorks: '[work] get all works',
   getAllHistories: '[histories] get all works turned in',
   getAllOrders: '[order] get all orders',
   setOneWork: '[work] set one work',
-
   getAllClients: '[client]get all the client form tha db',
   setOneClient: '[client] set one client',
   setWorksClient: '[client]set all works client',
   resetWorksClient: '[client]reset the state if there is no works',
-
   filterWorksState: '[works] filter the works bt state',
   filtrarClient: '[client] filter the clients by dni',
-
   updateClientAvatar: '[client] update client avatar',
   statusSuccess: 'success',
   statusFail: 'fail',
-
+  queriesNotread: 'Queries which not read',
   updatePassword: 'error update password',
 };

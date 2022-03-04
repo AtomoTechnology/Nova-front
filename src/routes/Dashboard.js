@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import NavbarContent from '../components/navbar/NavbarContent';
 import Footer from '../components/navbar/Footer';
@@ -7,6 +7,7 @@ import { Loading } from '../components/Loading';
 import NavbarLateral from '../components/navbar/NavbarLateral';
 import { ErrorApp } from '../components/ErrorApp';
 const Home = React.lazy(() => import('../components/Home'));
+const Browse = React.lazy(() => import('../components/Browse'));
 const Banners = React.lazy(() => import('../components/Banners'));
 const Users = React.lazy(() => import('../components/users/Users'));
 const Works = React.lazy(() => import('../components/works/Works'));
@@ -21,7 +22,7 @@ const UpdatePassword = React.lazy(() => import('../components/users/UpdatePasswo
 const OrderWork = React.lazy(() => import('../components/works/OrderWork'));
 const Queries = React.lazy(() => import('../components/queries/Queries'));
 const AddQuery = React.lazy(() => import('../components/queries/AddQuery'));
-const startChecking = React.lazy(() => import('../action/authAction'));
+// const startChecking = React.lazy(() => import('../action/authAction'));
 
 export default function Dashboard({ history }) {
   return (
@@ -33,6 +34,7 @@ export default function Dashboard({ history }) {
           <React.Suspense fallback={<Loading />}>
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route exact path="/browse" component={Browse} />
               <Route exact path="/clients" component={Users} />
               <Route exact path="/works">
                 <Works history={history} />
@@ -53,8 +55,6 @@ export default function Dashboard({ history }) {
                 <AddWork history={history} />
               </Route>
               <Route path="*" component={ErrorApp} />
-
-              {/* <Redirect to="/" /> */}
             </Switch>
           </React.Suspense>
         </div>

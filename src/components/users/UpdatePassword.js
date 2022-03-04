@@ -16,19 +16,16 @@ const UpdatePassword = () => {
   const { currentPassword, password, passwordConfirm } = values;
   const [loading, setLoading] = useState(false);
 
-  const handleSubmitLogin = (e) => {
+  const handleSubmitLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     if (verifyForm()) {
-      dispatch(updatePassword(values));
+      await dispatch(updatePassword(values));
       reset();
-    } else {
-      console.log(errores);
     }
     setLoading(false);
   };
 
-  // varify the form values
   const verifyForm = () => {
     let ok = true;
     let error = {};

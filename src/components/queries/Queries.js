@@ -8,7 +8,7 @@ import { SmallLoading } from '../SmallLoading';
 import smallNova from './../../templatePics/logoNovaSmall.png';
 import userChat from './../../templatePics/userchat.png';
 import Swal from 'sweetalert2';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 const Queries = () => {
   const [queries, setQueries] = useState([]);
@@ -43,21 +43,6 @@ const Queries = () => {
     }
   }
 
-  // setInterval(async () => {
-  //   console.log('acaaaa');
-  //   if (selectedQuery) {
-  //     try {
-  //       const res = await fetchWithToken(`queries/${selectedQuery._id}`);
-  //       const data = await res.json();
-  //       if (data.status === 'success') {
-  //         setSelectedQuery(data.data.data);
-  //       }
-  //     } catch (error) {
-  //       showAlert('error', 'Error al refrescar los datos de la consulta. Intente más tarde. ❌');
-  //     }
-  //   }
-  // }, 20000);
-
   const { uid, role } = useSelector((state) => state.auth);
 
   const addResponse = async (e) => {
@@ -88,9 +73,10 @@ const Queries = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, Borrar!',
       cancelButtonText: 'Cancelar',
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        DeleteQuery();
+        await DeleteQuery();
+        setRefreshQuery(!refreshQuery);
       }
     });
   };
@@ -123,14 +109,14 @@ const Queries = () => {
     if (!q.read) {
       const res = await fetchWithToken(`queries/${q._id}/setRead`, { read: true }, 'PUT');
       const data = await res.json();
-
-      console.log(data, data.data.query);
       if (data.status === 'success') {
         setSelectedQuery(data.data.query);
       }
     }
     let resps = document.querySelector('.responses');
-    resps.scrollTop = resps?.scrollHeight;
+    if (resps) {
+      resps.scrollTop = resps?.scrollHeight;
+    }
   };
 
   return (
@@ -176,7 +162,7 @@ const Queries = () => {
           <i className="fas fa-sync-alt w-12 h-12 rounded-full jhm-shadow flex items-center duration-150 justify-center bg-green-500 hover:bg-green-600 "></i>
         </div>
       </div>
-      <div className="query-chat justify-center items-center bg-gray-300 relative">
+      <div className="query-chat justify-center  bg-gray-300 relative">
         {selectedQuery ? (
           <div className="w-full ">
             <div className="query-header  w-full sticky  top-12 border-b border-2 p-2 flex justify-between items-center cursor-pointer gap-2 hover:bg-gray-200 bg-gray-100 ">
@@ -229,15 +215,11 @@ const Queries = () => {
                           // document.querySelectorAll('.action-query-response').classList.toggle('hidden');
                           $('.dots-action').click(function () {
                             if ($(this).siblings().hasClass('hidden')) {
-                              console.log('has');
                               $(this).siblings().removeClass('hidden');
                             } else {
-                              console.log('dont has');
                               $(this).siblings().addClass('hidden');
                             }
                             // $('.action-query-response').addClass('hidden');
-                            console.log($(this).siblings());
-                            // console.log($('.action-query-response'));
                           });
                         }}
                         className="fas fa-ellipsis-v dots-action text-lg mr-2 cursor-pointer text-gray-800"

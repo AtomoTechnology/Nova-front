@@ -1,5 +1,3 @@
-import React from 'react';
-
 const News = () => {
   return (
     <div className="news  bg-gray-100">

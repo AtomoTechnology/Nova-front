@@ -10,7 +10,7 @@ const AddUser = ({ history }) => {
   const dispatch = useDispatch();
   const [errores, setErrores] = useState([]);
   const [addingUser, setAddingUser] = useState(false);
-  const [urlImagen, setUrlImagen] = useState('');
+  const [urlImagen] = useState('');
 
   const auth = useSelector((state) => state.auth);
 
@@ -31,41 +31,20 @@ const AddUser = ({ history }) => {
 
   let { name, dni, phone1, phone2, direction, nota, password, passwordConfirm, email, role } = values;
 
-  const imageChange = (e) => {
-    // setFile(e.target.files[0]);
-    // console.log(e.target.files[0].size);
-    if (e.target.files[0]) {
-      var reader = new FileReader();
-
-      reader.onload = (ev) => {
-        let img = ev.target.result;
-        setUrlImagen(img);
-        document.querySelector('.imgLoad').setAttribute('src', img);
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
-    // showImg(e.target.files[0]);
-  };
-
-  // do the login method
   const handleCreateClient = async (e) => {
     setAddingUser(true);
     e.preventDefault();
     if (verifyForm()) {
-      // console.log(urlImagen);
-      dispatch(startCreatingClient(values, urlImagen));
+      await dispatch(startCreatingClient(values, urlImagen));
       reset();
       // setTimeout(() => {
       //   history.push('/clients');
       // }, 1000);
     }
-    //  else {
-    //   console.log(errores);
-    //   console.log(values);
-    // }
+
     setAddingUser(false);
   };
-  // varify the form values
+
   const verifyForm = () => {
     let ok = true;
     let errors = [];
@@ -105,7 +84,7 @@ const AddUser = ({ history }) => {
   };
 
   return (
-    <div className="user-add py-4 bg-gray-800 ">
+    <div className="user-add py-4">
       <div
         onClick={() => {
           history.push('/index');
@@ -259,9 +238,6 @@ const AddUser = ({ history }) => {
               placeholder="ingresa una nota"
             />
           </div>
-
-          {/* <div className="img  bg-gray-200 p-10 "> */}
-          {/* </div> */}
         </div>
         {/* <div className="my-2">
           <label
@@ -288,7 +264,7 @@ const AddUser = ({ history }) => {
         {/* <img className="w-32 imgLoad" alt="loading " /> */}
         <br />
         <button disabled={addingUser} className="btn jhm-shadow bg-red-500 hover:bg-red-700" type="submit">
-          {addingUser ? <SmallLoading text="..." size="small" /> : 'Crear Cuenta'}
+          {addingUser ? <SmallLoading text="" size="small" /> : 'Crear Cuenta'}
         </button>
         <div className="register-section my-4 text-sx text-blue-600 text-center ">
           <span className="text-sm">

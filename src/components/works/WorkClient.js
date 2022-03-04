@@ -1,16 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import userLogo from '../../templatePics/userLogo.png';
-import { DeleteWork } from '../../action/worksAction';
-import Swal from 'sweetalert2';
 import moment from 'moment';
 
-export const WorkClient = ({ work, history }) => {
-  const dispatch = useDispatch();
-  const { role } = useSelector((state) => state.auth);
+export const WorkClient = ({ work }) => {
   let color = '';
-  // console.log(history);
   switch (work.estado.name) {
     case 'Revision':
       color = 'red-700';
@@ -29,31 +22,12 @@ export const WorkClient = ({ work, history }) => {
       break;
   }
 
-  // const DeleteWorkById = () => {
-  //   Swal.fire({
-  //     title: 'Estás seguro ?',
-  //     text: 'Al aceptar se borrará el trabajo definitivamente!',
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: 'Si, Borrar!',
-  //     cancelButtonText: 'Cancelar',
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       dispatch(DeleteWork(work?._id));
-  //       history.push('/works');
-  //     }
+  // const toogleHeaderAction = (e) => {
+  //   const all = document.querySelectorAll('.header-action');
+  //   all.forEach((el) => {
+  //     if (el !== e.target.parentElement) el.classList.remove('active');
   //   });
   // };
-
-  const toogleHeaderAction = (e) => {
-    const all = document.querySelectorAll('.header-action');
-    all.forEach((el) => {
-      if (el !== e.target.parentElement) el.classList.remove('active');
-    });
-    console.log(e.target.parentElement, e.target.parentElement.classList.toggle('active'));
-  };
 
   return (
     <div className="work-client hover:bg-gray-100">

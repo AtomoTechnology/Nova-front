@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { Work } from '../works/Work';
-// import moment from 'moment';
-import userLogo from '../../templatePics/userLogo.png';
 import { getWorksClient, startDeleteClient, startEditClient, startGettingOneClient } from '../../action/clientsAction';
 import { useForm } from '../../hooks/useForm';
 import { SmallLoading } from '../SmallLoading';
@@ -11,7 +8,6 @@ import { updatePassword } from '../../action/authAction';
 import { WorkClient } from '../works/WorkClient';
 import { fetchWithToken } from '../../helpers/fetchWithOutToken';
 import { showAlert } from '../alerts';
-// import { fetchWithToken } from '../../helpers/fetchWithOutToken';
 
 const GetUser = ({ match, history }) => {
   const [loadingWorkUser, setLoadingWorkUser] = useState(true);
@@ -20,15 +16,18 @@ const GetUser = ({ match, history }) => {
   const [addingUser, setAddingUser] = useState(false);
   const [idChange, setIdChange] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [editMode, setEditMode] = useState(false);
   const dispatch = useDispatch();
   const [photo, setPhoto] = useState('');
   const userImageBox = useRef();
   const [loadingUpdatePhoto, setLoadingUpdatePhoto] = useState(false);
 
   const clientId = match.params.clientId;
+
   useEffect(() => {
-    dispatch(startGettingOneClient(clientId));
+    async function GetUserById() {
+      await dispatch(startGettingOneClient(clientId));
+    }
+    GetUserById();
   }, [dispatch, clientId]);
 
   useEffect(() => {
@@ -54,14 +53,12 @@ const GetUser = ({ match, history }) => {
 
   const { name, dni, phone1, phone2, direction, nota, email, currentPassword, password, passwordConfirm } = values;
 
-  const handleUpdateClient = (e) => {
+  const handleUpdateClient = async (e) => {
     e.preventDefault();
     setAddingUser(true);
     if (verifyForm()) {
-      dispatch(startEditClient(values, clientId));
+      await dispatch(startEditClient(values, clientId));
       document.querySelector('.edit-client').classList.toggle('active');
-    } else {
-      console.log(errores);
     }
     setAddingUser(false);
   };
@@ -76,27 +73,24 @@ const GetUser = ({ match, history }) => {
   const toggleModalDeleteClient = (e) => {
     document.querySelector('.delete-client-box').classList.toggle('active');
   };
-  const deleteCliente = (e) => {
-    dispatch(startDeleteClient(clientId));
+  const deleteCliente = async (e) => {
+    await dispatch(startDeleteClient(clientId));
     document.querySelector('.delete-client-box').classList.toggle('active');
     setTimeout(() => {
       history.push('/clients');
     }, 500);
   };
 
-  const UpdatePassword = (e) => {
+  const UpdatePassword = async (e) => {
     e.preventDefault();
     setLoading(true);
     if (verifyFormPass()) {
-      dispatch(updatePassword(values));
+      await dispatch(updatePassword(values));
       reset();
-    } else {
-      console.log(errores);
     }
     setLoading(false);
   };
 
-  // varify the form values
   const verifyFormPass = () => {
     let ok = true;
     let error = {};
@@ -120,10 +114,11 @@ const GetUser = ({ match, history }) => {
       return false;
     }
   };
-  // varify the form values
+
   const verifyForm = () => {
     let ok = true;
     let errors = [];
+    const regex = /^[0-9]*$/;
 
     if (!name) {
       ok = false;
@@ -133,15 +128,12 @@ const GetUser = ({ match, history }) => {
       ok = false;
       errors.email = true;
     }
-    // if (!direction || direction.trim().length === 0) {
-    // 	ok = false;
-    // 	errors.direction = true;
-    // }
-    if (!dni || dni.length < 8 || dni.length > 11) {
+
+    if (!dni || dni.length < 8 || dni.length > 11 || !regex.test(dni)) {
       ok = false;
       errors.dni = true;
     }
-    if (!phone1 || phone1.length < 7) {
+    if (!phone1 || phone1.length < 7 || !regex.test(phone1)) {
       ok = false;
       errors.phone1 = true;
     }
@@ -160,10 +152,9 @@ const GetUser = ({ match, history }) => {
       let url = e.target.result;
       let div = document.createElement('img');
       div.classList.add(`user-image`);
-      div.width = '150px';
-      userImageBox.current.appendChild(div);
       div.setAttribute('src', url);
       div.setAttribute('width', 150);
+      userImageBox.current.appendChild(div);
       setPhoto(url);
     };
     reader.readAsDataURL(e.target.files[0]);
@@ -176,6 +167,12 @@ const GetUser = ({ match, history }) => {
     const body = await resp.json();
     if (body.status === 'success') {
       showAlert('success', body.message);
+      userImageBox.current.innerHTML = '';
+      // setPhoto('');
+      // setInterval(() => {
+      //   window.location.reload();
+      //   // return false;
+      // }, 2000);
     } else {
       showAlert('error', body.message);
     }
@@ -243,6 +240,7 @@ const GetUser = ({ match, history }) => {
                 </span>
                 {/* <h3>Actualizar Cliente</h3> */}
                 <div className="form-grid">
+                  {client?.photo && <img width={100} src={client.photo} alt={client.name} />}
                   <div>
                     <label>Nombre Cliente :</label>
                     <span> {client?.name} </span>
@@ -332,20 +330,23 @@ const GetUser = ({ match, history }) => {
               </form>
             </div>
             <hr />
-            <div className="w-9/12 shadow-sm rounded p-2 m-auto">
-              <form onSubmit={UpdatePhoto}>
-                <fieldset>
-                  <label htmlFor="photo">Subir Foto</label>
-                  <input required onChange={ConvertPhoto} type="file" accept="image/*" name="photo" />
-                </fieldset>
-                <fieldset ref={userImageBox}></fieldset>
-                <fieldset>
-                  <button disabled={loadingUpdatePhoto} type="submit" className="btn hover:bg-green-600 bg-green-500">
-                    {loadingUpdatePhoto ? <SmallLoading text="" size="small" /> : 'Actualizar imagen'}
-                  </button>
-                </fieldset>
-              </form>
-            </div>
+            {(role === 'admin' || client?._id === uid) && (
+              <div className="w-9/12 shadow-sm rounded p-2 m-auto">
+                <form onSubmit={UpdatePhoto}>
+                  <fieldset>
+                    <label htmlFor="photo">Subir Foto</label>
+                    <input required onChange={ConvertPhoto} type="file" accept="image/*" name="photo" />
+                  </fieldset>
+                  <fieldset ref={userImageBox}></fieldset>
+                  <fieldset>
+                    <button disabled={loadingUpdatePhoto} type="submit" className="btn hover:bg-green-600 bg-green-500">
+                      {loadingUpdatePhoto ? <SmallLoading text="" size="small" /> : 'Actualizar imagen'}
+                    </button>
+                  </fieldset>
+                </form>
+              </div>
+            )}
+
             {client?._id === uid && (
               <>
                 <hr className="my-3" />
@@ -433,8 +434,6 @@ const GetUser = ({ match, history }) => {
               </div>
             }
           </div>
-
-          {/* <Link to="/users/userId">Ver Usuario</Link> */}
         </div>
       </div>
       {/* <hr /> */}
@@ -478,7 +477,7 @@ const GetUser = ({ match, history }) => {
                 />
                 {errores.name ? (
                   <span className="text-red-500 text-center bg-red-100 p-1">El nombre es obligatorio</span>
-                ) : null}{' '}
+                ) : null}
               </div>
               <div>
                 <label>
@@ -541,7 +540,7 @@ const GetUser = ({ match, history }) => {
                   name="phone2"
                   placeholder="ingresa el segundo telefono"
                   className="shadow"
-                />{' '}
+                />
               </div>
               <div>
                 <label>Dirección</label>
@@ -575,7 +574,7 @@ const GetUser = ({ match, history }) => {
         </div>
       </div>
 
-      <div className="modal-client-img hidden absolute z-10 bg-gray-600 w-full bg-opacity-50 place-content-center max-h-auto min-h-screen flex justify-center items-center top-0 left-0">
+      {/* <div className="modal-client-img hidden absolute z-10 bg-gray-600 w-full bg-opacity-50 place-content-center max-h-auto min-h-screen flex justify-center items-center top-0 left-0">
         <div onClick={showModalClient} className="overlay  absolute h-full w-full top-0 left-0"></div>
 
         <div id="img-client" className="flex justify-center  items-center">
@@ -583,11 +582,11 @@ const GetUser = ({ match, history }) => {
         </div>
         <span
           onClick={showModalClient}
-          className="absolute text-center flex justify-center items-center text-right top-10 right-10 h-10 w-10 rounded-full bg-white shadow-md p-1 cursor-pointer"
+          className="absolute text-center flex justify-center items-center  top-10 right-10 h-10 w-10 rounded-full bg-white shadow-md p-1 cursor-pointer"
         >
           <i className="far fa-times-circle text-3xl text-red-300"></i>
         </span>
-      </div>
+      </div> */}
     </div>
   );
 };

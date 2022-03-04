@@ -1,8 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { startGettingAllClient } from '../../action/clientsAction';
 import { fetchWithToken } from '../../helpers/fetchWithOutToken';
+import UsersPreview from '../preViews/UsersPreview';
 import { SmallLoading } from '../SmallLoading';
 import { AvatarDefault } from './AvatarDefault';
 import { User } from './User';
@@ -10,48 +9,40 @@ import { User } from './User';
 const Users = () => {
   // const dispatch = useDispatch();
   // const [searchClient, setSearchClient] = useState("");
-  // const [searchClient, setSearchClient] = useState('');
   // const [result, setResult] = useState([]);
+  // const [quant, setQuant] = useState(15);
+  const [searchClient, setSearchClient] = useState('');
   const [loadingUser, setLoadingUser] = useState(true);
   const observer = useRef();
-  // const [quant, setQuant] = useState(15);
   const [actualPage, setActualPage] = useState(1);
-  const [limit, setLimit] = useState(50);
+  const [limit] = useState(30);
   const [allUsers, setAllUsers] = useState([]);
   const [totalPage, setTotalPage] = useState(1);
-  const [a, setA] = useState([1, 2, 3]);
-
+  const [searchUsers, setSearchUsers] = useState([]);
+  const [loadingSearch, setLoadingSearch] = useState(false);
+  const [errorSearch, setErrorSearch] = useState(false);
+  const search = useRef();
   useEffect(() => {
     GetAll();
   }, [actualPage, setActualPage, limit]);
 
   const GetAll = async () => {
     setLoadingUser(true);
-    console.log('getting data');
     const resp = await fetchWithToken(`users?page=${actualPage}&limit=${limit}`);
     const body = await resp.json();
     if (body.status === 'success') {
       setTotalPage(body.totalPage);
-      console.log(body);
-      // body.data.users.map((user) => setAllUsers((p) => [...p, user]));
       setAllUsers((p) => [...p, ...body.data.users]);
     }
-    // await dispatch(startGettingAllClient(actualPage, limit));
     setLoadingUser(false);
   };
-  // const { clients, page, totalPage } = useSelector((state) => state.clients);
-
-  // let result = [];
 
   const lastUser = useCallback(
     (node) => {
-      console.log('last:', node);
       if (loadingUser) return;
-      //   console.log('ahter loading');
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && actualPage < totalPage) {
-          console.log('agregando 1 mas...');
           setActualPage((prevPage) => prevPage + 1);
         }
       });
@@ -59,10 +50,6 @@ const Users = () => {
     },
     [loadingUser, actualPage, setActualPage]
   );
-
-  // console.log(actualPage, page, totalPage);
-  // let { searchClient } = values;
-  console.log(allUsers, allUsers.length);
 
   // useEffect(() => {
   //   setLoadingUser(true);
@@ -79,74 +66,94 @@ const Users = () => {
     // setResult([]);
   };
 
-  // : result.length > 0 ? (
-  //       <div className="h-12/12 bg-gray-50 users-grid">
-  //         {result.map((clt, index) => {
-  //           if (result.length === index + 1) {
-  //             return <User ref={lastUser} key={clt._id} client={clt} />;
-  //           } else {
-  //             return <User key={clt._id} client={clt} />;
-  //           }
-  //         })}
-  //       </div>
-  //     )
+  const SearchUserByNameOrDNI = async (e) => {
+    e.preventDefault();
+    if (!search.current.value) {
+      setSearchUsers([]);
+      setErrorSearch(true);
+      return;
+    } else {
+      setAllUsers([]);
+      setErrorSearch(false);
+      setLoadingSearch(true);
+      const resp = await fetchWithToken(`users/search/${search.current.value}`);
+      const body = await resp.json();
+      if (body.status === 'success') {
+        setSearchUsers(body.data.users);
+      }
+      setLoadingSearch(false);
+    }
+  };
+  const ClearFilter = () => {
+    search.current.value = '';
+    setSearchUsers([]);
+    if (actualPage === 1) {
+      GetAll();
+    } else {
+      setActualPage(1);
+    }
+  };
 
   return (
     <div className="users">
-      {/* <button
-        onClick={() => {
-          setA((ant) => [...ant, 9]);
-          console.log(a);
-        }}
-      >
-        add
-      </button> */}
-      {/* <span className="title-header">Clientes</span> */}
-      {/* <div className="add-client-flotante">
+      <div className="add-client-flotante">
         <Link to="/client/add">
           <i className="fas fa-plus-circle"></i>
         </Link>
-      </div> */}
-      {/* {clients.length >= 10 && (
-        <div className="box-search relative">
-          <div className="users-filter hidden">
-            <h3>FIltro de Cliente</h3>
-            <span>Buscar Cliente por nombre y/o DNI</span>
-          </div>
-          <div className="search-box-userworks bg-gray-800 ">
-            <i className="fas fa-search text-gray-900 bg-gray-100 p-3"></i>
-
-            <form className="w-full">
+      </div>
+      <div className="box-search relative">
+        <div className="users-filter hidden">
+          <h3>FIltro de Cliente</h3>
+          <span>Buscar Cliente por nombre y/o DNI</span>
+        </div>
+        <div className="shadow-md sm:w-11/12 m-auto  ">
+          <form onSubmit={SearchUserByNameOrDNI} className="w-full">
+            <fieldset className="flex !flex-row !gap-0 ">
               <input
-                value={searchClient}
-                onChange={(e) => setSearchClient(e.target.value)}
+                ref={search}
                 placeholder={`Buscar cliente por nombre o dni...`}
-                name="searchClient"
+                name="search"
                 type="text"
+                style={{ borderRadius: '0px' }}
                 autoComplete="off"
-                className="text-gray-900"
+                className="text-gray-900 !rounded-0"
                 id="searchClientInput"
               />
-            </form>
-            <i
-              onClick={handleCloseBtn}
-              className="fas fa-times cursor-pointer duration-500 text-gray-600  right-3 bg-gray-100 hover:text-white hover:bg-red-500"
-            ></i>
-          </div>
-        </div>
-      )} */}
+              {(searchUsers.length > 0 || allUsers.length === 0) && (
+                <button onClick={ClearFilter} type="button" className="btn bg-gray-800">
+                  X
+                </button>
+              )}
 
-      {/* {searchClient.length > 0 && result.length === 0 && (
-        <div className="message-result-empty   bg-red-500 p-2 my-2 w-12/12 shadow-md rounded text-center">
-          No hay resultado para este filtro...
+              <button type="sumbit" className="btn bg-red-500">
+                Buscar
+              </button>
+            </fieldset>
+            {errorSearch && <span className="text-red-500 text-center p-1">Ingrese un valor para buscar</span>}
+          </form>
         </div>
-      )} */}
+      </div>
 
-      <div className="h-12/12 bg-gray-50 users-grid">
+      {loadingSearch && <SmallLoading />}
+      {searchUsers.length > 0 ? (
+        <div className="h-12/12  users-grid mb-2">
+          <div className="title-form !mb-0 p-4 sm:hidden">Resultados({searchUsers.length})</div>
+          {searchUsers.map((client, index) => (
+            <User client={client} key={index} />
+          ))}
+          <div className="title-form !mb-0 p-4">Fin busqueda</div>
+        </div>
+      ) : (
+        allUsers.length === 0 &&
+        loadingUser === false &&
+        loadingSearch === false && <div className="title-form !mb-0 p-4">No hay resultados para ese filtro!</div>
+      )}
+
+      <div className="h-12/12 md:w-11/12 m-auto users-grid">
         {allUsers.map((client, index) => {
           if (allUsers.length === index + 1) {
             return (
-              <Link key={index} ref={lastUser} to={`clients/${client._id}`} className="user lastttt">
+              <Link key={index} ref={lastUser} to={`clients/${client._id}`} className="user">
                 <div className="img-user sm:bg-blue-600 ">
                   {client?.photo ? (
                     <img
@@ -189,27 +196,11 @@ const Users = () => {
           }
         })}
       </div>
-
-      {loadingUser && <SmallLoading />}
-      {/* //  : (
-        //   <div className="no-cliente">
-        //     <span className="text-center text-2xl">No hay cliente por el momento</span>
-
-        //     <Link to="/client/add" className="btn add-client text-white p-3">
-        //       Agregar Cliente
-        //     </Link>
-        //   </div>
-        // ) */}
-
-      {/* {loadingUser ? (
-        <SmallLoading />
-      ) : (
-        <div className="h-12/12 bg-gray-50 users-grid">
-          {clients.length > 0
-            ? clients.map((clt) => <User key={clt._id} client={clt} />)
-            : null}
-        </div>
-      )} */}
+      {loadingUser && (
+        // <div className="h-12/12 md:w-11/12 m-auto users-grid">
+        <UsersPreview />
+        // </div>
+      )}
     </div>
   );
 };

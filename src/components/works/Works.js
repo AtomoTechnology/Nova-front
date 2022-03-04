@@ -1,50 +1,45 @@
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { DeleteWork, getAllWorks } from '../../action/worksAction';
+import { DeleteWork } from '../../action/worksAction';
 import { useForm } from '../../hooks/useForm';
 import { SmallLoading } from '../SmallLoading';
-import { Work } from './Work';
 import $ from 'jquery';
 import { useCallback } from 'react';
 import userLogo from '../../templatePics/userLogo.png';
 import Swal from 'sweetalert2';
 import { fetchWithToken } from '../../helpers/fetchWithOutToken';
+import WorksPreview from '../preViews/WorksPreview';
 
 const Works = ({ history }) => {
   const dispatch = useDispatch();
 
-  const [values, handleInputChange] = useForm({ estado: '' });
-  const { estado } = values;
   const [codigo, setCodigo] = useState('');
   const [loadingWorks, setLoadingWorks] = useState(true);
-  const [result, setResult] = useState([]);
-  const [limit, setLimit] = useState(30);
+  const [limit] = useState(30);
   const [actualPage, setPage] = useState(1);
   const filterBox = useRef();
   const observer = useRef();
   const [workss, setWorkss] = useState([]);
   const [total, setTotal] = useState(1);
   const { role } = useSelector((state) => state.auth);
-  // const { works, total } = useSelector((state) => state.works);
-
-  useEffect(() => {
-    GetAll();
-  }, [actualPage, setPage, limit]);
 
   const GetAll = async () => {
     setLoadingWorks(true);
     const resp = await fetchWithToken(`works?page=${actualPage}&limit=${limit}`);
     const body = await resp.json();
     if (body.status === 'success') {
-      console.log(body);
       setTotal(body.total);
       setWorkss((prev) => [...prev, ...body.data.works]);
     }
-    // await dispatch(getAllWorks(limit, actualPage));
-    setResult([]);
     setLoadingWorks(false);
   };
+  useEffect(() => {
+    GetAll();
+  }, [actualPage, setPage, limit]);
+
+  const [values, handleInputChange] = useForm({ estado: '' });
+  const { estado } = values;
   const lastWork = useCallback(
     (node) => {
       if (loadingWorks) return;
@@ -58,30 +53,12 @@ const Works = ({ history }) => {
     },
     [loadingWorks, actualPage, setPage]
   );
-  // useEffect(() => {
-  //   if (estado === 'Todos' || estado === '') {
-  //     setResult(works);
-  //   } else {
-  //     setResult(works.filter((w) => w.estado.name === estado));
-  //   }
-  // }, [estado]);
-
-  // useEffect(() => {
-  //   if (codigo !== '') {
-  //     setResult(works.filter((w) => w.codigo.includes(codigo)));
-  //   } else {
-  //     setResult([]);
-  //   }
-  // }, [codigo]);
 
   const stateArray = ['Revision', 'Presupuesto', 'En Reparacion', 'Terminado', 'Entregado', 'Todos'];
   const toggleFilterBox = () => {
     $('.toggle-filter').toggleClass('hidden');
   };
-  // let arrayPage = [];
-  // for (let i = 1; i <= page; i++) {
-  //   arrayPage.push(i);
-  // }
+
   const DeleteWorkById = (idWork) => {
     Swal.fire({
       title: 'Estás seguro ?',
@@ -118,29 +95,6 @@ const Works = ({ history }) => {
           ></i>
         </div>
 
-        {/* <span className="total-results bg-white shadow text-gray-900 p-1">
-          {results} / {total}
-        </span> */}
-
-        {/* <div className="page-filter flex items-center">
-          <label className="text-red-700 ">Page :</label>
-          <input
-            type="text"
-            placeholder="pagina"
-            className="w-8 h-8  bg-white "
-            onChange={(e) => {
-              setPage(e.target.value);
-            }}
-            value={actualPage}
-          />
-          <div className="note-page-filter flex text-center justify-center curso-pointer  items-center border-l border-t-0 border-r-0 border-gray-800  bg-white rounde note w-8 h-8">
-            <i>?</i>
-            <span className="absolute shadow-md bg-white p-1 top-0 left-7 hidden  ">
-              Indica la pagina que quieres acceder
-            </span>
-          </div>
-          <i className="fas fa-filter w-8 h-8 rounded-full shadow flex items-center justify-center bg-red-700 text-white cursor-pointer hover:bg-red-800 hover:shadow-md "></i>
-        </div> */}
         <div ref={filterBox} className="toggle-filter hidden">
           <div className="overflow-hidden  my-1 ">
             <form className="flex w-full flex-wrap lg:justify-center gap-y-2 flex-col sm:flex-row md:justify-between items-center sm:gap-x-2">
@@ -174,17 +128,10 @@ const Works = ({ history }) => {
           <i className="fas fa-plus-circle"></i>
         </Link>
       </div>
-      {/* 
-      {result.length === 0 && (
-        <div className="message-result-empty hidden  bg-red-500 text-gray-100 p-2 my-2 w-12/12 shadow-md rounded text-center">
-          No hay resultado para este filtro...
-        </div>
-      )} */}
 
       <div className="works-grid p-1 m-auto">
         {workss.map((work, index) => {
           let color = '';
-          // console.log(history);
           switch (work.estado.name) {
             case 'Revision':
               color = 'red-700';
@@ -210,19 +157,24 @@ const Works = ({ history }) => {
                     <img
                       className="rounded-full w-8 border-1 border-pink-500 h-8"
                       src={`/assets/img/client/${work?.cliente?.pathImg}`}
+                      alt={work?.client?.name}
                     />
                   ) : (
-                    <img className="rounded-full w-8 border-1 border-pink-500 h-8" src={userLogo} />
+                    <img
+                      className="rounded-full w-8 border-1 border-pink-500 h-8"
+                      src={userLogo}
+                      alt={work?.client?.name}
+                    />
                   )}
 
                   <h3 className="capitalize font-serif">{work?.cliente?.name}</h3>
-                  {role == 'admin' && (
+                  {role === 'admin' && (
                     <div className="header-action  relative">
                       <i
                         onClick={toogleHeaderAction}
                         className="fas fa-ellipsis-v rounded cursor-pointer w-8 h-8 shadow bg-gray-100  flex justify-center items-center hover:shadow-md hover:rounded-full hover:bg-blue-100"
                       ></i>
-                      <div className="hidden absolute flex justify-center gap-2 items-center right-0 p-1 bg-gray-100  shadow  ">
+                      <div className="hidden absolute  justify-center gap-2 items-center right-0 p-1 bg-gray-100  shadow  ">
                         <span className="w-8 h-8 rounded-full cursor-pointer hover:shadow-md hover:text-red-500  text-red-700  shadow p-1 flex justify-center items-center text-center bg-white">
                           <i className="fas fa-trash " onClick={() => DeleteWorkById(work?._id)}></i>
                         </span>
@@ -257,19 +209,24 @@ const Works = ({ history }) => {
                     <img
                       className="rounded-full w-8 border-1 border-pink-500 h-8"
                       src={`/assets/img/client/${work?.cliente?.pathImg}`}
+                      alt={work?.client?.name}
                     />
                   ) : (
-                    <img className="rounded-full w-8 border-1 border-pink-500 h-8" src={userLogo} />
+                    <img
+                      className="rounded-full w-8 border-1 border-pink-500 h-8"
+                      src={userLogo}
+                      alt={work?.client?.name}
+                    />
                   )}
 
                   <h3 className="capitalize font-serif">{work?.cliente?.name}</h3>
-                  {role == 'admin' && (
+                  {role === 'admin' && (
                     <div className="header-action  relative">
                       <i
                         onClick={toogleHeaderAction}
                         className="fas fa-ellipsis-v rounded cursor-pointer w-8 h-8 shadow bg-gray-100  flex justify-center items-center hover:shadow-md hover:rounded-full hover:bg-blue-100"
                       ></i>
-                      <div className="hidden absolute flex justify-center gap-2 items-center right-0 p-1 bg-gray-100  shadow  ">
+                      <div className="hidden absolute  justify-center gap-2 items-center right-0 p-1 bg-gray-100  shadow  ">
                         <span className="w-8 h-8 rounded-full cursor-pointer hover:shadow-md hover:text-red-500  text-red-700  shadow p-1 flex justify-center items-center text-center bg-white">
                           <i className="fas fa-trash " onClick={() => DeleteWorkById(work?._id)}></i>
                         </span>
@@ -300,7 +257,7 @@ const Works = ({ history }) => {
         })}
       </div>
 
-      {loadingWorks && <SmallLoading />}
+      {loadingWorks && <WorksPreview />}
     </div>
   );
 };

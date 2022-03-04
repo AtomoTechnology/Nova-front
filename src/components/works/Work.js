@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import userLogo from '../../templatePics/userLogo.png';
 import { DeleteWork } from '../../action/worksAction';
 import Swal from 'sweetalert2';
-import moment from 'moment';
 
 export const Work = ({ work, history }) => {
   const dispatch = useDispatch();
@@ -18,7 +17,7 @@ export const Work = ({ work, history }) => {
       color = 'gray-600';
       break;
     case 'En Reparacion':
-      color = 'yellow-500';
+      color = 'yellow-600';
       break;
     case 'Terminado':
       color = 'pink-400';
@@ -76,19 +75,6 @@ export const Work = ({ work, history }) => {
               <span className="w-8 h-8 rounded-full cursor-pointer hover:shadow-md hover:text-red-500  text-red-700  shadow p-1 flex justify-center items-center text-center bg-white">
                 <i className="fas fa-trash " onClick={DeleteWorkById}></i>
               </span>
-              {/* <span className="w-8 h-8 text-gray-700 cursor-pointer hover:shadow-md hover:text-gray-500 rounded-full shadow p-1 flex justify-center items-center text-center bg-white">
-                <Link to={'/work/edit/' + work?._id}>
-                  <i
-                    className="fas fa-edit  "
-                    // onClick={() => {
-                    //   history.push(`/work/edit/${work?._id}`);
-                    // }}
-                  ></i>
-                </Link>
-              </span> */}
-              {/* <span className="w-8 h-8 text-yellow-700 cursor-pointer hover:shadow-md hover:text-yellow-500 rounded-full shadow p-1 flex justify-center items-center text-center bg-white">
-                <i className="fas fa-trash"></i>
-              </span> */}
             </div>
           </div>
         )}

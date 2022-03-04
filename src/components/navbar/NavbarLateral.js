@@ -12,6 +12,9 @@ const NavbarLateral = ({ history }) => {
     if (history.location.pathname === '/') {
       document.querySelector('.link-lateral-home')?.classList.add('active');
     }
+    if (history.location.pathname === '/browse') {
+      document.querySelector('.link-lateral-browse')?.classList.add('active');
+    }
     if (history.location.pathname.includes('/works') && history.location.pathname.length === 6) {
       document.querySelector('.link-lateral-works')?.classList.add('active');
     }
@@ -58,30 +61,40 @@ const NavbarLateral = ({ history }) => {
             </div>
           </div>
           <ul id="menu-lateral-big" className="menu-lateral">
-            <li className="menu-item link-lateral link-lateral-home">
-              <span className="cartel">Home</span>
-              <Link to="/" className="">
-                <span className="icon">
-                  <i className="fas fa-home"></i>
-                </span>
-                <span className="title">Home</span>
-              </Link>
-            </li>
-
             {role === 'user' && (
-              <li className="menu-item link-lateral link-lateral-create-query">
-                <span className="cartel">Consultas</span>
-                <Link to="/createquery" className="">
-                  <span className="icon">
-                    <i className="fas fa-question"></i>
-                  </span>
-                  <span className="title"> Consulta </span>
-                </Link>
-              </li>
+              <>
+                <li className="menu-item link-lateral link-lateral-browse">
+                  <span className="cartel">Inicio</span>
+                  <Link to="/browse" className="">
+                    <span className="icon">
+                      <i className="fas fa-home"></i>
+                    </span>
+                    <span className="title">Inicio</span>
+                  </Link>
+                </li>
+                <li className="menu-item link-lateral link-lateral-create-query">
+                  <span className="cartel">Consultas</span>
+                  <Link to="/createquery" className="">
+                    <span className="icon">
+                      <i className="fas fa-question"></i>
+                    </span>
+                    <span className="title"> Consulta </span>
+                  </Link>
+                </li>
+              </>
             )}
 
             {role !== 'user' && (
               <>
+                <li className="menu-item link-lateral link-lateral-home">
+                  <span className="cartel">Inicio</span>
+                  <Link to="/" className="">
+                    <span className="icon">
+                      <i className="fas fa-home"></i>
+                    </span>
+                    <span className="title">Inicio</span>
+                  </Link>
+                </li>
                 <li className="menu-item link-lateral link-lateral-clientes">
                   <span className="cartel">Clientes</span>
                   <Link to="/clients">

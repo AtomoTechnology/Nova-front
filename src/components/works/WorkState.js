@@ -27,26 +27,6 @@ export const WorkState = ({ work }) => {
   }
   return (
     <Link to={`/works/${work?._id}`} className="work work-state">
-      {/* {work?.work.images.length > 0 ? (
-        <img
-          style={{
-            // width: 100,
-            height: 150,
-          }}
-          className="rounded-t"
-          src={`/assets/img/works/${work?.work.images[0]?.fileName}`}
-        />
-      ) : (
-        <img
-          style={{
-            // width: 100,
-            height: 150,
-          }}
-          className="rounded-t"
-          src={workFakeFoto}
-        />
-      )} */}
-
       <div className="title p-1">
         <span className={'capitalize text-' + color}>{work?.marca + '   ' + work?.modelo}</span>
       </div>
@@ -59,18 +39,13 @@ export const WorkState = ({ work }) => {
         {' '}
         <p className="text-gray-300">
           {'Hace ' +
-            ahora.diff(
-              moment(moment(work?.states[work?.states.length - 1].fecha).format('YYYY-MM-DD')),
-              'days'
-            ) +
+            ahora.diff(moment(moment(work?.states[work?.states.length - 1].fecha).format('YYYY-MM-DD')), 'days') +
             ' Dias'}
         </p>
         <p>{work?.codigo}</p>
       </div>
       <div className="estado p-1 flex justify-between items-center">
-        <span className={`rounded-sm bg-${color} p-1`}>
-          {work?.states[work?.states.length - 1].nombre}
-        </span>
+        <span className={`rounded-sm bg-${color} p-1`}>{work?.states[work?.states.length - 1].nombre}</span>
         <i className={' fas fa-mobile-alt mr-4 text-' + color}></i>
       </div>
       <div className="cliente-precio flex justify-between bg-gray-200 rounded-b p-1 items-center gap-2">
@@ -78,14 +53,13 @@ export const WorkState = ({ work }) => {
           <img
             className="rounded-full w-8 border-1 border-pink-500 h-8"
             src={`/assets/img/client/${work?.cliente?.pathImg}`}
+            alt="user Logo"
           />
         ) : (
-          <img className="rounded-full w-8 border-1 border-pink-500 h-8" src={userLogo} />
+          <img alt="user Logo" className="rounded-full w-8 border-1 border-pink-500 h-8" src={userLogo} />
         )}
         <h3 className="capitalize font-serif">{work?.cliente?.name?.slice(0, 13)}...</h3>
-        {role == 'admin' && (
-          <span className={'work-precio text-' + color}>{' $ ' + work?.total?.toFixed(2)}</span>
-        )}
+        {role === 'admin' && <span className={'work-precio text-' + color}>{' $ ' + work?.total?.toFixed(2)}</span>}
       </div>
     </Link>
   );

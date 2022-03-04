@@ -3,16 +3,12 @@ import { Link, NavLink } from 'react-router-dom';
 import logoNova from './../templatePics/logoNovaSmall.png';
 import bg from './../templatePics/bg.jpg';
 import bgwhite from './../templatePics/logoNovaWhite.png';
-
 import iphone from './../templatePics/reparacionIphone.jpg';
 import multiMarca from './../templatePics/multiMarca.jpg';
 import ServicioTécnicoIphone from './../templatePics/ServicioTécnicoIphone.jpg';
 import $ from 'jquery';
-import { fetchWithOutToken, fetchWithToken } from '../helpers/fetchWithOutToken';
-
+import { fetchWithOutToken } from '../helpers/fetchWithOutToken';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -20,10 +16,18 @@ import { Pagination, Navigation } from 'swiper';
 
 export const Index = () => {
   const [banners, setBanners] = useState([]);
-  useEffect(async () => {
-    const res = await fetchWithOutToken('banners');
-    const body = await res.json();
-    setBanners(body.data.banners);
+
+  useEffect(() => {
+    async function getAll() {
+      const res = await fetchWithOutToken('banners');
+      const body = await res.json();
+      setBanners(body.data.banners);
+    }
+    getAll();
+
+    return () => {
+      setBanners([]);
+    };
   }, []);
 
   return (
@@ -103,28 +107,23 @@ export const Index = () => {
         </div>
       </div>
 
-      {/* //banner  */}
-      {/* <div className="banner  w-11/12 my-2 m-auto " id="banner"> */}
-      {/* <div id="banner-content-imgs" className="banner-content items-center relative flex"> */}
-      <Swiper
-        pagination={{
-          type: 'fraction',
-        }}
-        navigation={true}
-        modules={[Pagination, Navigation]}
-        className="mySwiper sm:h-72 my-1"
-      >
-        {banners.map((b) => (
-          <SwiperSlide>
-            <img src={b.photo} alt={b.id} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {banners.length > 0 && (
+        <Swiper
+          pagination={{
+            type: 'fraction',
+          }}
+          navigation={true}
+          modules={[Pagination, Navigation]}
+          className="mySwiper sm:h-72 my-1"
+        >
+          {banners.map((b) => (
+            <SwiperSlide>
+              <img src={b.photo} alt={b.id} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
 
-      {/* </div> */}
-      {/* </div> */}
-
-      {/* //services  */}
       <div className="services w-11/12 p-4  my-2 m-auto bg-white shadow-lg " id="services">
         <h3 className="title-services !text-3xl sm:!text-6xl  title-form">Servicios</h3>
         <div className="services-content p-3  gap-2 justify-center items-center">
@@ -163,7 +162,6 @@ export const Index = () => {
         </div>
       </div>
 
-      {/* about us */}
       <div className="about-us w-11/12 p-4  my-4 m-auto bg-white shadow-lg" id="about">
         <h3 className="title-services !text-3xl sm:!text-6xl  title-form">Acerca de Nosotros</h3>
         <div className="about-us-content grid md:grid-cols-2 sm:grid-cols-1 justify-between gap-3 p-2 my-2 items-center">
@@ -182,14 +180,11 @@ export const Index = () => {
         </div>
       </div>
 
-      {/* map */}
       <div className="mapa-box w-11/12 p-4  my-4 m-auto bg-white shadow-lg">
         <h3 className="title-form  !text-3xl sm:!text-6xl">Cómo llegar </h3>
         <div className="mapa">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4039.7410697230857!2d-60.648348477213965!3d-32.943045974707616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95b7ab3dcfa636eb%3A0xf8d408ba1fff4aad!2sSan%20Lorenzo%201636%2C%20S2000ART%20Rosario%2C%20Santa%20Fe!5e0!3m2!1sen!2sar!4v1643655150414!5m2!1sen!2sar"
-            // width="550"
-            // height="500"
             style={{ border: 0 }}
             allowFullScreen=""
             loading="lazy"
@@ -197,7 +192,6 @@ export const Index = () => {
         </div>
       </div>
 
-      {/* footer */}
       <div className="footer-index  bg-gray-900 justify-items-center ">
         <div className="footer-index-container flex flex-wrap gap-y-4 gap-2 justify-around  items-center p-2">
           <div className="logo-footer flex items-center jsujtify-center h-full">
@@ -230,9 +224,6 @@ export const Index = () => {
           <Link to="#">
             <i className="fab fa-instagram w-6 text-lg hover:text-2xl h-6 rounded-full hover:shadow-md hover:bg-red-600 shadow bg-red-500 flex items-center justify-center text-white"></i>
           </Link>
-          {/* <Link to="#">
-            <i class="fab fa-twitter w-6 text-lg hover:text-2xl h-6 rounded-full hover:shadow-md hover:bg-blue-600 shadow bg-blue-500 flex items-center justify-center text-white"></i>
-          </Link> */}
         </div>
       </div>
     </div>

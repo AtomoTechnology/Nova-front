@@ -21,12 +21,22 @@ export const startGettingAllClient = (page, limit) => {
       const resp = await fetchWithToken(`users?page=${page}&limit=${limit}`);
       const users = await resp.json();
       if (users.status === types.statusSuccess) {
-        console.log(users);
         dispatch(getClients(users.data.users, users.page, users.totalPage, users.results));
       }
     } catch (error) {}
   };
 };
+// export const GetTotalClient = () => {
+//   return async (dispatch) => {
+//     try {
+//       const resp = await fetchWithToken(`users/stats`);
+//       const users = await resp.json();
+//       if (users.status === types.statusSuccess) {
+//         dispatch(SetTotalClient());
+//       }
+//     } catch (error) {}
+//   };
+// };
 
 export const startGettingOneClient = (clientId) => {
   return async (dispatch) => {
@@ -89,19 +99,16 @@ export const startCreatingClient = (user, file) => {
     try {
       const resp = await fetchWithOutToken('users/signup', user, 'POST');
       const result = await resp.json();
-      console.log(result);
       if (result.status === types.statusSuccess) {
-        showAlert('success', 'Cuenta creada con exito.🙌👏✔.Ahora podes iniciar sesion');
+        showAlert('success', 'Cuenta creada con exito.🙌👏✔.Ahora podes iniciar sesion. Revisa tu casilla de email!');
         setTimeout(() => {
           window.location = '/login';
         }, 3000);
       } else {
         showAlert('error', result.message);
-        // window.location = '/login';
       }
     } catch (error) {
       showAlert('error', error.message);
-      // window.location = '/login';
     }
   };
 };

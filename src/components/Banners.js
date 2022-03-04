@@ -19,7 +19,6 @@ const Banners = () => {
     const res = await fetchWithOutToken('banners');
     const body = await res.json();
     setBanners(body.data.banners);
-    console.log(body.data.banners);
     setLoading(false);
   }, [refresh]);
 
@@ -54,13 +53,9 @@ const Banners = () => {
       const res = await fetchWithToken('banners', { photos }, 'POST');
       const body = await res.json();
       if (body.status === 'success') {
-        console.log('photo uploaded');
         setRefresh(!refresh);
         bannerImages.current.innerHTML = '';
         setPhotos([]);
-        console.log(inputBanner.current);
-        console.log(inputBanner.files);
-        console.log(inputBanner.values);
         inputBanner.current.files = null;
       }
     }
@@ -113,6 +108,8 @@ const Banners = () => {
         </form>
         <div className="flex  items-center gap-4 p-4 m-4 overflow-auto" ref={bannerImages}></div>
       </div>
+
+      {loading && <SmallLoading />}
 
       <div
         style={{

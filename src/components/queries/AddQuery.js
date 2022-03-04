@@ -5,12 +5,12 @@ import { useForm } from '../../hooks/useForm';
 import { showAlert } from '../alerts';
 
 const AddQuery = ({ history }) => {
-  console.log(history);
-  const [values, handleInputChange, reset] = useForm({ message: '' });
   const [ok, setOk] = useState(true);
   const [loading, setLoading] = useState(false);
-  const { message } = values;
+
   const { username } = useSelector((state) => state.auth);
+  const [values, handleInputChange, reset] = useForm({ message: '' });
+  const { message } = values;
 
   const Add = async (e) => {
     e.preventDefault();
@@ -22,8 +22,8 @@ const AddQuery = ({ history }) => {
         const data = await res.json();
         if (data.status === 'success') {
           showAlert('success', 'Tu consulta se mandó con exito.');
+          setLoading(false);
           reset();
-          console.log(data);
           history.push('/queries');
         } else {
           throw new Error(data.message);
@@ -31,11 +31,11 @@ const AddQuery = ({ history }) => {
         }
       } catch (error) {
         showAlert('error', error.message);
+        setLoading(false);
       }
     } else {
       setOk(false);
     }
-    setLoading(false);
   };
 
   return (

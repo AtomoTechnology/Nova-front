@@ -1,6 +1,5 @@
 import { fetchWithOutToken, fetchWithToken } from '../helpers/fetchWithOutToken.js';
 import { types } from '../types/types.js';
-
 import Swal from 'sweetalert2';
 import { showAlert } from '../components/alerts.js';
 
@@ -18,7 +17,14 @@ export const startLogin = (dni, password) => {
           role: body.data.user.role,
         })
       );
-      // showAlert('success', 'Inicio de sesion con exito');
+
+      if (body.data.user.role === 'user') {
+        console.log('user');
+        window.location = '/browse';
+      } else {
+        console.log('admin');
+        window.location = '/';
+      }
     } else {
       showAlert('error', body.message);
     }
@@ -30,17 +36,16 @@ export const startChecking = () => {
     try {
       const resp = await fetchWithToken('users/renewToken', {}, 'POST');
       const body = await resp.json();
+      console.log(body);
       if (body.status === types.statusSuccess) {
         localStorage.setItem('token', body.token);
         localStorage.setItem('token-start-date', new Date().getTime());
         dispatch(login({ uid: body.data.user._id, username: body.data.user.name, role: body.data.user.role }));
       } else {
+        console.log('esta acaaa');
         dispatch(finishChecking());
         dispatch(startLogout());
-
-        // console.log(body);
-        // window.location.reload();
-        // showAlert('error', 'Se expiró tu sesíon. Por favor conectate de nuevo.');
+        throw new Error(body.message);
       }
     } catch (error) {
       showAlert('error', error.message);

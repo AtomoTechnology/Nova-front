@@ -4,9 +4,20 @@ import { Link } from 'react-router-dom';
 import { startLogout } from '../../action/authAction';
 import userLogo from '../../templatePics/userLogo.png';
 import userLogoAdmin from '../../templatePics/adminLogo.png';
+import { GetTotalQueriesNotRead } from '../../action/queriesAction';
+import { useEffect } from 'react';
 
 const NavbarContent = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    function GetTotalQueriesNotread() {
+      dispatch(GetTotalQueriesNotRead());
+    }
+    GetTotalQueriesNotread();
+  }, []);
+  const { notRead } = useSelector((state) => state.queries);
+
   const handleLogout = () => {
     dispatch(startLogout());
   };
@@ -44,17 +55,21 @@ const NavbarContent = () => {
     <div className="content-header">
       <i onClick={handleNavbar} id="btn-open-menu-mobile" className="fas fa-bars"></i>
 
-      <div className="messages relative">
-        <Link to="/queries" className="text-white">
-          {/* <span className="absolute top-0 right-0 flex items-center justify-center w-6 h-6  rounded-full text-white jhm-rounded text-center bg-red-500">
-            9
-          </span> */}
+      {role === 'admin' && (
+        <div className="messages relative">
+          <Link to="/queries" className="text-white">
+            {notRead !== 0 && (
+              <span className="absolute top-0 right-0 flex items-center justify-center w-6 h-6  rounded-full text-white jhm-rounded text-center bg-red-500">
+                {notRead > 9 ? `9+` : notRead}
+              </span>
+            )}
 
-          <span className="icon text-white">
-            <i id="" className="fas fa-envelope text-white"></i>
-          </span>
-        </Link>
-      </div>
+            <span className="icon text-white">
+              <i id="" className="fas fa-envelope text-white"></i>
+            </span>
+          </Link>
+        </div>
+      )}
 
       <div onMouseOut={outMenuUser} onMouseOver={overMenuUser} onClick={mobileToggle} className="content-header-right">
         <div className="user-logo">
@@ -68,7 +83,7 @@ const NavbarContent = () => {
         </div>
         <div className="menu-user">
           <ul>
-            <li className="menu-item" onClick={activeLink}>
+            {/* <li className="menu-item" onClick={activeLink}>
               <span className="cartel">Home</span>
               <Link to="/" className="">
                 <span className="icon">
@@ -76,7 +91,7 @@ const NavbarContent = () => {
                 </span>
                 <span className="title">Home</span>
               </Link>
-            </li>
+            </li> */}
 
             {role !== 'user' && (
               <>

@@ -5,7 +5,7 @@ import { showAlert } from '../alerts';
 import moment from 'moment';
 
 export const CheckState = ({ history }) => {
-  const [values, handleInputChange, reset] = useForm({ codigo: '' });
+  const [values, handleInputChange] = useForm({ codigo: '' });
   const [ok, setOk] = useState(true);
   const [loading, setLoading] = useState(false);
   const { codigo } = values;
@@ -23,7 +23,6 @@ export const CheckState = ({ history }) => {
           setWork(data.work);
         } else {
           throw new Error(data.message);
-          // showAlert('error', data.message);
         }
       } catch (error) {
         showAlert('error', error.message);

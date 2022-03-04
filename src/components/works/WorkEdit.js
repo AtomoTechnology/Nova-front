@@ -11,8 +11,6 @@ const WorkEdit = ({ match, history }) => {
   const [patronError, setPatronError] = useState(false);
   const [checkPassword, setCheckPassword] = useState(false);
   const [checkPatron, setCheckPatron] = useState(false);
-  const [tiene_Contrasena, setTieneContrasena] = useState(false);
-  const [es_patron, setEs_patron] = useState(false);
   const [passwordPatron, setContraseña] = useState('');
   const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [estados, setEstados] = useState([]);
@@ -49,14 +47,15 @@ const WorkEdit = ({ match, history }) => {
     patron: work?.patron,
     total: work?.total,
   });
-  useEffect(async () => {
-    const resp = await fetchWithToken('state');
-    const states = await resp.json();
-    setEstados(states.data.states);
+  useEffect(() => {
+    async function GetAllState() {
+      const resp = await fetchWithToken('state');
+      const states = await resp.json();
+      setEstados(states.data.states);
+    }
+    GetAllState();
   }, [setEstados]);
-  console.log(work);
 
-  //hacer un useEffect before destriction of the values
   const {
     marca,
     modelo,
@@ -82,10 +81,8 @@ const WorkEdit = ({ match, history }) => {
       setCheckPassword(false);
       values.tieneContrasena = false;
       values.contrasena = '';
-      // setPasswordRequired(false);
     }
   };
-  console.log(esPatron, tieneContrasena);
 
   const changeCheckPatron = (e) => {
     if (e.target.checked) {
@@ -103,25 +100,19 @@ const WorkEdit = ({ match, history }) => {
     }
   };
 
-  const handleSubmitLogin = (e) => {
+  const handleSubmitLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     if (verifyForm()) {
-      dispatch(startEditWork(values, workId));
+      await dispatch(startEditWork(values, workId));
       setReload(!reload);
       reset();
       setTimeout(() => {
         history.push(`/works/${workId}`);
       }, 1000);
-      // reset();
-      // history.push('/works');
-      // window.location.replace('/works');
-    } else {
-      console.log(values, errores);
     }
     setLoading(false);
   };
-  // varify the form values
   const verifyForm = () => {
     let ok = true;
     let errors = [];
@@ -149,7 +140,7 @@ const WorkEdit = ({ match, history }) => {
     }
 
     if (tieneContrasena) {
-      if (!esPatron && contrasena.length == 0) {
+      if (!esPatron && contrasena.length === 0) {
         setPatronError(true);
         ok = false;
       } else {
@@ -157,7 +148,7 @@ const WorkEdit = ({ match, history }) => {
       }
     }
     if (esPatron) {
-      if (patron.length == 0) {
+      if (patron.length === 0) {
         setPatronError(true);
         ok = false;
       } else {
@@ -227,20 +218,6 @@ const WorkEdit = ({ match, history }) => {
               <span className="text-red-600">*</span>
             </label>
             <div>
-              {/* <select
-								value={cliente}
-								onChange={handleInputChange}
-								name="cliente"
-							>
-								<option value="" disabled>
-									Elegir un cliente
-								</option>
-								{clients.map((clt) => (
-									<option key={clt._id} value={clt._id}>
-										{clt.dni.toString()}
-									</option>
-								))}
-							</select> */}
               <input type="text" value={cliente} onChange={handleInputChange} name="cliente" list="clientes" />
               <datalist name="cliente" id="clientes">
                 <option value="" disabled>
@@ -277,16 +254,8 @@ const WorkEdit = ({ match, history }) => {
             ) : null}
           </div>
           <div>
-            <label>
-              Emei / Serie
-              {/* <span className="text-red-600">*</span> */}
-            </label>
+            <label>Emei / Serie</label>
             <input onChange={handleInputChange} value={emei} type="number" name="emei" min={1} minLength={25} />
-            {/* {errores.emei ? (
-							<h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-								El emei es obligatoria, debe tener 15 numeros
-							</h5>
-						) : null} */}
           </div>
 
           {role === 'admin' && (
@@ -357,11 +326,6 @@ const WorkEdit = ({ match, history }) => {
                 type="text"
                 placeholder="ingresa su contraseña"
               />
-              {/* {errores.withoutPassword ? (
-                <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-                  La Contraseña es obligatoria
-                </h5>
-              ) : null} */}
             </div>
           </div>
         )}
@@ -398,43 +362,8 @@ const WorkEdit = ({ match, history }) => {
           </div>
         ) : null}
 
-        {/* <div className="my-2">
-					<label
-						htmlFor="loadImg"
-						style={{
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-						}}
-						className="loadImage gap-x-2 hover:bg-gray-800 bg-gray-900 text-white cursor-pointer flex justify-between p-1 rounded align-center"
-					>
-						<i className="fas fa-plus-circle text-center align-center text-white text-3xl  flex rounded-full p-1 justify-between"></i>
-						<span className="text-white"> Subir Foto</span>
-					</label>
-					{errores.files ? (
-						<h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-							Debe subir por lo menos 2 images o ninguna
-						</h5>
-					) : null}
-					<input
-						id="loadImg"
-						onChange={imageChange}
-						type="file"
-						className="hidden"
-						name="file"
-						multiple
-						accept="image/*"
-					/>
-				</div>
-				<div className="images grid gap-2 grid-cols-3 p-2 bg-gray-300 shadow rounded">
-					<img className={'image0 w-32 '} />
-					<img className={'image1  w-32'} />
-					<img className={'image2  w-32'} />
-				</div>
-				<br /> */}
-
         <button disabled={loading} className="btn bg-red-500 hover:bg-red-700" type="submit">
-          {loading ? 'Espere...' : '  Guardar Trabajo '}
+          {loading ? 'Guardando...' : '  Guardar Trabajo '}
         </button>
       </form>
     </div>

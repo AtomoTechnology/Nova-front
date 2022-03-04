@@ -1,17 +1,14 @@
 import moment from 'moment';
-import React, { useEffect } from 'react';
-import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
+import React, { useEffect, useState } from 'react';
+import { PDFExport } from '@progress/kendo-react-pdf';
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneWork } from '../../action/worksAction';
-
 import nova from './../../templatePics/logoNovaSmall.png';
-import { useState } from 'react';
 
 const OrderWork = ({ match, history }) => {
   const workId = match.params.id;
   const dispatch = useDispatch();
-  // console.log(history);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -50,7 +47,7 @@ const OrderWork = ({ match, history }) => {
               <h3>SERVICIO Y REPARACIÓN DE TELÉFONOS CELULARES</h3>
               <p>CUIT: 20-37308578-3</p>
               <p>TRABICHET NICOLAS MAXIMILIANO</p>
-              <p>JUJUY 1692 Piso:2 Dpto:A</p>
+              <p>San Lorenzo 1636 Piso:4 Oficina:3</p>
               <p>ROSARIO</p>
               <p>2000-SANTA FE</p>
             </div>
@@ -93,8 +90,6 @@ const OrderWork = ({ match, history }) => {
                   <span>Observaciones : {work?.observaciones}</span>
                   <span>Falla Encontrada : {work?.fachasEncontradas}</span>
                   <span>Descripcion: {work?.descripcion}</span>
-                  {/* <span>Garantia de reparacion: 3 meses</span> */}
-                  {/* <span>El equipo enciende :...</span> */}
                 </div>
               </section>
             </div>
@@ -170,14 +165,6 @@ const OrderWork = ({ match, history }) => {
                 <p>DNI : ................... ................</p>
               </div>
             </section>
-            {/* <div className="fecha-entrega">
-              <h3>
-                <span>Entrega Equipo </span>
-                <span>Fecha ....... </span>
-              </h3>
-
-              <p>Firma de Conformidad : ...................</p>
-            </div> */}
           </footer>
         </div>
       </PDFExport>

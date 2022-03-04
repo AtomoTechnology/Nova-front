@@ -27,8 +27,6 @@ export const getAllWorks = (limit, page = 1) => {
 };
 export const GetHistories = (startDate, endDate) => {
   return async (dispatch) => {
-    console.log(startDate, endDate);
-
     try {
       const resp = await fetchWithToken('works/historialWork/all', { startDate, endDate }, 'POST');
       const works = await resp.json();
@@ -38,7 +36,6 @@ export const GetHistories = (startDate, endDate) => {
     } catch (error) {
       throw error;
     }
-    console.log('estoy....');
   };
 };
 
@@ -84,20 +81,6 @@ export const createWork = (work) => {
           title: body2.message,
         });
       }
-
-      //     let formData = new FormData();
-      //     for (let index = 0; index < files.length; index++) {
-      //       formData.append("files", files[index]);
-      //     }
-      //     const resp1 = await axios.post(
-      //       `${process.env.REACT_APP_URL}works/uploadFileWork`,
-      //       formData,
-      //       {
-      //         Headers: {
-      //           // "Content-Type": "multipart/form-data",
-      //         },
-      //       }
-      //     );
     } catch (error) {
       Swal.fire('error', 'Hubo un fallo al hacer la petition...', 'error');
     }

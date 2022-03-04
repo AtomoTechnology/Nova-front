@@ -29,18 +29,11 @@ export const WorkWithOut = ({ work }) => {
       <div className="title p-1">
         <span className={'capitalize text-' + color}>{work?.marca + '   ' + work?.modelo}</span>
       </div>
-      {/* <div className="observaciones p-1">
-				<span>
-					{work?.observaciones.slice(0, 100)}{' '}
-					{work?.observaciones.length > 100 ? '...' : null}
-				</span>
-			</div> */}
+
       <div className="p-1">
-        {' '}
         <p className="text-gray-700">{work?.codigo}</p>
       </div>
       <div className="p-1">
-        {' '}
         <p className="text-gray-300">{moment(work?.fechaInicio).format('DD-MM-yyyy')}</p>
       </div>
       <div className="estado p-1 flex justify-between items-center">
@@ -52,15 +45,14 @@ export const WorkWithOut = ({ work }) => {
           <img
             className="rounded-full w-8 border-1 border-pink-500 h-8"
             src={`/assets/img/client/${work?.cliente?.pathImg}`}
+            alt="user Logo"
           />
         ) : (
-          <img className="rounded-full w-8 border-1 border-pink-500 h-8" src={userLogo} />
+          <img alt="user Logo" className="rounded-full w-8 border-1 border-pink-500 h-8" src={userLogo} />
         )}
 
         <h3 className="capitalize font-serif">{work?.cliente?.name?.slice(0, 10)}...</h3>
-        {role == 'admin' && (
-          <span className={'work-precio text-' + color}>{'$' + work?.total.toFixed(2)}</span>
-        )}
+        {role === 'admin' && <span className={'work-precio text-' + color}>{'$' + work?.total?.toFixed(2)}</span>}
       </div>
     </Link>
   );

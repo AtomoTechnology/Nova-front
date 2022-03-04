@@ -30,7 +30,6 @@ export default function AppRoute() {
           <PublicRoute isLogged={!!uid} exact path="/register" component={AddUser} />
           <PublicRoute isLogged={!!uid} exact path="/work/check" component={CheckState} />
           <PrivateRoute role={role} isLogged={!!uid} path="/" refresh={true} component={Dashboard} />
-          {/* <Redirect to="/index" /> */}
         </Switch>
       </>
     </Router>

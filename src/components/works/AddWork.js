@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { createWork, getAllWorks } from '../../action/worksAction';
 import { useForm } from '../../hooks/useForm';
 import { startGettingAllClient } from '../../action/clientsAction';
 import { GetStates } from '../../helpers/getStates';
-const AddWork = ({ history, refresh, setRefresh }) => {
+
+const AddWork = ({ history }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(startGettingAllClient());
   }, [dispatch]);
 
   const { clients } = useSelector((state) => state.clients);
-  const { uid } = useSelector((state) => state.auth);
   const [errores, setErrores] = useState([]);
   const [patronError, setPatronError] = useState(false);
   const [checkPassword, setCheckPassword] = useState(false);
@@ -20,16 +19,18 @@ const AddWork = ({ history, refresh, setRefresh }) => {
   const [tiene_Contrasena] = useState(false);
   const [es_patron] = useState(false);
   const [passwordPatron, setContraseña] = useState('');
-
   const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [estados, setEstados] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [linkImages] = useState(null);
 
-  useEffect(async () => {
-    const states = await GetStates();
-    setEstados(states.data.states);
+  useEffect(() => {
+    async function GetAllState() {
+      const states = await GetStates();
+      setEstados(states.data.states);
+    }
+    GetAllState();
   }, [setEstados]);
+
   const [values, handleInputChange, reset] = useForm({
     marca: '',
     modelo: '',
@@ -40,7 +41,6 @@ const AddWork = ({ history, refresh, setRefresh }) => {
     fachasEncontradas: '',
     observaciones: '',
     descripcion: '',
-    // fechaInicio: new Date(),
     recargo: 0,
     cliente: '',
     fechaFin: null,
@@ -51,7 +51,6 @@ const AddWork = ({ history, refresh, setRefresh }) => {
     total: 0,
   });
 
-  // console.log(oneClientForm);
   const {
     marca,
     modelo,
@@ -78,7 +77,6 @@ const AddWork = ({ history, refresh, setRefresh }) => {
       setCheckPassword(false);
       values.tieneContrasena = false;
       values.contrasena = '';
-      // setPasswordRequired(false);
     }
   };
   const changeCheckPatron = (e) => {
@@ -105,13 +103,10 @@ const AddWork = ({ history, refresh, setRefresh }) => {
       reset();
       dispatch(getAllWorks());
       history.push(`/works`);
-    } else {
-      console.log(errores);
-      console.log(values);
     }
     setLoading(false);
   };
-  // varify the form values
+
   const verifyForm = () => {
     let ok = true;
     let errors = [];
@@ -161,33 +156,6 @@ const AddWork = ({ history, refresh, setRefresh }) => {
       return false;
     }
   };
-  // let imgs = [];
-
-  // const imageChange = (e) => {
-  // 	setFiles(e.target.files);
-  // 	// for (let index = 0; index < e.target.files.length; index++) {
-  // 	//   imgs.push(index);
-  // 	// }
-
-  // 	let arrayImg = [];
-  // 	if (e.target.files) {
-  // 		for (let index = 0; index < e.target.files.length; index++) {
-  // 			console.log('images');
-
-  // 			var reader = new FileReader();
-
-  // 			reader.onload = (ev) => {
-  // 				let img = ev.target.result;
-  // 				arrayImg.push(img);
-  // 			};
-  // 			reader.readAsDataURL(e.target.files[index]);
-  // 		}
-  // 	}
-
-  // 	console.log('lenght ' + arrayImg.length);
-  // 	setLinkImages(arrayImg);
-  // 	showMultiplesImg(e.target.files);
-  // };
 
   return (
     <div className="work-add 2xl:w-2/5 2xl:m-auto 2xl:my-4 my-4">
@@ -232,20 +200,6 @@ const AddWork = ({ history, refresh, setRefresh }) => {
               <span className="text-red-600">*</span>
             </label>
             <div>
-              {/* <select
-								value={cliente}
-								onChange={handleInputChange}
-								name="cliente"
-							>
-								<option value="" disabled>
-									Elegir un cliente
-								</option>
-								{clients.map((clt) => (
-									<option key={clt._id} value={clt._id}>
-										{clt.dni.toString()}
-									</option>
-								))}
-							</select> */}
               <input
                 type="text"
                 value={cliente}
@@ -290,24 +244,14 @@ const AddWork = ({ history, refresh, setRefresh }) => {
             ) : null}
           </div>
           <div>
-            <label>
-              Emei / Serie
-              {/* <span className="text-red-600">*</span> */}
-            </label>
+            <label>Emei / Serie</label>
             <input
               onChange={handleInputChange}
               value={emei}
               type="text"
               name="emei"
               placeholder="ingrese el emei/nro serie "
-              // min={1}
-              // minLength={25}
             />
-            {/* {errores.emei ? (
-							<h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-								El emei es obligatoria, debe tener 15 numeros
-							</h5>
-						) : null} */}
           </div>
           <div>
             <label>recargo</label>
@@ -353,9 +297,7 @@ const AddWork = ({ history, refresh, setRefresh }) => {
             onChange={handleInputChange}
             placeholder="ingresa sintomas "
             name="observaciones"
-          >
-            {' '}
-          </textarea>
+          ></textarea>
           {errores.observaciones ? (
             <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">La(s) observaciones es obligatoria</h5>
           ) : null}
@@ -399,11 +341,6 @@ const AddWork = ({ history, refresh, setRefresh }) => {
                 type="text"
                 placeholder="ingresa su contraseña"
               />
-              {/* {errores.withoutPassword ? (
-                <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-                  La Contraseña es obligatoria
-                </h5>
-              ) : null} */}
             </div>
           </div>
         )}
@@ -439,41 +376,6 @@ const AddWork = ({ history, refresh, setRefresh }) => {
             {passwordPatron}
           </div>
         ) : null}
-
-        {/* <div className="my-2">
-					<label
-						htmlFor="loadImg"
-						style={{
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-						}}
-						className="loadImage gap-x-2 hover:bg-gray-800 bg-gray-900 text-white cursor-pointer flex justify-between p-1 rounded align-center"
-					>
-						<i className="fas fa-plus-circle text-center align-center text-white text-3xl  flex rounded-full p-1 justify-between"></i>
-						<span className="text-white"> Subir Foto</span>
-					</label>
-					{errores.files ? (
-						<h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">
-							Debe subir por lo menos 2 images o ninguna
-						</h5>
-					) : null}
-					<input
-						id="loadImg"
-						onChange={imageChange}
-						type="file"
-						className="hidden"
-						name="file"
-						multiple
-						accept="image/*"
-					/>
-				</div>
-				<div className="images grid gap-2 grid-cols-3 p-2 bg-gray-300 shadow rounded">
-					<img className={'image0 w-32 '} />
-					<img className={'image1  w-32'} />
-					<img className={'image2  w-32'} />
-				</div>
-				<br /> */}
 
         <button className="btn bg-red-500 hover:bg-red-800 jhm-shadow" type="submit">
           {loading ? 'Espere...' : '  Agregar Trabajo'}
