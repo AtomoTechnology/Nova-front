@@ -10,9 +10,11 @@ export const CheckState = ({ history }) => {
   const [loading, setLoading] = useState(false);
   const { codigo } = values;
   const [work, setWork] = useState(null);
+  const [error, setError] = useState(false);
 
   const CheckWork = async (e) => {
     e.preventDefault();
+    setWork(null);
     if (codigo && codigo.length === 6) {
       setOk(true);
       setLoading(true);
@@ -20,7 +22,12 @@ export const CheckState = ({ history }) => {
         const res = await fetchWithOutToken('works/code', values, 'POST');
         const data = await res.json();
         if (data.status === 'success') {
-          setWork(data.work);
+          if (data.work[0]) {
+            setError(false);
+            setWork(data.work[0]);
+          } else {
+            setError(true);
+          }
         } else {
           throw new Error(data.message);
         }
@@ -110,6 +117,7 @@ export const CheckState = ({ history }) => {
           </ul>
         </div>
       )}
+      {error && <span className="text-red-300 text-center">No existe trabajo con ese codigo</span>}
     </div>
   );
 };

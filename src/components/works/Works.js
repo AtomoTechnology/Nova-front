@@ -10,6 +10,9 @@ import userLogo from '../../templatePics/userLogo.png';
 import Swal from 'sweetalert2';
 import { fetchWithToken } from '../../helpers/fetchWithOutToken';
 import WorksPreview from '../preViews/WorksPreview';
+import { GetStates } from '../../helpers/getStates';
+import { Work } from './Work';
+import { ErrorApp } from '../ErrorApp';
 
 const Works = ({ history }) => {
   const dispatch = useDispatch();
@@ -18,13 +21,16 @@ const Works = ({ history }) => {
   const [loadingWorks, setLoadingWorks] = useState(true);
   const [limit] = useState(30);
   const [actualPage, setPage] = useState(1);
+  const [estados, setEstados] = useState([]);
   const filterBox = useRef();
   const observer = useRef();
   const [workss, setWorkss] = useState([]);
   const [total, setTotal] = useState(1);
+  const [searchWorks, setSearchWorks] = useState([]);
   const { role } = useSelector((state) => state.auth);
 
   const GetAll = async () => {
+    setSearchWorks([]);
     setLoadingWorks(true);
     const resp = await fetchWithToken(`works?page=${actualPage}&limit=${limit}`);
     const body = await resp.json();
@@ -38,8 +44,16 @@ const Works = ({ history }) => {
     GetAll();
   }, [actualPage, setPage, limit]);
 
-  const [values, handleInputChange] = useForm({ estado: '' });
-  const { estado } = values;
+  useEffect(() => {
+    async function GetAllState() {
+      const states = await GetStates();
+      setEstados(states.data.states);
+    }
+    GetAllState();
+  }, [setEstados]);
+
+  // const [values, handleInputChange] = useForm({ estado: '' });
+  // const { estado } = values;
   const lastWork = useCallback(
     (node) => {
       if (loadingWorks) return;
@@ -53,6 +67,41 @@ const Works = ({ history }) => {
     },
     [loadingWorks, actualPage, setPage]
   );
+  // if (role === 'user') return <ErrorApp message="Aceso no permitido!" />;
+
+  const FilterByState = async (e) => {
+    setSearchWorks([]);
+    setWorkss([]);
+    setLoadingWorks(true);
+    // setPage(1);
+    if (e.target.value === '') {
+      GetAll();
+    } else {
+      const resp = await fetchWithToken(`works?estado=${e.target.value}`);
+      const body = await resp.json();
+      if (body.status === 'success') {
+        setSearchWorks(body.data.works);
+      }
+      setLoadingWorks(false);
+    }
+  };
+
+  const searchbyCode = async (e) => {
+    setCodigo(e.target.value);
+    if (e.target.value) {
+      setSearchWorks([]);
+      setWorkss([]);
+      setLoadingWorks(true);
+      const resp = await fetchWithToken(`works/code`, { codigo: e.target.value }, 'POST');
+      const body = await resp.json();
+      if (body.status === 'success') {
+        setSearchWorks(body.work);
+      }
+      setLoadingWorks(false);
+    } else {
+      GetAll();
+    }
+  };
 
   const stateArray = ['Revision', 'Presupuesto', 'En Reparacion', 'Terminado', 'Entregado', 'Todos'];
   const toggleFilterBox = () => {
@@ -98,23 +147,24 @@ const Works = ({ history }) => {
         <div ref={filterBox} className="toggle-filter hidden">
           <div className="overflow-hidden  my-1 ">
             <form className="flex w-full flex-wrap lg:justify-center gap-y-2 flex-col sm:flex-row md:justify-between items-center sm:gap-x-2">
-              <select className=" shadow  sm:w-min w-full" name="estado" onChange={handleInputChange} value={estado}>
+              <select className=" shadow  sm:w-min w-full" name="estado" onChange={FilterByState}>
                 <option value="" disabled>
                   Filtrar por estado
                 </option>
-                {stateArray.map((elem) => (
-                  <option key={elem} value={elem}>
-                    {elem}
+                {estados.map((elem) => (
+                  <option key={elem._id} value={elem._id}>
+                    {elem.name}
                   </option>
                 ))}
+                <option key="100" value="">
+                  Todos
+                </option>
               </select>
               <input
                 name="codigo"
                 className="shadow   sm:w-min w-full"
                 value={codigo}
-                onChange={(e) => {
-                  setCodigo(e.target.value);
-                }}
+                onChange={searchbyCode}
                 placeholder="Buscar codigo de trabajo"
                 type="text"
               />
@@ -129,6 +179,18 @@ const Works = ({ history }) => {
         </Link>
       </div>
 
+      {searchWorks.length > 0 && (
+        <>
+          <div className="search-results px-8 text-blue-500">Resultados({searchWorks.length})</div>
+
+          <div className="works-grid p-1 m-auto">
+            {searchWorks.map((work, index) => (
+              <Work work={work} key={index} />
+            ))}
+          </div>
+        </>
+      )}
+
       <div className="works-grid p-1 m-auto">
         {workss.map((work, index) => {
           let color = '';
@@ -140,7 +202,7 @@ const Works = ({ history }) => {
               color = 'gray-600';
               break;
             case 'En Reparacion':
-              color = 'yellow-500';
+              color = 'yellow-600';
               break;
             case 'Terminado':
               color = 'pink-400';

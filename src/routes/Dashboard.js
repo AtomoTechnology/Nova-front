@@ -7,6 +7,7 @@ import { Loading } from '../components/Loading';
 import NavbarLateral from '../components/navbar/NavbarLateral';
 import { ErrorApp } from '../components/ErrorApp';
 const Home = React.lazy(() => import('../components/Home'));
+const TermsConditions = React.lazy(() => import('../components/TermsConditions'));
 const Browse = React.lazy(() => import('../components/Browse'));
 const Banners = React.lazy(() => import('../components/Banners'));
 const Users = React.lazy(() => import('../components/users/Users'));
@@ -34,6 +35,7 @@ export default function Dashboard({ history }) {
           <React.Suspense fallback={<Loading />}>
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route exact path="/terms-conditions" component={TermsConditions} />
               <Route exact path="/browse" component={Browse} />
               <Route exact path="/clients" component={Users} />
               <Route exact path="/works">

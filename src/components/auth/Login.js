@@ -21,9 +21,6 @@ export const Login = ({ history }) => {
     setLoading(true);
     if (verifyForm()) {
       dispatch(startLogin(dni, password));
-    } else {
-      console.log('verifica los datos');
-      console.log(errores);
     }
     setLoading(false);
   };
@@ -76,12 +73,12 @@ export const Login = ({ history }) => {
         </fieldset>
         <fieldset>
           <button disabled={loading} className="btn bg-red-500 hover:bg-red-700" type="submit">
-            {!loading ? 'Inicia Sesion' : <SmallLoading text="Espera..." size="small" />}
+            {!loading ? 'Inicia Sesión' : <SmallLoading text="Espera..." size="small" />}
           </button>
         </fieldset>
         <div className="register-section text-sx text-blue-600 ">
           <span className="text-sm">
-            ¿Aun no tiene una cuenta ?
+            ¿Aun no tiene una cuenta?
             <Link to="/register" className="text-pink-800 ml-1 hover:underline  p-1">
               Registrarse
             </Link>

@@ -18,7 +18,8 @@ const Toast = Swal.mixin({
 export const startGettingAllClient = (page, limit) => {
   return async (dispatch) => {
     try {
-      const resp = await fetchWithToken(`users?page=${page}&limit=${limit}`);
+      // ?page=${page}&limit=${limit}
+      const resp = await fetchWithToken(`users`);
       const users = await resp.json();
       if (users.status === types.statusSuccess) {
         dispatch(getClients(users.data.users, users.page, users.totalPage, users.results));
@@ -105,7 +106,13 @@ export const startCreatingClient = (user, file) => {
           window.location = '/login';
         }, 3000);
       } else {
-        showAlert('error', result.message);
+        Swal.fire({
+          icon: 'info',
+          title: 'Cuenta ya creada',
+          text: result.message,
+          footer: '<a href="/login">Inicio Sesion</a>',
+        });
+        // showAlert('error', result.message);
       }
     } catch (error) {
       showAlert('error', error.message);

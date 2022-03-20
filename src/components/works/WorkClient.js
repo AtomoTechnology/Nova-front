@@ -12,13 +12,16 @@ export const WorkClient = ({ work }) => {
       color = 'gray-600';
       break;
     case 'En Reparacion':
-      color = 'yellow-500';
+      color = 'yellow-600';
       break;
     case 'Terminado':
       color = 'pink-400';
       break;
-    default:
+    case 'Entregado':
       color = 'green-700';
+      break;
+    default:
+      color = '';
       break;
   }
 
@@ -30,7 +33,7 @@ export const WorkClient = ({ work }) => {
   // };
 
   return (
-    <div className="work-client hover:bg-gray-100">
+    <div className={'work-client hover:bg-gray-100 !bg-' + color}>
       <Link to={`/works/${work._id}`} className="title p-1">
         <span className={'capitalize text-' + color}>
           {work?.marca + ' - ' + work?.modelo}
@@ -47,10 +50,10 @@ export const WorkClient = ({ work }) => {
         {' '}
         <p className="text-gray-300">{moment(work?.fechaInicio).format('DD-MM-yyyy')}</p>
       </div>
-      {/* <div className="estado p-1 flex justify-between items-center">
+      <div className="estado p-1 flex justify-between items-center">
         <span className={`rounded-sm text-white bg-${color} p-1`}>{work?.estado.name}</span>
-        <i className={' fas fa-mobile-alt mr-4 text-' + color}></i>
-      </div> */}
+        <i className={' fas fa-mobile-alt mr-4 !text-' + color}></i>
+      </div>
     </div>
   );
 };

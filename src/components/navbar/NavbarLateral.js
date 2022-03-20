@@ -8,7 +8,6 @@ const NavbarLateral = ({ history }) => {
   const { role } = useSelector((state) => state.auth);
 
   useLayoutEffect(() => {
-    // console.log();
     if (history.location.pathname === '/') {
       document.querySelector('.link-lateral-home')?.classList.add('active');
     }

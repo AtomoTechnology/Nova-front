@@ -15,12 +15,9 @@ const Toast = Swal.mixin({
 });
 
 export const Gasto = ({ gasto, setOutGoingChange, outGoingChange }) => {
-  // console.log(outGoingChange);
-
   const deleteOutgoing = async () => {
     const res = await fetchWithToken(`outgoings/${gasto._id}`, [], 'DELETE');
     const body = await res.json();
-    // console.log(body);
     if (body.status === 'success') {
       setOutGoingChange(!outGoingChange);
       Toast.fire({

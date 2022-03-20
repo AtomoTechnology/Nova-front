@@ -7,11 +7,7 @@ import { GetStates } from '../../helpers/getStates';
 
 const AddWork = ({ history }) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(startGettingAllClient());
-  }, [dispatch]);
 
-  const { clients } = useSelector((state) => state.clients);
   const [errores, setErrores] = useState([]);
   const [patronError, setPatronError] = useState(false);
   const [checkPassword, setCheckPassword] = useState(false);
@@ -22,6 +18,12 @@ const AddWork = ({ history }) => {
   const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [estados, setEstados] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    dispatch(startGettingAllClient());
+  }, [dispatch]);
+
+  const { clients } = useSelector((state) => state.clients);
 
   useEffect(() => {
     async function GetAllState() {

@@ -35,8 +35,7 @@ const GetUser = ({ match, history }) => {
     setLoadingWorkUser(false);
   }, [dispatch, setLoadingWorkUser, clientId]);
 
-  let { clientWorks } = useSelector((state) => state.clients);
-  const { client } = useSelector((state) => state.clients);
+  const { client, clientWorks } = useSelector((state) => state.clients);
 
   const [values, handleInputChange, reset] = useForm({
     name: client?.name,
@@ -336,6 +335,7 @@ const GetUser = ({ match, history }) => {
                   <fieldset>
                     <label htmlFor="photo">Subir Foto</label>
                     <input required onChange={ConvertPhoto} type="file" accept="image/*" name="photo" />
+                    <span className="text-sm text-red-300">* Maximo 1MB </span>
                   </fieldset>
                   <fieldset ref={userImageBox}></fieldset>
                   <fieldset>
@@ -423,14 +423,16 @@ const GetUser = ({ match, history }) => {
                     <i className="fas fa-sad-tear text-red-600 text-3xl"></i>
                   </div>
                 )}
-                <div className="bg-gray-200 p-2 my-2 add-work-user shadow rounded hover:bg-gray-300 hover:shadow-lg">
-                  <Link
-                    to={`/work/add#${client?._id}`}
-                    className="flex justify-center items-center h-full text-pink-500"
-                  >
-                    <i className="fas fa-plus-circle duration-800"></i>
-                  </Link>
-                </div>
+                {role === 'admin' && (
+                  <div className="bg-gray-200 p-2 my-2 add-work-user shadow rounded hover:bg-gray-300 hover:shadow-lg">
+                    <Link
+                      to={`/work/add#${client?._id}`}
+                      className="flex justify-center items-center h-full text-pink-500"
+                    >
+                      <i className="fas fa-plus-circle duration-800"></i>
+                    </Link>
+                  </div>
+                )}
               </div>
             }
           </div>
@@ -469,7 +471,7 @@ const GetUser = ({ match, history }) => {
                 </label>
                 <input
                   onChange={handleInputChange}
-                  value={name}
+                  value={name ?? ''}
                   type="text"
                   name="name"
                   placeholder="ingresa el nombre"
@@ -485,7 +487,7 @@ const GetUser = ({ match, history }) => {
                 </label>
                 <input
                   onChange={handleInputChange}
-                  value={dni}
+                  value={dni ?? ''}
                   type="text"
                   placeholder="ingresa el dni"
                   name="dni"
@@ -502,7 +504,7 @@ const GetUser = ({ match, history }) => {
                 <input
                   className="shadow"
                   onChange={handleInputChange}
-                  value={email}
+                  value={email ?? ''}
                   type="email"
                   name="email"
                   placeholder="Ingrese su correo electronico"
@@ -519,7 +521,7 @@ const GetUser = ({ match, history }) => {
                 </label>
                 <input
                   onChange={handleInputChange}
-                  value={phone1}
+                  value={phone1 ?? ''}
                   type="text"
                   name="phone1"
                   placeholder="ingresa el numero de celular"
@@ -535,7 +537,7 @@ const GetUser = ({ match, history }) => {
                 <label>Telefono 2</label>
                 <input
                   onChange={handleInputChange}
-                  value={phone2}
+                  value={phone2 ?? ''}
                   type="text"
                   name="phone2"
                   placeholder="ingresa el segundo telefono"
@@ -547,7 +549,7 @@ const GetUser = ({ match, history }) => {
                 <input
                   className="shadow"
                   onChange={handleInputChange}
-                  value={direction}
+                  value={direction ?? ''}
                   type="text"
                   name="direction"
                   placeholder="ingresa la direccion"
@@ -558,7 +560,7 @@ const GetUser = ({ match, history }) => {
                 <input
                   className="shadow"
                   onChange={handleInputChange}
-                  value={nota}
+                  value={nota ?? ''}
                   type="text"
                   name="nota"
                   placeholder="ingresa una nota"

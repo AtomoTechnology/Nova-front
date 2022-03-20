@@ -105,7 +105,7 @@ const AddUser = ({ history }) => {
               value={name}
               type="text"
               name="name"
-              placeholder="ingresa el nombre"
+              placeholder="Ingresa el nombre"
               className="shadow"
             />
             {errores.name ? (
@@ -120,7 +120,7 @@ const AddUser = ({ history }) => {
               onChange={handleInputChange}
               value={dni}
               type="text"
-              placeholder="ingresa el dni"
+              placeholder="Ingresa el DNI"
               name="dni"
               className="shadow"
             />
@@ -140,7 +140,7 @@ const AddUser = ({ history }) => {
               value={email}
               type="email"
               name="email"
-              placeholder="Ingrese su correo electronico"
+              placeholder="Ingrese su correo electrónico"
             />
             {errores.email ? (
               <span className="text-red-500 text-center bg-red-100 p-1">El email es obligatorio y debe ser valido</span>
@@ -159,14 +159,14 @@ const AddUser = ({ history }) => {
 
           <div>
             <label>
-              Telefono 1 <span className="text-red-600">*</span>
+              Teléfono 1 <span className="text-red-600">*</span>
             </label>
             <input
               onChange={handleInputChange}
               value={phone1}
               type="text"
               name="phone1"
-              placeholder="ingresa el numero de celular"
+              placeholder="Ingresa el número de celular"
               className="shadow"
             />
             {errores.phone1 ? (
@@ -182,7 +182,7 @@ const AddUser = ({ history }) => {
               value={password}
               type="password"
               name="password"
-              placeholder="ingresa una contraseña"
+              placeholder="Ingresa una contraseña"
             />
             {errores.password ? (
               <span className="text-red-500 text-center bg-red-100 p-1">
@@ -206,13 +206,13 @@ const AddUser = ({ history }) => {
           </div>
 
           <div>
-            <label>Telefono 2</label>
+            <label>Teléfono 2</label>
             <input
               onChange={handleInputChange}
               value={phone2}
               type="text"
               name="phone2"
-              placeholder="ingresa el segundo telefono"
+              placeholder="Ingresa el segundo teléfono"
               className="shadow"
             />{' '}
           </div>
@@ -224,7 +224,7 @@ const AddUser = ({ history }) => {
               value={direction}
               type="text"
               name="direction"
-              placeholder="ingresa la direccion"
+              placeholder="Ingresa una dirección (provincia ,ciudad ,calle,número)"
             />
           </div>
           <div>
@@ -235,7 +235,7 @@ const AddUser = ({ history }) => {
               value={nota}
               type="text"
               name="nota"
-              placeholder="ingresa una nota"
+              placeholder="Ingresa una nota"
             />
           </div>
         </div>
@@ -268,9 +268,9 @@ const AddUser = ({ history }) => {
         </button>
         <div className="register-section my-4 text-sx text-blue-600 text-center ">
           <span className="text-sm">
-            ¿Ya tiene una cuenta ?
+            ¿Ya tiene una cuenta?
             <Link to="/login" className="text-pink-800 ml-1 hover:text-pink-700 hover:shadow hover:underline p-1">
-              Inicia Session
+              Inicia Sesión
             </Link>
           </span>
         </div>

@@ -11,22 +11,27 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { Pagination, Navigation } from 'swiper';
+import { Navigation } from 'swiper';
 // import { GetTotalQueriesNotRead } from '../action/queriesAction';
 
-const Home = () => {
+const Home = ({ history }) => {
+  const { role } = useSelector((state) => state.auth);
+  if (role === 'user') {
+    history.push('browse');
+  }
+
   const dispatch = useDispatch();
   const [loadingWorkState, setLoadingWorkState] = useState(true);
   const [totalClient, setTotalClient] = useState(0);
 
   useEffect(() => {
     async function GetData() {
+      await dispatch(getAllWorks());
       const resp = await fetchWithToken(`users/stats`);
       const users = await resp.json();
       if (users.status === 'success') {
         setTotalClient(users.total);
       }
-      await dispatch(getAllWorks());
       setLoadingWorkState(false);
     }
     GetData();
@@ -128,7 +133,7 @@ const Home = () => {
                 clickable: true,
               }}
               navigation={true}
-              modules={[Pagination, Navigation]}
+              modules={[Navigation]}
               className="mySwiper"
             >
               {workWithoutChangeState.map((wk) => (
@@ -173,7 +178,7 @@ const Home = () => {
               clickable: true,
             }}
             navigation={true}
-            modules={[Pagination, Navigation]}
+            modules={[Navigation]}
             className="mySwiper"
           >
             {confirmWorks.map((wk) => (

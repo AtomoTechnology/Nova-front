@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logoNova from './../templatePics/logoNovaSmall.png';
-import bg from './../templatePics/bg.jpg';
+import nico from './../templatePics/nico.jpeg';
 import bgwhite from './../templatePics/logoNovaWhite.png';
 import iphone from './../templatePics/reparacionIphone.jpg';
 import multiMarca from './../templatePics/multiMarca.jpg';
-import ServicioTécnicoIphone from './../templatePics/ServicioTécnicoIphone.jpg';
+import ServicioTecnicoIphone from './../templatePics/ServicioTecnicoIphone.jpg';
 import $ from 'jquery';
 import { fetchWithOutToken } from '../helpers/fetchWithOutToken';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -34,23 +34,23 @@ export const Index = () => {
     <div className="index">
       <div className="welcome flex justify-around items-center p-2 bg-gray-800 text-white">
         <div className="">
-          <span>Horario de atención: Lunes‑Viernes 09:30‑17:30</span>
+          <span>Horario de atención: Lunes‑Viernes 10:00‑18:00</span>
         </div>
 
         <div className="follow-us flex justify-center items-center gap-2 ">
           {/* <span className="text-white text-lg">SEGUINOS</span> */}
-          <Link to="#">
+          <a target="_blank" href="https://www.facebook.com/TechnologyNOVA/">
             <i className="fab fa-facebook w-6 text-lg hover:text-2xl h-6 rounded-full hover:shadow-md hover:bg-blue-600 shadow bg-blue-500 flex items-center justify-center text-white"></i>
-          </Link>
-          <Link to="#">
+          </a>
+          <a target="_blank" href="https://instagram.com/novaatechnology/">
             <i className="fab fa-instagram w-6 text-lg hover:text-2xl h-6 rounded-full hover:shadow-md hover:bg-red-600 shadow bg-red-500 flex items-center justify-center text-white"></i>
-          </Link>
+          </a>
           {/* <Link to="#">
             <i class="fab fa-twitter w-6 text-lg hover:text-2xl h-6 rounded-full hover:shadow-md hover:bg-blue-600 shadow bg-blue-500 flex items-center justify-center text-white"></i>
           </Link> */}
         </div>
         <div className="">
-          <a href="tel:123-456-7890">
+          <a href="https://wa.me/message/DZGJELBXWMZ7G1">
             <span className="flex gap-1">
               {/* <span>Llámanos</span> */}
               <i className="fab fa-whatsapp w-6 text-lg hover:text-2xl h-6 rounded-full hover:shadow-md hover:bg-green-600 shadow bg-green-500 flex items-center justify-center text-white"></i>{' '}
@@ -75,20 +75,20 @@ export const Index = () => {
             </Link>
           </div>
           <ul className="menu-index flex menu-index justify-center items-center gap-3 ml-10">
-            <li className="hover:text-pink-600">
+            {/* <li className="hover:text-pink-600">
               <a href="#home">Inicio</a>
-            </li>
+            </li> */}
             <li className="hover:text-pink-600">
               <a href="#services">Servicios</a>
             </li>
             <li className="hover:text-pink-600">
-              <a href="#about">Sobre Nosotros</a>
+              <a href="#about">Sobre nosotros</a>
             </li>
             <li className="hover:text-pink-600">
-              <a href="#contact">Contactanos</a>
+              <a href="#adress">Cómo llegar</a>
             </li>
             <li className="hover:text-pink-600">
-              <NavLink to="/work/check"> Consulta un Equipo </NavLink>
+              <NavLink to="/work/check"> Consulta por tu equipo </NavLink>
             </li>
             <div className="register-menu-mobile hidden">
               <Link className="btn bg-red-700  text-white shadow jhm-shadow p-2 " to="/register">
@@ -99,7 +99,7 @@ export const Index = () => {
         </div>
         <div className="btn-login-btn-register">
           <Link className="p-1 text-lg hover:text-pink-700 hover:underline text-pink-600  m-2" to="/login">
-            Inicia Session
+            Inicia Sesión
           </Link>
           <Link className="btn bg-red-700 btn-register text-white shadow jhm-shadow p-2  m-2" to="/register">
             Registrarse
@@ -116,8 +116,8 @@ export const Index = () => {
           modules={[Pagination, Navigation]}
           className="mySwiper sm:h-72 my-1"
         >
-          {banners.map((b) => (
-            <SwiperSlide>
+          {banners.map((b, index) => (
+            <SwiperSlide key={index}>
               <img src={b.photo} alt={b.id} />
             </SwiperSlide>
           ))}
@@ -137,7 +137,7 @@ export const Index = () => {
           </div>
           <div className="card-service hover:shadow cursor-pointer  rounded shadow-md">
             <div className="img">
-              <img src={ServicioTécnicoIphone} alt="" />
+              <img src={ServicioTecnicoIphone} alt="" />
             </div>
             <div className="card-footer  bg-gray-800 text-white flex items-center justify-center text-center">
               <span>Smart Watch - Ipad - Mac Book </span>
@@ -151,14 +151,6 @@ export const Index = () => {
               <span>Venta de equipos Nuevos-Usados </span>
             </div>
           </div>
-          <div className="card-service hover:shadow cursor-pointer  rounded shadow-md bg-sky-800">
-            <div className="img">
-              <img src={multiMarca} alt="" />
-            </div>
-            <div className="card-footer bg-yellow-700 text-white flex items-center justify-center">
-              <span>Reparación de Celulares Android </span>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -168,19 +160,24 @@ export const Index = () => {
           <div className="about-text bg-gray-100 shadow-lg rounded-sm p-2">
             <p className="first-letter:text-6xl first-letter:text-pink-700 first-line:tracking-widest">
               Somos una empresa con varios años de trayectoria. Nos dedicamos a todo lo que se refiera a reparaciones de
-              telefonía celular e IPads. Realizamos todo lo que son cambio de piezas de diferentes marcas (Samsung,
-              Motorola, Xiaomi, entre otras) y iPhone Trabajamos con los repuestos de la máxima calidad que se
-              encuentran en el mercado para poder asegurarle al cliente una reparación exitosa y una experiencia de
-              usuario igual a la que lo sorprendió al usar su equipo por primera vez.
+              telefonía celular, tablets y computadoras multimarcas. Realizamos todo lo que son cambio de piezas y
+              reparaciones a nivel componentes de diferentes marcas (Iphone, Samsung, Motorola, Xiaomi, entre otras)
+              Trabajamos con los repuestos de la máxima calidad que se encuentran en el mercado para poder asegurarle al
+              cliente una reparación exitosa y una experiencia de usuario igual a la que lo sorprendió al usar su equipo
+              por primera vez.
             </p>
           </div>
           <div className="img-about-us flex justify-center items-center p-2">
-            <img src={bg} style={{ width: '100%' }} alt="" />
+            <img
+              src={nico}
+              className="rounded-full w-64 h-64 shadow object-cover overflow-hidden"
+              alt="Nova Technology"
+            />
           </div>
         </div>
       </div>
 
-      <div className="mapa-box w-11/12 p-4  my-4 m-auto bg-white shadow-lg">
+      <div id="adress" className="mapa-box w-11/12 p-4  my-4 m-auto bg-white shadow-lg">
         <h3 className="title-form  !text-3xl sm:!text-6xl">Cómo llegar </h3>
         <div className="mapa">
           <iframe
@@ -207,9 +204,6 @@ export const Index = () => {
             <li className="hover:text-pink-600">
               <a href="#about">Sobre Nosotros</a>
             </li>
-            <li className="hover:text-pink-600">
-              <a href="#contact">Contactanos</a>
-            </li>
           </ul>
           <div className="text-white">
             <span> &copy; Nova Technology 2022 </span>
@@ -218,12 +212,12 @@ export const Index = () => {
         <hr />
         <div className="follow-us flex justify-center items-center gap-2 mt-3 p-2">
           <span className="text-white text-lg">SEGUINOS</span>
-          <Link to="#">
+          <a href="https://www.facebook.com/TechnologyNOVA/">
             <i className="fab fa-facebook w-6 text-lg hover:text-2xl h-6 rounded-full hover:shadow-md hover:bg-blue-600 shadow bg-blue-500 flex items-center justify-center text-white"></i>
-          </Link>
-          <Link to="#">
+          </a>
+          <a href="https://instagram.com/novaatechnology">
             <i className="fab fa-instagram w-6 text-lg hover:text-2xl h-6 rounded-full hover:shadow-md hover:bg-red-600 shadow bg-red-500 flex items-center justify-center text-white"></i>
-          </Link>
+          </a>
         </div>
       </div>
     </div>

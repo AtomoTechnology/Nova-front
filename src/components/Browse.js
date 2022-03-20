@@ -19,9 +19,10 @@ const Browse = () => {
   const { uid } = useSelector((state) => state.auth);
   const { clientWorks } = useSelector((state) => state.clients);
 
-  useEffect(() => {
-    dispatch(getWorksClient(uid));
+  useEffect(async () => {
+    await dispatch(getWorksClient(uid));
   }, [dispatch, uid]);
+
   useEffect(() => {
     async function getAll() {
       const res = await fetchWithOutToken('banners');
@@ -33,21 +34,23 @@ const Browse = () => {
 
   return (
     <div className="m-4">
-      <Swiper
-        pagination={{
-          type: 'fraction',
-        }}
-        navigation={true}
-        modules={[Pagination, Navigation]}
-        className="mySwiper sm:h-72 bg-white shadow my-2"
-      >
-        {banners.map((b, i) => (
-          <SwiperSlide key={i}>
-            <img src={b.photo} alt={b.id} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      {}
+      {banners.length > 0 && (
+        <Swiper
+          pagination={{
+            type: 'fraction',
+          }}
+          navigation={true}
+          modules={[Pagination, Navigation]}
+          className="mySwiper sm:h-72 bg-white shadow my-2"
+        >
+          {banners.map((b, i) => (
+            <SwiperSlide key={i}>
+              <img src={b.photo} alt={b.id} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
+
       <div className="clients-works my-2">
         <span className="title-form !mb-0"> Mis Trabajos </span>
         <div className="works-grid p-1">

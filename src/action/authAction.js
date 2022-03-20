@@ -19,10 +19,8 @@ export const startLogin = (dni, password) => {
       );
 
       if (body.data.user.role === 'user') {
-        console.log('user');
         window.location = '/browse';
       } else {
-        console.log('admin');
         window.location = '/';
       }
     } else {
@@ -36,19 +34,18 @@ export const startChecking = () => {
     try {
       const resp = await fetchWithToken('users/renewToken', {}, 'POST');
       const body = await resp.json();
-      console.log(body);
       if (body.status === types.statusSuccess) {
         localStorage.setItem('token', body.token);
         localStorage.setItem('token-start-date', new Date().getTime());
         dispatch(login({ uid: body.data.user._id, username: body.data.user.name, role: body.data.user.role }));
       } else {
-        console.log('esta acaaa');
         dispatch(finishChecking());
         dispatch(startLogout());
         throw new Error(body.message);
       }
     } catch (error) {
-      showAlert('error', error.message);
+      // throw new Error(error);
+      // showAlert('error', error.message);
     }
   };
 };

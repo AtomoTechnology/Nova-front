@@ -55,21 +55,19 @@ const NavbarContent = () => {
     <div className="content-header">
       <i onClick={handleNavbar} id="btn-open-menu-mobile" className="fas fa-bars"></i>
 
-      {role === 'admin' && (
-        <div className="messages relative">
-          <Link to="/queries" className="text-white">
-            {notRead !== 0 && (
-              <span className="absolute top-0 right-0 flex items-center justify-center w-6 h-6  rounded-full text-white jhm-rounded text-center bg-red-500">
-                {notRead > 9 ? `9+` : notRead}
-              </span>
-            )}
-
-            <span className="icon text-white">
-              <i id="" className="fas fa-envelope text-white"></i>
+      <div className="messages relative">
+        <Link to="/queries" className="text-white">
+          {notRead !== 0 && (
+            <span className="absolute top-0 right-0 flex items-center justify-center w-6 h-6  rounded-full text-white jhm-rounded text-center bg-red-500">
+              {notRead > 9 ? `9+` : notRead}
             </span>
-          </Link>
-        </div>
-      )}
+          )}
+
+          <span className="icon text-white">
+            <i id="" className="fas fa-envelope text-white"></i>
+          </span>
+        </Link>
+      </div>
 
       <div onMouseOut={outMenuUser} onMouseOver={overMenuUser} onClick={mobileToggle} className="content-header-right">
         <div className="user-logo">

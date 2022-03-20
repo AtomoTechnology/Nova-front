@@ -16,6 +16,7 @@ export const fetchWithToken = (endpoint, data, method = 'GET') => {
   let url = `${process.env.REACT_APP_URL}${endpoint}`;
   const tok = localStorage.getItem('token') || '';
   const token = 'Bearer ' + tok;
+
   if (method === 'GET') {
     return fetch(url, {
       headers: {

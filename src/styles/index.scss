@@ -1,7 +1,32 @@
 // import all the  base style
+// @tailwind components;
 @tailwind base;
-@tailwind components;
 @tailwind utilities;
+body,
+html {
+  scroll-behavior: smooth;
+}
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: initial;
+  box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.192), inset 2px 2px 5px #043b6836, inset -3px -3px 5px #12466c0f;
+  border-radius: 999px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(238, 119, 119);
+  box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.192), inset 2px 2px 5px #043b6836, inset -3px -3px 5px #12466c0f;
+  border-radius: 999px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(255, 23, 74);
+}
 
 @import './base/color';
 @import './base/default';

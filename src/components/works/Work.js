@@ -17,13 +17,16 @@ export const Work = ({ work, history }) => {
       color = 'gray-600';
       break;
     case 'En Reparacion':
-      color = 'yellow-600';
+      color = 'yellow-700';
       break;
     case 'Terminado':
       color = 'pink-400';
       break;
+    case 'Entregado':
+      color = 'green-400';
+      break;
     default:
-      color = 'green-700';
+      color = '';
       break;
   }
 
