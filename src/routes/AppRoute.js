@@ -15,7 +15,7 @@ export default function AppRoute() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(startChecking());
-  }, []);
+  }, [dispatch]);
   const { uid, role, checking } = useSelector((state) => state.auth);
 
   if (checking) {
@@ -26,7 +26,14 @@ export default function AppRoute() {
       <>
         <Switch>
           <PublicRoute isLogged={!!uid} component={Index} exact path="/index" />
-          <PublicRoute isLogged={!!uid} exact path="/login" component={Login} />
+          <Route
+            isLogged={!!uid}
+            exact
+            path="/login"
+            render={() => {
+              return !!uid ? <Redirect to="/" /> : <Login />;
+            }}
+          />
           <PublicRoute isLogged={!!uid} exact path="/register" component={AddUser} />
           <PublicRoute isLogged={!!uid} exact path="/work/check" component={CheckState} />
           <PrivateRoute role={role} isLogged={!!uid} path="/" refresh={true} component={Dashboard} />

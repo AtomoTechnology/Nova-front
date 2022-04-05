@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import NavbarContent from '../components/navbar/NavbarContent';
 import Footer from '../components/navbar/Footer';
 import { Loading } from '../components/Loading';
 import NavbarLateral from '../components/navbar/NavbarLateral';
 import { ErrorApp } from '../components/ErrorApp';
+import { useSelector } from 'react-redux';
 const Home = React.lazy(() => import('../components/Home'));
 const TermsConditions = React.lazy(() => import('../components/TermsConditions'));
 const Browse = React.lazy(() => import('../components/Browse'));
@@ -23,9 +24,10 @@ const UpdatePassword = React.lazy(() => import('../components/users/UpdatePasswo
 const OrderWork = React.lazy(() => import('../components/works/OrderWork'));
 const Queries = React.lazy(() => import('../components/queries/Queries'));
 const AddQuery = React.lazy(() => import('../components/queries/AddQuery'));
-// const startChecking = React.lazy(() => import('../action/authAction'));
 
 export default function Dashboard({ history }) {
+  const { role } = useSelector((state) => state.auth);
+
   return (
     <div className="taller">
       <NavbarLateral history={history} />
@@ -37,25 +39,69 @@ export default function Dashboard({ history }) {
               <Route exact path="/" component={Home} />
               <Route exact path="/terms-conditions" component={TermsConditions} />
               <Route exact path="/browse" component={Browse} />
-              <Route exact path="/clients" component={Users} />
-              <Route exact path="/works">
-                <Works history={history} />
-              </Route>
+              <Route
+                exact
+                path="/clients"
+                render={() => {
+                  return role === 'admin' ? <Users /> : <Redirect to="/browse" />;
+                }}
+              />
+              <Route
+                exact
+                path="/works"
+                render={() => {
+                  return role === 'admin' ? <Works /> : <Redirect to="/browse" />;
+                }}
+              ></Route>
               <Route exact path="/works/:workId/" component={GetWork} />
-              <Route exact path="/histories" component={Histories} />
-              <Route exact path="/work/edit/:id" component={WorkEdit} />
+              <Route
+                exact
+                path="/histories"
+                render={() => {
+                  return role === 'admin' ? <Histories /> : <Redirect to="/browse" />;
+                }}
+              />
+              <Route
+                exact
+                path="/work/edit/:id"
+                render={() => {
+                  return role === 'admin' ? <WorkEdit /> : <Redirect to="/browse" />;
+                }}
+              />
               <Route exact path="/works/order/:id" component={OrderWork} />
-              <Route exaxt path="/news" component={News} />
-              <Route exaxt path="/queries" component={Queries} />
-              <Route exaxt path="/createquery" component={AddQuery} />
-              <Route exaxt path="/banners" component={Banners} />
+              <Route
+                exaxt
+                path="/news"
+                render={() => {
+                  return role === 'admin' ? <News /> : <Redirect to="/browse" />;
+                }}
+              />
+              <Route exact path="/queries" component={Queries} />
+              <Route exact path="/createquery" component={AddQuery} />
+              <Route
+                exact
+                path="/banners"
+                render={() => {
+                  return role === 'admin' ? <Banners /> : <Redirect to="/browse" />;
+                }}
+              />
 
               <Route exact path="/clients/:clientId" component={GetUser} />
-              <Route exact path="/client/add" component={AddUser} />
+              <Route
+                exact
+                path="/client/add"
+                render={() => {
+                  return role === 'admin' ? <AddUser /> : <Redirect to="/browse" />;
+                }}
+              />
               <Route exact path="/user/update-password" component={UpdatePassword} />
-              <Route exact path="/work/add">
-                <AddWork history={history} />
-              </Route>
+              <Route
+                exact
+                path="/work/add"
+                render={() => {
+                  return role === 'admin' ? <AddWork /> : <Redirect to="/browse" />;
+                }}
+              />
               <Route path="*" component={ErrorApp} />
             </Switch>
           </React.Suspense>
