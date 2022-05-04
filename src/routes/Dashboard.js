@@ -42,38 +42,38 @@ export default function Dashboard({ history }) {
               <Route
                 exact
                 path="/clients"
-                render={() => {
-                  return role === 'admin' ? <Users /> : <Redirect to="/browse" />;
+                render={(props) => {
+                  return role === 'admin' ? <Users {...props} /> : <Redirect to="/browse" />;
                 }}
               />
               <Route
                 exact
                 path="/works"
-                render={() => {
-                  return role === 'admin' ? <Works /> : <Redirect to="/browse" />;
+                render={(props) => {
+                  return role === 'admin' ? <Works {...props} /> : <Redirect to="/browse" />;
                 }}
               ></Route>
               <Route exact path="/works/:workId/" component={GetWork} />
               <Route
                 exact
                 path="/histories"
-                render={() => {
-                  return role === 'admin' ? <Histories /> : <Redirect to="/browse" />;
+                render={(props) => {
+                  return role === 'admin' ? <Histories {...props} /> : <Redirect to="/browse" />;
                 }}
               />
               <Route
                 exact
                 path="/work/edit/:id"
-                render={() => {
-                  return role === 'admin' ? <WorkEdit /> : <Redirect to="/browse" />;
+                render={(props) => {
+                  return role === 'admin' ? <WorkEdit {...props} /> : <Redirect to="/browse" />;
                 }}
               />
               <Route exact path="/works/order/:id" component={OrderWork} />
               <Route
                 exaxt
                 path="/news"
-                render={() => {
-                  return role === 'admin' ? <News /> : <Redirect to="/browse" />;
+                render={(props) => {
+                  return role === 'admin' ? <News {...props} /> : <Redirect to="/browse" />;
                 }}
               />
               <Route exact path="/queries" component={Queries} />
@@ -81,8 +81,8 @@ export default function Dashboard({ history }) {
               <Route
                 exact
                 path="/banners"
-                render={() => {
-                  return role === 'admin' ? <Banners /> : <Redirect to="/browse" />;
+                render={(props) => {
+                  return role === 'admin' ? <Banners {...props} /> : <Redirect to="/browse" />;
                 }}
               />
 
@@ -90,16 +90,17 @@ export default function Dashboard({ history }) {
               <Route
                 exact
                 path="/client/add"
-                render={() => {
-                  return role === 'admin' ? <AddUser /> : <Redirect to="/browse" />;
+                render={(props) => {
+                  return role === 'admin' ? <AddUser {...props} /> : <Redirect to="/browse" />;
                 }}
               />
               <Route exact path="/user/update-password" component={UpdatePassword} />
               <Route
                 exact
                 path="/work/add"
-                render={() => {
-                  return role === 'admin' ? <AddWork /> : <Redirect to="/browse" />;
+                render={(props) => {
+                  console.log(props);
+                  return role === 'admin' ? <AddWork {...props} /> : <Redirect to="/browse" />;
                 }}
               />
               <Route path="*" component={ErrorApp} />

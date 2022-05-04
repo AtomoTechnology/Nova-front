@@ -26,14 +26,7 @@ export default function AppRoute() {
       <>
         <Switch>
           <PublicRoute isLogged={!!uid} component={Index} exact path="/index" />
-          <Route
-            isLogged={!!uid}
-            exact
-            path="/login"
-            render={() => {
-              return !!uid ? <Redirect to="/" /> : <Login />;
-            }}
-          />
+          <PublicRoute isLogged={!!uid} exact path="/login" component={Login} />
           <PublicRoute isLogged={!!uid} exact path="/register" component={AddUser} />
           <PublicRoute isLogged={!!uid} exact path="/work/check" component={CheckState} />
           <PrivateRoute role={role} isLogged={!!uid} path="/" refresh={true} component={Dashboard} />

@@ -12,21 +12,48 @@ const WorkEdit = ({ match, history }) => {
   const [checkPassword, setCheckPassword] = useState(false);
   const [checkPatron, setCheckPatron] = useState(false);
   const [passwordPatron, setContraseña] = useState('');
-  const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [estados, setEstados] = useState([]);
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(false);
 
+  const workId = match.params.id;
   useEffect(() => {
     dispatch(startGettingAllClient());
   }, [dispatch]);
-  const workId = match.params.id;
 
   useEffect(() => {
-    dispatch(getOneWork(workId));
+    const getWorkById = async (id) => {
+      await dispatch(getOneWork(id));
+    };
+    getWorkById(workId);
   }, [dispatch, workId]);
+  useEffect(() => {
+    async function GetAllState() {
+      const resp = await fetchWithToken('state');
+      const states = await resp.json();
+      setEstados(states.data.states);
+    }
+    GetAllState();
+  }, [setEstados]);
 
+  const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const { work } = useSelector((state) => state.works);
+  const changeCheckPatron = (e) => {
+    if (e.target.checked) {
+      setCheckPatron(true);
+      values.esPatron = true;
+      values.contrasena = '';
+      document.querySelector('#input-password').classList.add('hidden');
+    } else {
+      values.contrasena = '';
+      values.patron = '';
+      setContraseña('');
+      setCheckPatron(false);
+      values.esPatron = false;
+      document.querySelector('#input-password').classList.remove('hidden');
+    }
+  };
+
   const { clients } = useSelector((state) => state.clients);
   const { role } = useSelector((state) => state.auth);
   const [values, handleInputChange, reset] = useForm({
@@ -47,14 +74,6 @@ const WorkEdit = ({ match, history }) => {
     patron: work?.patron,
     total: work?.total,
   });
-  useEffect(() => {
-    async function GetAllState() {
-      const resp = await fetchWithToken('state');
-      const states = await resp.json();
-      setEstados(states.data.states);
-    }
-    GetAllState();
-  }, [setEstados]);
 
   const {
     marca,
@@ -81,22 +100,6 @@ const WorkEdit = ({ match, history }) => {
       setCheckPassword(false);
       values.tieneContrasena = false;
       values.contrasena = '';
-    }
-  };
-
-  const changeCheckPatron = (e) => {
-    if (e.target.checked) {
-      setCheckPatron(true);
-      values.esPatron = true;
-      values.contrasena = '';
-      document.querySelector('#input-password').classList.add('hidden');
-    } else {
-      values.contrasena = '';
-      values.patron = '';
-      setContraseña('');
-      setCheckPatron(false);
-      values.esPatron = false;
-      document.querySelector('#input-password').classList.remove('hidden');
     }
   };
 
@@ -281,9 +284,7 @@ const WorkEdit = ({ match, history }) => {
             Observaciones
             <span className="text-red-600">*</span>
           </label>
-          <textarea value={observaciones} onChange={handleInputChange} name="observaciones">
-            {' '}
-          </textarea>
+          <textarea value={observaciones} onChange={handleInputChange} name="observaciones"></textarea>
           {errores.observaciones ? (
             <h5 className="bg-red-100 text-red-800 p-2 my-2 text-center">La(s) observaciones es obligatoria</h5>
           ) : null}

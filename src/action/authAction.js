@@ -24,7 +24,7 @@ export const startLogin = (dni, password) => {
         window.location = '/';
       }
     } else {
-      showAlert('error', body.message);
+      document.querySelector('.error-login-database').classList.remove('hidden');
     }
   };
 };
@@ -41,7 +41,7 @@ export const startChecking = () => {
       } else {
         dispatch(finishChecking());
         dispatch(startLogout());
-        throw new Error(body.message);
+        // throw new Error(body.message);
       }
     } catch (error) {
       // throw new Error(error);

@@ -7,13 +7,16 @@ import logo from '../../templatePics/logo03.png';
 import { SmallLoading } from '../SmallLoading';
 
 export const Login = ({ history }) => {
+  console.log(history);
   const [errores, setErrores] = useState({});
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+
   const [values, handleInputChange] = useForm({
     dni: '',
     password: '',
   });
+
   const { dni, password } = values;
 
   const handleSubmitLogin = (e) => {
@@ -25,7 +28,6 @@ export const Login = ({ history }) => {
     setLoading(false);
   };
 
-  // varify the form values
   const verifyForm = () => {
     let ok = true;
     let error = {};
@@ -60,16 +62,20 @@ export const Login = ({ history }) => {
         className="auth__login-form flex items-center justify-between flex-col shadow-lg rounded-sm bg-white p-6 mx-2 "
       >
         <h3 className="title-form">Nova Technology</h3>
+
+        <fieldset className="error-login-database hidden">
+          <span className="text-red-500 bg-red-200 p-2 ">DNI y/o Contraseña incorrecto</span>
+        </fieldset>
         <fieldset>
           <label>DNI</label>
           <input value={dni} onChange={handleInputChange} type="text" name="dni" />
-          {errores.dni ? <span className="text-red-500 text-center  p-1">Ingrese un DNI valido </span> : null}{' '}
+          {errores.dni ? <span className="text-red-500   p-1">Ingrese un DNI valido </span> : null}{' '}
         </fieldset>
 
         <fieldset>
           <label>Contraseña</label>
           <input value={password} onChange={handleInputChange} type="password" name="password" />
-          {errores.password ? <span className="text-red-500 text-center  p-1">Contraseña requerida</span> : null}
+          {errores.password ? <span className="text-red-500   p-1">Contraseña requerida</span> : null}
         </fieldset>
         <fieldset>
           <button disabled={loading} className="btn bg-red-500 hover:bg-red-700" type="submit">
